@@ -462,53 +462,50 @@
   <h2>五、热门基金 Top30</h2>
   <div class="card">
     <div class="tabs" id="fundTabs">
-      <button class="tab on" id="fundTabMain" onclick="window.__fundTab('main')">综合榜</button>
+      <button class="tab on" id="fundTabMain" onclick="window.__fundTab('main')">热门榜单</button>
       <button class="tab" id="fundTabRec" onclick="window.__fundTab('rec')">推荐榜单</button>
     </div>
 
     <div class="tab-panel" id="fundPanelMain">
       <div class="wgt">
-        <span class="chip">近1年 <b>20%</b></span>
-        <span class="chip">近6月 <b>25%</b></span>
-        <span class="chip">近3月 <b>25%</b></span>
-        <span class="chip">近1月 <b>10%</b></span>
-        <span class="chip">阿尔法 <b>10%</b></span>
-        <span class="chip">最大回撤 <b>−10%</b></span>
+        <span class="chip">排序：近1年涨幅 <b>降序</b></span>
+        <span class="chip">全市场开放式基金（股票/混合/指数型，可申购）</span>
       </div>
       <div class="tbl-wrap" id="top30Wrap">
         <table>
           <thead><tr>
             <th class="c-rank">排名</th><th class="c-code">代码</th><th class="c-name">基金名称</th>
-            <th>近1月</th><th>近3月</th><th>近6月</th><th>近1年</th><th>最大回撤(近1年)</th><th>阿尔法(年化)</th><th>综合得分</th><th>重仓板块</th><th>申购状态</th><th>第三方评级</th>
+            <th>近1月</th><th>近3月</th><th>近6月</th><th>近1年</th><th>最大回撤(近1年)</th><th>阿尔法(年化)</th><th>重仓板块</th><th>申购状态</th><th>第三方评级</th>
           </tr></thead>
           <tbody id="top30Body"></tbody>
         </table>
       </div>
-      <p class="method">榜单更新时间：<span id="top30AsOf">--</span> · 表格支持鼠标按住拖动上下/左右滚动，前三列（排名/代码/名称）冻结 · 本榜为收益与风险调整后的综合比较，仅为跟踪工具，不构成买卖建议。</p>
-      <p class="method"><b>综合榜 · 口径说明：</b>全市场开放式基金（股票型 / 混合型 / 指数型，可申购），综合得分 = 近1年收益率×20% + 近6月×25% + 近3月×25% + 近1月×10% + 詹森阿尔法×10% − 近1年最大回撤×10%（阿尔法 = 年化超额收益，按近1年日净值对沪深300回归计算，无风险利率取 1.5%/年，预置于 <span id="alphaAsOf">最近收盘</span>，随榜单更新重算），同名基金 A/C 份额合并保留得分最高一只，取前 30 名。四项收益率随「刷新」实时重算；最大回撤、重仓板块、申购状态实时获取；第三方评级为最近一期（<span id="rateAsOf">2026-06-30</span>）披露预置——评级接口校验来源页，浏览器端无法直连，随季报期更新。</p>
+      <p class="method">榜单更新时间：<span id="top30AsOf">--</span> · 表格支持鼠标按住拖动上下/左右滚动，前三列（排名/代码/名称）冻结 · 本榜按近1年涨幅排序，仅为跟踪工具，不构成买卖建议。</p>
+      <p class="method"><b>热门榜单 · 口径说明：</b>全市场开放式基金（股票型 / 混合型 / 指数型，可申购），同名基金 A/C 份额合并保留一只，直接按<b>近1年涨幅（近1年收益率）降序</b>取前 30 名。近1月/近3月/近6月/近1年收益率随「刷新」实时重算；最大回撤、重仓板块、申购状态实时获取；第三方评级为最近一期（<span id="rateAsOf">2026-06-30</span>）披露预置——评级接口校验来源页，浏览器端无法直连，随季报期更新。阿尔法（年化超额收益，按近1年日净值对沪深300回归计算，无风险利率取 1.5%/年，预置于 <span id="alphaAsOf">最近收盘</span>）仅作参考列展示，不参与排序。</p>
     </div>
 
     <div class="tab-panel" id="fundPanelRec" style="display:none">
       <div class="wgt">
-        <span class="chip">资产规模 <b>10%</b></span>
-        <span class="chip">近3月年化 <b>30%</b></span>
-        <span class="chip">近6月年化 <b>30%</b></span>
-        <span class="chip">管护人评分 <b>15%</b></span>
-        <span class="chip">三方评分 <b>15%</b></span>
+        <span class="chip">资产规模 <b>8.5%</b></span>
+        <span class="chip">近3月年化 <b>25.5%</b></span>
+        <span class="chip">近6月年化 <b>25.5%</b></span>
+        <span class="chip">最大回撤 <b>15%</b></span>
+        <span class="chip">管护人评分 <b>12.75%</b></span>
+        <span class="chip">三方评分 <b>12.75%</b></span>
       </div>
       <div class="tbl-wrap" id="fundRecWrap">
         <table>
           <thead><tr>
             <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">基金名称</th>
-            <th>资产规模(亿)</th><th>近3月年化</th><th>近6月年化</th>
+            <th>资产规模(亿)</th><th>近3月年化</th><th>近6月年化</th><th>最大回撤</th>
             <th>管护人评分</th><th>三方评分</th><th>推荐指数</th>
-            <th>得分明细(规模/近3月/近6月/管护/三方)</th>
+            <th>得分明细(规模/近3月/近6月/回撤/管护/三方)</th>
           </tr></thead>
           <tbody id="fundRecBody"></tbody>
         </table>
       </div>
       <p class="method" id="fundRecAsOf">--</p>
-      <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 资产规模×10% + 近3月年化×30% + 近6月年化×30% + 管护人评分×15% + 三方评分×15%，满分 100，从高到低排序。各因子先按 30 只池内百分位归一化为 0-100 分（越大分越高）：资产规模=期末资产净值（亿元，实时）；近3月/近6月年化=近3月/近6月收益率年化（%）；三方评分=第三方评级星级映射（5星=100 / 4星=80 / 3星=60 / 2星=40 / 1星=20，取招商与晨星最高星级）；管护人评分=基金管理人评分，无公开实时接口，按<b>中性 50 分兜底</b>。任一字段缺失时同样按中性 50 分兜底。仅供参考，不构成投资建议。</p>
+      <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 资产规模×8.5% + 近3月年化×25.5% + 近6月年化×25.5% + 最大回撤×15% + 管护人评分×12.75% + 三方评分×12.75%，满分 100，从高到低排序。各因子先按 30 只池内百分位归一化为 0-100 分：资产规模（亿元，越大越好）、近3月/近6月年化（%，越大越好）、<b>最大回撤（%，负向指标：回撤越小分越高）</b>；三方评分=第三方评级星级映射（5星=100 / 4星=80 / 3星=60 / 2星=40 / 1星=20，取招商与晨星最高星级）；管护人评分=基金管理人评分，无公开实时接口，按<b>中性 50 分兜底</b>。任一字段缺失时同样按中性 50 分兜底。仅供参考，不构成投资建议。</p>
     </div>
   </div>
 
@@ -805,7 +802,7 @@
         <div class="kpi"><div class="v">15.19%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">56.549</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v down" id="sflow_600519">-34.23 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_600519">11</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_600519">11</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>盈利质量与现金流标杆：净利率 48.2%、每股经营现金流 56.5 元全池第一，负债率仅 15.2%</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_600519">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -824,7 +821,7 @@
         <div class="kpi"><div class="v">11.47%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">8.619</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v down" id="sflow_603986">-665.67 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_603986">4</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_603986">4</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>半导体存储/MCU 国产化核心：ROE 23.1%、营收 +178.7%；但近10日板块主力净流出 666 亿，短线拥挤</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_603986">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -843,7 +840,7 @@
         <div class="kpi"><div class="v">89.83%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">20.325</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v up" id="sflow_601318">+1.48 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_601318">20</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_601318">20</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>低估值金融蓝筹：PE 5.48、PB 0.99 破净，经营现金流 20.3 元/股，股息防御属性</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_601318">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -862,7 +859,7 @@
         <div class="kpi"><div class="v">38.33%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">0.06</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v up" id="sflow_000506">+18.76 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_000506">8</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_000506">8</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>黄金景气 + 板块资金流入：ROE 28.3%、营收 +85.1%，贵金属近10日净流入 +18.8 亿</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_000506">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -881,9 +878,9 @@
         <div class="kpi"><div class="v">17.37%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">0.212</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v up" id="sflow_002611">+19.65 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_002611">1</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_002611">1</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
-      <p class="reason"><b>入选理由：</b>综合榜第 1（78.1 分）：ROE 50.9%、PE 仅 2.34，叠加板块净流入 +19.7 亿</p>
+      <p class="reason"><b>入选理由：</b>六维评分第 1（78.1 分）：ROE 50.9%、PE 仅 2.34，叠加板块净流入 +19.7 亿</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_002611">2026-08-25</span> 快照，随刷新实时更新</p>
     </div>
 
@@ -900,7 +897,7 @@
         <div class="kpi"><div class="v">93.52%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">10.314</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v up" id="sflow_600919">+14.29 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_600919">21</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_600919">21</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>城商行龙头：PE 5.11、PB 0.82 破净，净利 +8.1%，板块近10日净流入 +14.3 亿</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_600919">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -919,7 +916,7 @@
         <div class="kpi"><div class="v">22.61%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">17.669</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v down" id="sflow_603444">-16.95 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_603444">6</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_603444">6</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>现金流丰厚的游戏龙头：每股经营现金流 17.7 元，ROE 18.6%、PE 12.8 低于行业</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_603444">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -938,7 +935,7 @@
         <div class="kpi"><div class="v">30.87%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">-0.244</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v " id="sflow_002432">-- 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_002432">12</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_002432">12</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>低估值医疗器械：PE 5.02、PB 1.33，账上现金充裕（中报含一次性因素，需甄别）</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_002432">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -957,7 +954,7 @@
         <div class="kpi"><div class="v">91.29%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">0.598</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v down" id="sflow_000042">-1.66 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_000042">10</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_000042">10</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>地产困境反转弹性：ROE 35.0%、营收 +168%、PE 2.89；负债率 91.3% 财务安全分低，高风险观察</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_000042">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -976,7 +973,7 @@
         <div class="kpi"><div class="v">65.45%</div><div class="l">资产负债率</div></div>
         <div class="kpi"><div class="v">14.637</div><div class="l">每股经营现金流</div></div>
         <div class="kpi"><div class="v down" id="sflow_603129">-3.52 亿</div><div class="l">近10日板块主力净流入</div></div>
-        <div class="kpi"><div class="v" id="srank_603129">28</div><div class="l">综合榜排名 / 62 池</div></div>
+        <div class="kpi"><div class="v" id="srank_603129">28</div><div class="l">六维评分排名 / 62 池</div></div>
       </div>
       <p class="reason"><b>入选理由：</b>出海制造（摩托车）：ROE 13.4%、经营现金流 14.6 元/股，PE 21.9 成长溢价</p>
       <p class="method">财务为 2026-06-30 中报口径（自动推算最近一期）｜ 行情/估值/板块资金为 <span id="sasof_603129">2026-08-25</span> 快照，随刷新实时更新</p>
@@ -986,18 +983,14 @@
     <h2>二、热门股票 Top30</h2>
     <div class="card">
       <div class="tabs" id="stockTabs">
-        <button class="tab on" id="stockTabMain" onclick="window.__stockTab('main')">综合榜</button>
+        <button class="tab on" id="stockTabMain" onclick="window.__stockTab('main')">热门榜单</button>
         <button class="tab" id="stockTabRec" onclick="window.__stockTab('rec')">推荐榜单</button>
       </div>
 
       <div class="tab-panel" id="stockPanelMain">
         <div class="wgt">
-          <span class="chip"><b>盈利能力 25.5%</b>（ROE 60% + 净利率 40%）</span>
-          <span class="chip"><b>成长能力 20%</b>（营收增速 50% + 净利增速 50%）</span>
-          <span class="chip"><b>财务安全 18.2%</b>（资产负债率反向）</span>
-          <span class="chip"><b>估值水平 16.4%</b>（PE 50% + PB 50%，亏损 PE 最低分）</span>
-          <span class="chip"><b>现金流质量 10.9%</b>（每股经营现金流百分位）</span>
-          <span class="chip"><b>板块资金净流入 9.1%</b>（近10日主力净流入百分位）</span>
+          <span class="chip">排序：当日涨跌幅 <b>降序</b></span>
+          <span class="chip">A 股主板 · 剔除创业板/科创板</span>
         </div>
         <div class="tbl-wrap" id="sTop30Wrap">
           <table>
@@ -1007,36 +1000,33 @@
               <th>PE(动)</th><th>PB</th><th>ROE</th><th>净利率</th>
               <th>营收增速</th><th>净利增速</th><th>资产负债率</th>
               <th>每股经营现金流</th><th>近10日板块资金</th>
-              <th>得分</th><th>六维(盈利/成长/安全/估值/现金流/资金)</th>
             </tr></thead>
             <tbody id="sTop30Body"></tbody>
           </table>
         </div>
         <p class="method" id="sTop30AsOf">--</p>
-        <p class="method">综合榜 · 评分模型说明：从东方财富 RPT_LICO_FN_CPD 业绩报表（2026-06-30 口径，6628 行 A 股中报财务数据）中筛选 A 股主板标的（剔除创业板 300xxx、科创板 688xxx），排除金融业（银行/非银金融/证券，负债率特征不同）后剩余 1577 只，再按 ROE ≥ 8% 且 营收增速 > 0 且 资产负债率 < 100% 三个条件精选为 62 只候选池。六维百分位打分（0-100），用户指定权重等比归一化为 25.5% / 20% / 18.2% / 16.4% / 10.9% / 9.1%。行情（现价/涨跌/PE/PB）与板块资金净流入为实时接口（东方财富 push2 JSONP），刷新后按实时估值与资金重排。财务数据为静态中报快照。</p>
+        <p class="method"><b>热门榜单 · 口径说明：</b>从东方财富 RPT_LICO_FN_CPD 业绩报表（2026-06-30 口径）筛选 A 股主板标的（剔除创业板 300xxx、科创板 688xxx），排除金融业，再按 ROE ≥ 8% 且 营收增速 > 0 且 资产负债率 < 100% 精选为 62 只候选池；榜单按<b>当日涨跌幅（%）降序</b>排序。行情（现价/涨跌/PE/PB/换手率）与板块资金净流入为实时接口（东方财富 push2 JSONP），刷新后按当日涨幅重排。财务数据为静态中报快照。</p>
       </div>
 
       <div class="tab-panel" id="stockPanelRec" style="display:none">
         <div class="wgt">
-          <span class="chip">资产规模 <b>10%</b></span>
-          <span class="chip">近3月年化 <b>30%</b></span>
-          <span class="chip">近6月年化 <b>30%</b></span>
-          <span class="chip">管护人评分 <b>15%</b></span>
-          <span class="chip">三方评分 <b>15%</b></span>
+          <span class="chip">涨跌幅（MA60 偏离）<b>40%</b></span>
+          <span class="chip">换手率 <b>30%</b></span>
+          <span class="chip">资金净流入 <b>30%</b></span>
         </div>
         <div class="tbl-wrap" id="stockRecWrap">
           <table>
             <thead><tr>
               <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">名称</th>
-              <th>总市值(亿)</th><th>近3月年化</th><th>近6月年化</th>
-              <th>管护人评分</th><th>三方评分</th><th>推荐指数</th>
-              <th>得分明细(规模/近3月/近6月/管护/三方)</th>
+              <th>总市值(亿)</th><th>涨跌幅</th><th>换手率</th><th>资金净流入</th>
+              <th>推荐指数</th>
+              <th>得分明细(涨跌/换手/资金)</th>
             </tr></thead>
             <tbody id="stockRecBody"></tbody>
           </table>
         </div>
         <p class="method" id="stockRecAsOf">--</p>
-        <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 资产规模×10% + 近3月年化×30% + 近6月年化×30% + 管护人评分×15% + 三方评分×15%，满分 100，从高到低排序。各因子先按 62 只候选池内百分位归一化为 0-100 分（越大分越高）：资产规模=总市值（亿元，实时行情）；近3月/近6月年化=近3月/近6月股价涨幅年化（%，实时日K线计算）；管护人评分、三方评分对股票无对应公开口径，按<b>中性 50 分兜底（不适用）</b>。任一字段缺失时同样按中性 50 分兜底。仅供参考，不构成投资建议。</p>
+        <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 涨跌幅×40% + 换手率×30% + 资金净流入×30%，满分 100，从高到低排序。其中涨跌幅 =（60日均价 MA60 − 当前价格）÷ MA60 × 100%（正=低于均线/超跌，越大越好）；换手率=当日换手率（%，越大越活跃）；资金净流入=近10日板块主力净流入（亿元，越大越好）。三指标先按 62 只候选池内百分位归一化为 0-100 分后加权；任一字段缺失时按中性 50 分兜底。仅供参考，不构成投资建议。</p>
       </div>
     </div>
 
@@ -1104,7 +1094,7 @@ var SECTOR_INITIAL={"asof":"2026-08-25","list":[{"code":"BK1616","name":"白银"
 var WEALTH_TOP={"asof":"2026-08-25","count":60,"list":[{"code":"022403","name":"信澳稳悦60天滚动持有债券A","ftype":"债券型-中短债","scale":46.31,"r1m":0.18,"r3m":0.38,"r6m":1.18,"r1y":3.26,"r3m_ann":1.53,"r6m_ann":2.38,"mdd1y":0.1,"winrate":1,"mstd":0.117,"s_ret":78.2,"s_risk":87.8,"s_stab":87.3,"s_qual":60.3,"s_liq":100,"score":82.98,"buy":true,"estab":"2024-12-10","years":1.7,"navDate":"2026-08-24"},{"code":"005754","name":"平安短债A","ftype":"债券型-中短债","scale":29.96,"r1m":0.14,"r3m":0.31,"r6m":0.97,"r1y":1.84,"r3m_ann":1.25,"r6m_ann":1.95,"mdd1y":0.07,"winrate":1,"mstd":0.082,"s_ret":59.5,"s_risk":92.9,"s_stab":94,"s_qual":67.5,"s_liq":100,"score":82.03,"buy":true,"estab":"2018-05-16","years":8.3,"navDate":"2026-08-24"},{"code":"022539","name":"天弘安利短债D","ftype":"债券型-中短债","scale":15.79,"r1m":0.15,"r3m":0.35,"r6m":0.93,"r1y":1.78,"r3m_ann":1.41,"r6m_ann":1.87,"mdd1y":0.04,"winrate":1,"mstd":0.061,"s_ret":60.8,"s_risk":98.6,"s_stab":98.3,"s_qual":42.1,"s_liq":100,"score":80.85,"buy":true,"estab":"2024-11-04","years":1.8,"navDate":"2026-08-24"},{"code":"022319","name":"兴全恒嘉30天持有债券C","ftype":"债券型-长债","scale":45.49,"r1m":0.12,"r3m":0.31,"r6m":0.85,"r1y":1.77,"r3m_ann":1.25,"r6m_ann":1.71,"mdd1y":0.07,"winrate":1,"mstd":0.046,"s_ret":52.2,"s_risk":98,"s_stab":95.8,"s_qual":59.5,"s_liq":100,"score":80.63,"buy":true,"estab":"2024-12-02","years":1.7,"navDate":"2026-08-24"},{"code":"005882","name":"财通资管鸿达债券E","ftype":"债券型-中短债","scale":38.56,"r1m":0.13,"r3m":0.28,"r6m":0.79,"r1y":1.43,"r3m_ann":1.13,"r6m_ann":1.59,"mdd1y":0.09,"winrate":1,"mstd":0.057,"s_ret":46.6,"s_risk":94.2,"s_stab":95.8,"s_qual":73,"s_liq":100,"score":80.31,"buy":true,"estab":"2018-07-04","years":8.1,"navDate":"2026-08-24"},{"code":"017055","name":"工银稳健丰润90天持有中短债C","ftype":"债券型-中短债","scale":30.36,"r1m":0.14,"r3m":0.33,"r6m":0.9,"r1y":1.67,"r3m_ann":1.33,"r6m_ann":1.81,"mdd1y":0.11,"winrate":1,"mstd":0.073,"s_ret":55.9,"s_risk":90.1,"s_stab":94.9,"s_qual":63.5,"s_liq":100,"score":80.03,"buy":true,"estab":"2022-12-01","years":3.7,"navDate":"2026-08-24"},{"code":"022807","name":"创金合信恒睿90天持有期债券A","ftype":"债券型-中短债","scale":27.98,"r1m":0.2,"r3m":0.4,"r6m":1.39,"r1y":3.3,"r3m_ann":1.61,"r6m_ann":2.81,"mdd1y":0.11,"winrate":0.917,"mstd":0.165,"s_ret":81.9,"s_risk":82.4,"s_stab":79.7,"s_qual":51.2,"s_liq":100,"score":79.68,"buy":true,"estab":"2024-12-23","years":1.7,"navDate":"2026-08-24"},{"code":"023031","name":"招商稳嘉120天滚动持有纯债C","ftype":"债券型-中短债","scale":82.81,"r1m":0.12,"r3m":0.26,"r6m":0.76,"r1y":2.02,"r3m_ann":1.05,"r6m_ann":1.53,"mdd1y":0.06,"winrate":1,"mstd":0.099,"s_ret":50.2,"s_risk":94.2,"s_stab":88.1,"s_qual":66,"s_liq":100,"score":78.61,"buy":true,"estab":"2025-03-12","years":1.5,"navDate":"2026-08-24"},{"code":"007447","name":"平安惠泰纯债A","ftype":"债券型-长债","scale":24.39,"r1m":0.24,"r3m":0.4,"r6m":1.47,"r1y":2.66,"r3m_ann":1.61,"r6m_ann":2.97,"mdd1y":0.28,"winrate":0.833,"mstd":0.193,"s_ret":80.5,"s_risk":78.3,"s_stab":71.2,"s_qual":62,"s_liq":100,"score":78.26,"buy":true,"estab":"2019-06-05","years":7.2,"navDate":"2026-08-24"},{"code":"000191","name":"富国信用债债券A/B","ftype":"债券型-信用债","scale":67.45,"r1m":0.22,"r3m":0.46,"r6m":1.52,"r1y":2.63,"r3m_ann":1.86,"r6m_ann":3.07,"mdd1y":0.71,"winrate":0.75,"mstd":0.27,"s_ret":83.4,"s_risk":67.1,"s_stab":56.8,"s_qual":87.3,"s_liq":100,"score":77.09,"buy":true,"estab":"2013-06-25","years":13.2,"navDate":"2026-08-24"},{"code":"003223","name":"广发景丰纯债A","ftype":"债券型-长债","scale":21.05,"r1m":0.26,"r3m":0.57,"r6m":1.84,"r1y":3.19,"r3m_ann":2.31,"r6m_ann":3.72,"mdd1y":0.78,"winrate":0.833,"mstd":0.295,"s_ret":93.4,"s_risk":63,"s_stab":67,"s_qual":63.7,"s_liq":100,"score":77.04,"buy":true,"estab":"2016-11-23","years":9.8,"navDate":"2026-08-24"},{"code":"004042","name":"华夏鼎茂债券A","ftype":"债券型-长债","scale":308.74,"r1m":0.43,"r3m":0.9,"r6m":2.26,"r1y":3.29,"r3m_ann":3.66,"r6m_ann":4.58,"mdd1y":0.99,"winrate":0.75,"mstd":0.384,"s_ret":101,"s_risk":52.8,"s_stab":44.9,"s_qual":92.9,"s_liq":100,"score":76.38,"buy":true,"estab":"2017-03-15","years":9.4,"navDate":"2026-08-24"},{"code":"006668","name":"华夏中短债债券A","ftype":"债券型-中短债","scale":72.81,"r1m":0.22,"r3m":0.43,"r6m":1.15,"r1y":2.09,"r3m_ann":1.74,"r6m_ann":2.32,"mdd1y":0.41,"winrate":0.75,"mstd":0.17,"s_ret":73.7,"s_risk":75.6,"s_stab":60.2,"s_qual":79.8,"s_liq":100,"score":76.34,"buy":true,"estab":"2018-12-25","years":7.7,"navDate":"2026-08-24"},{"code":"022033","name":"兴业短债债券D","ftype":"债券型-中短债","scale":34.39,"r1m":0.13,"r3m":0.33,"r6m":0.87,"r1y":1.69,"r3m_ann":1.33,"r6m_ann":1.75,"mdd1y":0.08,"winrate":0.917,"mstd":0.066,"s_ret":54.4,"s_risk":93.9,"s_stab":87.3,"s_qual":62.5,"s_liq":76,"score":75.3,"buy":true,"estab":"2024-08-19","years":2,"navDate":"2026-08-24"},{"code":"022133","name":"富国增利债券发起式E","ftype":"债券型-长债","scale":105.14,"r1m":0.28,"r3m":0.59,"r6m":1.73,"r1y":3.05,"r3m_ann":2.39,"r6m_ann":3.5,"mdd1y":0.79,"winrate":0.833,"mstd":0.285,"s_ret":92.9,"s_risk":63.4,"s_stab":64.4,"s_qual":78,"s_liq":72,"score":74.45,"buy":false,"estab":"2024-09-06","years":2,"navDate":"2026-08-24"},{"code":"000252","name":"景顺长城景兴信用纯债债券A","ftype":"债券型-长债","scale":36.75,"r1m":0.23,"r3m":0.52,"r6m":1.55,"r1y":2.69,"r3m_ann":2.1,"r6m_ann":3.13,"mdd1y":0.93,"winrate":0.75,"mstd":0.297,"s_ret":86.4,"s_risk":58.3,"s_stab":57.6,"s_qual":76.3,"s_liq":100,"score":74.14,"buy":true,"estab":"2013-08-26","years":13,"navDate":"2026-08-24"},{"code":"023015","name":"招商招华纯债D","ftype":"债券型-长债","scale":46.22,"r1m":0.24,"r3m":0.53,"r6m":1.71,"r1y":2.7,"r3m_ann":2.14,"r6m_ann":3.46,"mdd1y":0.7,"winrate":0.75,"mstd":0.361,"s_ret":90.3,"s_risk":63.4,"s_stab":52.5,"s_qual":60.2,"s_liq":100,"score":72.97,"buy":true,"estab":"2024-12-23","years":1.7,"navDate":"2026-08-24"},{"code":"022009","name":"南方祥元债券E","ftype":"债券型-长债","scale":15.93,"r1m":0.2,"r3m":0.45,"r6m":1.43,"r1y":2.54,"r3m_ann":1.82,"r6m_ann":2.89,"mdd1y":0.9,"winrate":0.833,"mstd":0.288,"s_ret":80.9,"s_risk":60.7,"s_stab":68.7,"s_qual":49.9,"s_liq":100,"score":71.6,"buy":true,"estab":"2024-08-15","years":2,"navDate":"2026-08-24"},{"code":"022107","name":"华宝中短债债券D","ftype":"债券型-中短债","scale":15.93,"r1m":0.15,"r3m":0.36,"r6m":1.13,"r1y":2.27,"r3m_ann":1.45,"r6m_ann":2.28,"mdd1y":0.41,"winrate":0.917,"mstd":0.192,"s_ret":69.8,"s_risk":73.9,"s_stab":79.7,"s_qual":51,"s_liq":76,"score":70.92,"buy":true,"estab":"2024-09-09","years":2,"navDate":"2026-08-24"},{"code":"006662","name":"易方达安悦超短债A","ftype":"债券型-中短债","scale":45.76,"r1m":0.12,"r3m":0.3,"r6m":0.46,"r1y":0.39,"r3m_ann":1.21,"r6m_ann":0.92,"mdd1y":0.38,"winrate":0.75,"mstd":0.152,"s_ret":40,"s_risk":80.4,"s_stab":67,"s_qual":74.9,"s_liq":100,"score":69.71,"buy":true,"estab":"2018-12-05","years":7.7,"navDate":"2026-08-24"},{"code":"021289","name":"中金金辰债券","ftype":"债券型-长债","scale":62.58,"r1m":0.39,"r3m":0.71,"r6m":1.85,"r1y":1.36,"r3m_ann":2.88,"r6m_ann":3.74,"mdd1y":1.17,"winrate":0.667,"mstd":0.409,"s_ret":83.4,"s_risk":50.2,"s_stab":38.2,"s_qual":72.3,"s_liq":100,"score":66.86,"buy":true,"estab":"2024-06-17","years":2.2,"navDate":"2026-08-24"},{"code":"006663","name":"易方达安悦超短债C","ftype":"债券型-中短债","scale":17.19,"r1m":0.1,"r3m":0.25,"r6m":0.26,"r1y":0.2,"r3m_ann":1.01,"r6m_ann":0.52,"mdd1y":0.39,"winrate":0.75,"mstd":0.152,"s_ret":32.9,"s_risk":78.7,"s_stab":71.2,"s_qual":58.2,"s_liq":100,"score":65.86,"buy":true,"estab":"2018-12-05","years":7.7,"navDate":"2026-08-24"},{"code":"000033","name":"易方达信用债债券C","ftype":"债券型-信用债","scale":25.51,"r1m":0.34,"r3m":0.33,"r6m":0.85,"r1y":0.51,"r3m_ann":1.33,"r6m_ann":1.71,"mdd1y":0.79,"winrate":0.667,"mstd":0.225,"s_ret":51,"s_risk":64.4,"s_stab":51.7,"s_qual":72.9,"s_liq":100,"score":65.13,"buy":true,"estab":"2013-04-24","years":13.3,"navDate":"2026-08-24"},{"code":"023791","name":"浦银普航3个月定开债券","ftype":"债券型-长债","scale":32.66,"r1m":0.14,"r3m":0.28,"r6m":1.15,"r1y":1.95,"r3m_ann":1.13,"r6m_ann":2.32,"mdd1y":0.17,"winrate":1,"mstd":0.118,"s_ret":60.7,"s_risk":84.1,"s_stab":89,"s_qual":48.6,"s_liq":24,"score":64.88,"buy":false,"estab":"2025-04-24","years":1.3,"navDate":"2026-08-24"},{"code":"000402","name":"工银纯债债券A","ftype":"债券型-长债","scale":79.16,"r1m":0.28,"r3m":0.59,"r6m":1.58,"r1y":0.69,"r3m_ann":2.39,"r6m_ann":3.19,"mdd1y":2.27,"winrate":0.75,"mstd":0.656,"s_ret":77.8,"s_risk":34.6,"s_stab":39.9,"s_qual":87.1,"s_liq":100,"score":64.13,"buy":true,"estab":"2014-05-16","years":12.3,"navDate":"2026-08-24"},{"code":"022207","name":"鹏华丰恒债券B","ftype":"债券型-中短债","scale":77.59,"r1m":-0.1,"r3m":0.13,"r6m":0.32,"r1y":1.01,"r3m_ann":0.52,"r6m_ann":0.64,"mdd1y":0.43,"winrate":0.667,"mstd":0.156,"s_ret":38.1,"s_risk":74.9,"s_stab":51.7,"s_qual":69.7,"s_liq":100,"score":64.06,"buy":true,"estab":"2024-09-20","years":1.9,"navDate":"2026-08-24"},{"code":"000084","name":"博时安盈债券A","ftype":"债券型-中短债","scale":19.4,"r1m":-0.05,"r3m":-0.02,"r6m":0.02,"r1y":0.36,"r3m_ann":-0.08,"r6m_ann":0.04,"mdd1y":0.33,"winrate":0.5,"mstd":0.08,"s_ret":26.6,"s_risk":85.4,"s_stab":50.9,"s_qual":68.1,"s_liq":100,"score":63.38,"buy":true,"estab":"2013-04-23","years":13.3,"navDate":"2026-08-24"},{"code":"018596","name":"华商利欣回报债券C","ftype":"债券型-混合二级","scale":94.06,"r1m":-0.45,"r3m":0.73,"r6m":4.12,"r1y":10.82,"r3m_ann":2.96,"r6m_ann":8.43,"mdd1y":4.66,"winrate":0.833,"mstd":1.771,"s_ret":107.3,"s_risk":10.5,"s_stab":37.3,"s_qual":71.5,"s_liq":100,"score":62.64,"buy":true,"estab":"2023-08-29","years":3,"navDate":"2026-08-24"},{"code":"023091","name":"鑫元合丰纯债D","ftype":"债券型-利率债","scale":18.47,"r1m":0.21,"r3m":0.38,"r6m":2.14,"r1y":2.26,"r3m_ann":1.53,"r6m_ann":4.34,"mdd1y":1.36,"winrate":0.917,"mstd":0.453,"s_ret":82.2,"s_risk":47.5,"s_stab":66.1,"s_qual":44.6,"s_liq":66,"score":62.23,"buy":false,"estab":"2024-12-26","years":1.7,"navDate":"2026-08-24"},{"code":"000032","name":"易方达信用债债券A","ftype":"债券型-信用债","scale":63.01,"r1m":0.36,"r3m":0.34,"r6m":0.82,"r1y":0.46,"r3m_ann":1.37,"r6m_ann":1.65,"mdd1y":0.74,"winrate":0.5,"mstd":0.248,"s_ret":50,"s_risk":66.8,"s_stab":37.3,"s_qual":86.6,"s_liq":72,"score":60.45,"buy":false,"estab":"2013-04-24","years":13.3,"navDate":"2026-08-24"}]};
 var WEALTH_PICKS=[["005754","t-cash","现金管理升级：短债旗舰、月度胜率 100%，低波动替代货基"],["022319","t-bond","30 天持有期长债：以持有期换收益，回撤 0.07%、月度全胜"],["022403","t-cash","60 天滚动持有中短债：榜单第 1（82.98 分），收益与回撤均衡"],["017055","t-cash","90 天持有中短债：工银瑞信银行系固收，稳健型配置"],["023031","t-cash","120 天滚动持有纯债：拉长持有期提升票息，回撤仅 0.06%"],["004042","t-bond","长债规模王（308.7 亿）：久期配置与流动性兼备"],["000191","t-credit","信用债旗舰：票息增强，近1年 +2.63%、回撤 0.71%"],["003223","t-bond","长债收益档：近1年 +3.19%，纯债中收益靠前"],["000171","t-fixp","固收+代表作：二级债基叠加权益增强，近1年 +8.63%"],["018596","t-fixp","固收+进攻端：近1年 +10.82% 全场最高，回撤 4.66% 需承受波动"]];
 var STOCK_POOL={"asof":"2026-08-25","count":62,"list":[{"code":"002611","name":"东方精工","industry":"专用设备","board_code":"BK0910","roe":50.88,"npm":227.47,"yoyr":-21.68,"yoyp":500,"ocfps":0.212,"eps":3.22,"bps":7.78,"zcfzl":17.37,"xsmll":23.46,"price":14.76,"chg":0.61,"pe":2.34,"pb":1.95,"flow10":19.65,"flowD":"2026-08-25","s_earn":97.7,"s_grow":45.1,"s_safe":96.7,"s_val":82,"s_cash":41,"s_flow":95.1,"score":78.1},{"code":"002582","name":"好想你","industry":"休闲食品","board_code":"BK1281","roe":17.19,"npm":105.34,"yoyr":2.59,"yoyp":500,"ocfps":0.074,"eps":1.663,"bps":10.04,"zcfzl":33.3,"xsmll":33.52,"price":10.27,"chg":0.79,"pe":3.09,"pb":1.02,"flow10":3.03,"flowD":"2026-08-25","s_earn":88.5,"s_grow":57.4,"s_safe":88.5,"s_val":91.8,"s_cash":34.4,"s_flow":73.8,"score":75.68},{"code":"000430","name":"张家界","industry":"旅游及景区","board_code":"BK1272","roe":20.94,"npm":145.52,"yoyr":9.34,"yoyp":500,"ocfps":0.005,"eps":0.38,"bps":2.25,"zcfzl":26.93,"xsmll":21.94,"price":6.89,"chg":0.58,"pe":9.05,"pb":3.07,"flow10":0.88,"flowD":"2026-08-25","s_earn":92.2,"s_grow":64.8,"s_safe":93.4,"s_val":62.3,"s_cash":27.9,"s_flow":68.9,"score":73},{"code":"603986","name":"兆易创新","industry":"半导体","board_code":"BK1036","roe":23.13,"npm":59.29,"yoyr":178.67,"yoyp":500,"ocfps":8.619,"eps":9.83,"bps":53.13,"zcfzl":11.47,"xsmll":63.13,"price":394.96,"chg":-0.14,"pe":20.21,"pb":7.43,"flow10":-665.67,"flowD":"2026-08-25","s_earn":92.1,"s_grow":72.2,"s_safe":100,"s_val":33.6,"s_cash":88.5,"s_flow":0,"score":71.28},{"code":"603162","name":"海通发展","industry":"航运港口","board_code":"BK0450","roe":11.16,"npm":15.08,"yoyr":92.78,"yoyp":500,"ocfps":0.525,"eps":0.39,"bps":3.54,"zcfzl":35.54,"xsmll":19.61,"price":12.08,"chg":1,"pe":15.86,"pb":3.41,"flow10":8.28,"flowD":"2026-08-25","s_earn":61.3,"s_grow":83.6,"s_safe":83.6,"s_val":52.5,"s_cash":59,"s_flow":83.6,"score":70.22},{"code":"603444","name":"吉比特","industry":"游戏Ⅱ","board_code":"BK1046","roe":18.57,"npm":29.29,"yoyr":48.01,"yoyp":69.31,"ocfps":17.669,"eps":15.15,"bps":84.07,"zcfzl":22.61,"xsmll":93.71,"price":389,"chg":1.02,"pe":12.84,"pb":4.63,"flow10":-16.95,"flowD":"2026-08-25","s_earn":79,"s_grow":36.1,"s_safe":95.1,"s_val":49.2,"s_cash":96.7,"s_flow":42.6,"score":67.16},{"code":"002497","name":"雅化集团","industry":"化学制品","board_code":"BK0538","roe":10.73,"npm":18.12,"yoyr":96.02,"yoyp":500,"ocfps":-0.358,"eps":1.063,"bps":10.56,"zcfzl":28.02,"xsmll":31.7,"price":19.47,"chg":4.45,"pe":9.23,"pb":1.84,"flow10":-86.21,"flowD":"2026-08-25","s_earn":61.7,"s_grow":92.6,"s_safe":91.8,"s_val":71.3,"s_cash":11.5,"s_flow":13.1,"score":65.1},{"code":"000506","name":"招金黄金","industry":"贵金属","board_code":"BK0732","roe":28.34,"npm":62.49,"yoyr":85.13,"yoyp":407.44,"ocfps":0.06,"eps":0.24,"bps":0.97,"zcfzl":38.33,"xsmll":55.94,"price":21.51,"chg":4.37,"pe":44.05,"pb":22.16,"flow10":18.76,"flowD":"2026-08-25","s_earn":93.8,"s_grow":58.1,"s_safe":80.3,"s_val":15.6,"s_cash":31.1,"s_flow":93.4,"score":64.6},{"code":"002458","name":"益生股份","industry":"养殖业","board_code":"BK1259","roe":6.86,"npm":18.13,"yoyr":28.44,"yoyp":500,"ocfps":0.322,"eps":0.219,"bps":3.24,"zcfzl":35.14,"xsmll":28.04,"price":8.92,"chg":0.79,"pe":20.75,"pb":2.88,"flow10":3.14,"flowD":"2026-08-25","s_earn":49.5,"s_grow":73.8,"s_safe":85.2,"s_val":48.3,"s_cash":49.2,"s_flow":75.4,"score":63.03},{"code":"000042","name":"中洲控股","industry":"房地产开发","board_code":"BK0451","roe":34.97,"npm":21.97,"yoyr":168.35,"yoyp":421.76,"ocfps":0.598,"eps":1.487,"bps":5,"zcfzl":91.29,"xsmll":67.93,"price":8.6,"chg":1.9,"pe":2.89,"pb":1.72,"flow10":-1.66,"flowD":"2026-08-25","s_earn":83.6,"s_grow":65.5,"s_safe":8.2,"s_val":84.5,"s_cash":63.9,"s_flow":57.4,"score":61.96},{"code":"600519","name":"贵州茅台","industry":"白酒Ⅱ","board_code":"BK1277","roe":16.75,"npm":48.24,"yoyr":1.3,"yoyp":-1.95,"ocfps":56.549,"eps":35.57,"bps":200.99,"zcfzl":15.19,"xsmll":89.56,"price":1309.81,"chg":0.45,"pe":18.39,"pb":6.52,"flow10":-34.23,"flowD":"2026-08-25","s_earn":84.6,"s_grow":9.8,"s_safe":98.4,"s_val":37.7,"s_cash":100,"s_flow":32.8,"score":61.51},{"code":"002432","name":"九安医疗","industry":"医疗器械","board_code":"BK1041","roe":13.65,"npm":577.9,"yoyr":-30.58,"yoyp":233.66,"ocfps":-0.244,"eps":7.333,"bps":49.65,"zcfzl":30.87,"xsmll":67.88,"price":66.11,"chg":0.78,"pe":5.02,"pb":1.33,"flow10":null,"flowD":"","s_earn":84.6,"s_grow":11.5,"s_safe":90.2,"s_val":85.3,"s_cash":14.8,"s_flow":50,"score":60.44},{"code":"000603","name":"盛达资源","industry":"贵金属","board_code":"BK0732","roe":12.14,"npm":33.87,"yoyr":27.08,"yoyp":456.46,"ocfps":0.83,"eps":0.565,"bps":5.44,"zcfzl":48.36,"xsmll":69.15,"price":38.21,"chg":5.35,"pe":33.79,"pb":7.02,"flow10":18.76,"flowD":"2026-08-25","s_earn":68.2,"s_grow":46.8,"s_safe":67.2,"s_val":29.6,"s_cash":67.2,"s_flow":91.8,"score":59.51},{"code":"600816","name":"建元信托","industry":"多元金融","board_code":"BK0738","roe":7.28,"npm":959.7,"yoyr":-25.45,"yoyp":500,"ocfps":0.018,"eps":0.109,"bps":1.54,"zcfzl":41.09,"xsmll":null,"price":2.57,"chg":1.98,"pe":11.81,"pb":1.67,"flow10":3.39,"flowD":"2026-08-25","s_earn":66.6,"s_grow":26.2,"s_safe":78.7,"s_val":71.4,"s_cash":29.5,"s_flow":77,"score":58.48},{"code":"601869","name":"长飞光纤","industry":"通信设备","board_code":"BK0448","roe":19.22,"npm":29.81,"yoyr":53.64,"yoyp":500,"ocfps":2.206,"eps":3.56,"bps":19.77,"zcfzl":47.95,"xsmll":53.36,"price":405.86,"chg":2.88,"pe":57.45,"pb":20.84,"flow10":-77.87,"flowD":"2026-08-25","s_earn":80.7,"s_grow":64.8,"s_safe":68.9,"s_val":14,"s_cash":75.4,"s_flow":19.7,"score":58.39},{"code":"000703","name":"恒逸石化","industry":"炼化及贸易","board_code":"BK1274","roe":21.32,"npm":8.77,"yoyr":20.28,"yoyp":500,"ocfps":-0.128,"eps":1.75,"bps":7.8,"zcfzl":67.57,"xsmll":15.31,"price":17.89,"chg":-2.45,"pe":5.79,"pb":2.12,"flow10":2.94,"flowD":"2026-08-25","s_earn":73.4,"s_grow":56.5,"s_safe":42.6,"s_val":72.2,"s_cash":16.4,"s_flow":72.1,"score":57.96},{"code":"002297","name":"博云新材","industry":"航空装备Ⅱ","board_code":"BK1231","roe":7.69,"npm":22.85,"yoyr":88.33,"yoyp":500,"ocfps":-0.076,"eps":0.297,"bps":4.01,"zcfzl":34.15,"xsmll":44.4,"price":17.47,"chg":-0.46,"pe":29.41,"pb":4.36,"flow10":-25.44,"flowD":"2026-08-25","s_earn":54.7,"s_grow":83.6,"s_safe":86.9,"s_val":36.9,"s_cash":18,"s_flow":36.1,"score":57.78},{"code":"002738","name":"中矿资源","industry":"能源金属","board_code":"BK1015","roe":8.74,"npm":30.37,"yoyr":12.03,"yoyp":500,"ocfps":-0.314,"eps":1.54,"bps":18.02,"zcfzl":36.18,"xsmll":52.9,"price":53.05,"chg":5.36,"pe":17.41,"pb":2.92,"flow10":-39.91,"flowD":"2026-08-25","s_earn":61.6,"s_grow":69.7,"s_safe":82,"s_val":52.5,"s_cash":13.1,"s_flow":31.1,"score":57.44},{"code":"603329","name":"上海雅仕","industry":"物流","board_code":"BK0422","roe":7.67,"npm":7.85,"yoyr":-2.19,"yoyp":460.72,"ocfps":1.137,"eps":0.46,"bps":6.13,"zcfzl":44.89,"xsmll":16.22,"price":10.43,"chg":-1.6,"pe":11.44,"pb":1.7,"flow10":-2.45,"flowD":"2026-08-25","s_earn":43.9,"s_grow":31.1,"s_safe":77,"s_val":71.3,"s_cash":68.9,"s_flow":55.7,"score":55.7},{"code":"601318","name":"中国平安","industry":"保险Ⅱ","board_code":"BK0474","roe":9,"npm":16.1,"yoyr":15.01,"yoyp":36.1,"ocfps":20.325,"eps":5.3,"bps":56.78,"zcfzl":89.83,"xsmll":null,"price":55.99,"chg":1.78,"pe":5.48,"pb":0.99,"flow10":1.48,"flowD":"2026-08-25","s_earn":58,"s_grow":27.9,"s_safe":13.1,"s_val":86.9,"s_cash":98.4,"s_flow":70.5,"score":54.15},{"code":"600919","name":"江苏银行","industry":"银行Ⅱ","board_code":"BK0475","roe":7.86,"npm":44.69,"yoyr":9.11,"yoyp":8.09,"ocfps":10.314,"eps":1.13,"bps":14.79,"zcfzl":93.52,"xsmll":null,"price":12.18,"chg":1.16,"pe":5.11,"pb":0.82,"flow10":14.29,"flowD":"2026-08-25","s_earn":63.6,"s_grow":18.8,"s_safe":3.3,"s_val":91,"s_cash":90.2,"s_flow":86.9,"score":53.24},{"code":"603256","name":"宏和科技","industry":"玻璃玻纤","board_code":"BK0546","roe":15.28,"npm":36.22,"yoyr":90.39,"yoyp":334.32,"ocfps":0.308,"eps":0.42,"bps":3.26,"zcfzl":49.95,"xsmll":59.34,"price":133.19,"chg":0.02,"pe":158.74,"pb":40.85,"flow10":null,"flowD":"","s_earn":75.7,"s_grow":58.2,"s_safe":65.6,"s_val":2.5,"s_cash":47.5,"s_flow":50,"score":53.02},{"code":"601009","name":"南京银行","industry":"银行Ⅱ","board_code":"BK0475","roe":7.25,"npm":43.2,"yoyr":10.94,"yoyp":8.17,"ocfps":8.507,"eps":1.1,"bps":15.62,"zcfzl":93.14,"xsmll":null,"price":11.77,"chg":1.47,"pe":5.33,"pb":0.75,"flow10":14.29,"flowD":"2026-08-25","s_earn":58.4,"s_grow":22.9,"s_safe":4.9,"s_val":91,"s_cash":86.9,"s_flow":90.2,"score":52.97},{"code":"000415","name":"渤海租赁","industry":"多元金融","board_code":"BK0738","roe":10.55,"npm":13.54,"yoyr":-16.86,"yoyp":258.73,"ocfps":1.405,"eps":0.521,"bps":5.05,"zcfzl":80.24,"xsmll":33.61,"price":4.54,"chg":1.79,"pe":4.38,"pb":0.9,"flow10":3.39,"flowD":"2026-08-25","s_earn":58.7,"s_grow":14.8,"s_safe":23,"s_val":92.6,"s_cash":72.1,"s_flow":80.3,"score":52.47},{"code":"600768","name":"富邦新材","industry":"工业金属","board_code":"BK1287","roe":12.75,"npm":5.71,"yoyr":91.04,"yoyp":500,"ocfps":-1.992,"eps":0.44,"bps":3.6,"zcfzl":51.52,"xsmll":17.72,"price":15.28,"chg":-0.26,"pe":17.46,"pb":4.24,"flow10":-69.01,"flowD":"2026-08-25","s_earn":53.8,"s_grow":82,"s_safe":63.9,"s_val":44.3,"s_cash":1.6,"s_flow":24.6,"score":51.43},{"code":"000783","name":"长江证券","industry":"证券Ⅱ","board_code":"BK0473","roe":8.39,"npm":42.99,"yoyr":58.6,"yoyp":83.8,"ocfps":5.156,"eps":0.56,"bps":6.67,"zcfzl":81.53,"xsmll":null,"price":9.03,"chg":5,"pe":7.82,"pb":1.35,"flow10":-93.17,"flowD":"2026-08-25","s_earn":64.6,"s_grow":44.3,"s_safe":19.7,"s_val":77.9,"s_cash":82,"s_flow":6.6,"score":51.23},{"code":"601963","name":"重庆银行","industry":"银行Ⅱ","board_code":"BK0475","roe":6.01,"npm":41.45,"yoyr":10.79,"yoyp":10.29,"ocfps":13.924,"eps":0.99,"bps":16.42,"zcfzl":93.62,"xsmll":null,"price":11.23,"chg":0.63,"pe":5.79,"pb":0.68,"flow10":14.29,"flowD":"2026-08-25","s_earn":50.5,"s_grow":23,"s_safe":1.6,"s_val":90.2,"s_cash":93.4,"s_flow":85.2,"score":50.5},{"code":"603129","name":"春风动力","industry":"摩托车及其他","board_code":"BK1263","roe":13.36,"npm":7.95,"yoyr":35.82,"yoyp":6.26,"ocfps":14.637,"eps":6.96,"bps":52.17,"zcfzl":65.45,"xsmll":27.26,"price":303.92,"chg":-0.36,"pe":21.91,"pb":5.83,"flow10":-3.52,"flowD":"2026-08-25","s_earn":60.3,"s_grow":28.7,"s_safe":45.9,"s_val":35.3,"s_cash":95.1,"s_flow":49.2,"score":50.1},{"code":"000001","name":"平安银行","industry":"银行Ⅱ","board_code":"BK0475","roe":5.22,"npm":36.39,"yoyr":1.78,"yoyp":3.3,"ocfps":11.08,"eps":1.24,"bps":24.13,"zcfzl":90.91,"xsmll":null,"price":11.68,"chg":0.78,"pe":4.41,"pb":0.48,"flow10":14.29,"flowD":"2026-08-25","s_earn":46.9,"s_grow":11.5,"s_safe":9.8,"s_val":95.9,"s_cash":91.8,"s_flow":88.5,"score":49.83},{"code":"601211","name":"国泰海通","industry":"证券Ⅱ","board_code":"BK0473","roe":6.12,"npm":42.96,"yoyr":97.56,"yoyp":28.74,"ocfps":3.853,"eps":1.14,"bps":18.78,"zcfzl":84.49,"xsmll":null,"price":17.96,"chg":3.76,"pe":7.79,"pb":0.95,"flow10":-93.17,"flowD":"2026-08-25","s_earn":52.1,"s_grow":48.4,"s_safe":18,"s_val":85.3,"s_cash":80.3,"s_flow":8.2,"score":49.73},{"code":"600116","name":"三峡水利","industry":"电力","board_code":"BK0428","roe":3.29,"npm":7.46,"yoyr":3.53,"yoyp":500,"ocfps":0.526,"eps":0.2,"bps":6.04,"zcfzl":51.97,"xsmll":15.77,"price":6.33,"chg":0.96,"pe":16.01,"pb":1.05,"flow10":-83.09,"flowD":"2026-08-25","s_earn":27.9,"s_grow":53.3,"s_safe":62.3,"s_val":72.1,"s_cash":60.7,"s_flow":16.4,"score":49.05},{"code":"605138","name":"盛泰集团","industry":"服装家纺","board_code":"BK1225","roe":6.42,"npm":8.92,"yoyr":0.56,"yoyp":413.47,"ocfps":0.478,"eps":0.29,"bps":4.39,"zcfzl":58.81,"xsmll":16.58,"price":5.85,"chg":0.69,"pe":10.14,"pb":1.33,"flow10":-11.42,"flowD":"2026-08-25","s_earn":40.7,"s_grow":29.5,"s_safe":55.7,"s_val":75.4,"s_cash":55.7,"s_flow":44.3,"score":48.88},{"code":"001339","name":"智微智能","industry":"计算机设备","board_code":"BK0735","roe":15.58,"npm":12.74,"yoyr":56.64,"yoyp":281.92,"ocfps":2.95,"eps":1.19,"bps":8.29,"zcfzl":72.7,"xsmll":39.52,"price":75.6,"chg":-2.69,"pe":31.82,"pb":9.1,"flow10":-76.81,"flowD":"2026-08-25","s_earn":68.9,"s_grow":48.4,"s_safe":34.4,"s_val":27.9,"s_cash":78.7,"s_flow":23,"score":48.76},{"code":"603093","name":"南华期货","industry":"多元金融","board_code":"BK0738","roe":6.76,"npm":44.17,"yoyr":48.18,"yoyp":67.91,"ocfps":7.542,"eps":0.55,"bps":8.13,"zcfzl":92.35,"xsmll":null,"price":12.42,"chg":7.53,"pe":16.6,"pb":2.21,"flow10":3.39,"flowD":"2026-08-25","s_earn":56.1,"s_grow":36,"s_safe":6.6,"s_val":57.4,"s_cash":83.6,"s_flow":78.7,"score":48.39},{"code":"601066","name":"中信建投","industry":"证券Ⅱ","board_code":"BK0473","roe":8.27,"npm":47.07,"yoyr":51.11,"yoyp":69.44,"ocfps":7.842,"eps":0.92,"bps":11.29,"zcfzl":85.38,"xsmll":null,"price":25.37,"chg":2.96,"pe":12.88,"pb":2.25,"flow10":-93.17,"flowD":"2026-08-25","s_earn":66.3,"s_grow":39.3,"s_safe":14.8,"s_val":60.7,"s_cash":85.2,"s_flow":4.9,"score":47.15},{"code":"600433","name":"冠豪高新","industry":"造纸","board_code":"BK1267","roe":4.9,"npm":5.85,"yoyr":6.94,"yoyp":467.25,"ocfps":-0.025,"eps":0.12,"bps":2.54,"zcfzl":46.73,"xsmll":10.05,"price":3.44,"chg":1.78,"pe":14.15,"pb":1.35,"flow10":-0.69,"flowD":"2026-08-25","s_earn":26.9,"s_grow":37.7,"s_safe":70.5,"s_val":69.7,"s_cash":23,"s_flow":63.9,"score":46.98},{"code":"000762","name":"西藏矿业","industry":"能源金属","board_code":"BK1015","roe":2.03,"npm":11.1,"yoyr":304.58,"yoyp":492.46,"ocfps":0.47,"eps":0.115,"bps":5.74,"zcfzl":44.95,"xsmll":43.66,"price":23.5,"chg":3.07,"pe":101.88,"pb":4.09,"flow10":-39.91,"flowD":"2026-08-25","s_earn":25.2,"s_grow":72.2,"s_safe":75.4,"s_val":23,"s_cash":54.1,"s_flow":29.5,"score":46.94},{"code":"002918","name":"蒙娜丽莎","industry":"家居用品","board_code":"BK0440","roe":1.48,"npm":2.82,"yoyr":-8.66,"yoyp":500,"ocfps":0.444,"eps":0.12,"bps":7.97,"zcfzl":46,"xsmll":25.05,"price":10.07,"chg":-0.59,"pe":41.73,"pb":1.26,"flow10":-1.65,"flowD":"2026-08-25","s_earn":8.5,"s_grow":51.6,"s_safe":73.8,"s_val":55,"s_cash":52.5,"s_flow":60.7,"score":46.19},{"code":"000701","name":"厦门信达","industry":"贸易Ⅱ","board_code":"BK0484","roe":85.27,"npm":2.93,"yoyr":-11.75,"yoyp":500,"ocfps":-4.115,"eps":0.548,"bps":-0.35,"zcfzl":77.24,"xsmll":1.51,"price":5.06,"chg":0.2,"pe":4,"pb":null,"flow10":-2.74,"flowD":"2026-08-25","s_earn":67.2,"s_grow":37.8,"s_safe":26.2,"s_val":72.6,"s_cash":0,"s_flow":52.5,"score":46.15},{"code":"600078","name":"澄星股份","industry":"农化制品","board_code":"BK0731","roe":6.77,"npm":5.5,"yoyr":20.37,"yoyp":500,"ocfps":0.334,"eps":0.174,"bps":2.66,"zcfzl":64.03,"xsmll":19.09,"price":10.94,"chg":0.92,"pe":31.61,"pb":4.11,"flow10":-7.51,"flowD":"2026-08-25","s_earn":35.4,"s_grow":60.6,"s_safe":49.2,"s_val":38.5,"s_cash":50.8,"s_flow":45.9,"score":46.13},{"code":"603507","name":"振江股份","industry":"风电设备","board_code":"BK1032","roe":5.81,"npm":5.23,"yoyr":56.1,"yoyp":500,"ocfps":1.989,"eps":0.63,"bps":14.19,"zcfzl":73,"xsmll":19.69,"price":23.53,"chg":0.77,"pe":18.76,"pb":2.15,"flow10":-18.72,"flowD":"2026-08-25","s_earn":28.9,"s_grow":59.8,"s_safe":32.8,"s_val":54.1,"s_cash":73.8,"s_flow":41,"score":45.95},{"code":"002384","name":"东山精密","industry":"元件","board_code":"BK0459","roe":12.88,"npm":10.64,"yoyr":63.95,"yoyp":290.09,"ocfps":1.302,"eps":1.62,"bps":13.3,"zcfzl":64.51,"xsmll":20.15,"price":192.3,"chg":0.77,"pe":59.56,"pb":14.45,"flow10":-306.71,"flowD":"2026-08-25","s_earn":62,"s_grow":54.1,"s_safe":47.5,"s_val":13.9,"s_cash":70.5,"s_flow":1.6,"score":45.38},{"code":"000553","name":"安道麦A","industry":"农化制品","board_code":"BK0731","roe":2.46,"npm":2.99,"yoyr":-3.65,"yoyp":500,"ocfps":0.288,"eps":0.19,"bps":7.57,"zcfzl":62.19,"xsmll":27.31,"price":5.56,"chg":1.46,"pe":14.97,"pb":0.73,"flow10":-7.51,"flowD":"2026-08-25","s_earn":17.7,"s_grow":45.9,"s_safe":50.8,"s_val":79.5,"s_cash":44.3,"s_flow":47.5,"score":45.13},{"code":"000626","name":"远大控股","industry":"物流","board_code":"BK0422","roe":9.57,"npm":0.47,"yoyr":10.22,"yoyp":500,"ocfps":-1.835,"eps":0.425,"bps":4.64,"zcfzl":70.79,"xsmll":1.3,"price":8.26,"chg":0,"pe":9.73,"pb":1.78,"flow10":-2.45,"flowD":"2026-08-25","s_earn":36.7,"s_grow":57.4,"s_safe":37.7,"s_val":71.4,"s_cash":3.3,"s_flow":54.1,"score":44.69},{"code":"002407","name":"多氟多","industry":"化学制品","board_code":"BK0538","roe":5.94,"npm":7.28,"yoyr":62.55,"yoyp":500,"ocfps":0.283,"eps":0.43,"bps":7.29,"zcfzl":60.97,"xsmll":21.57,"price":34.3,"chg":1.24,"pe":39.89,"pb":4.7,"flow10":-86.21,"flowD":"2026-08-25","s_earn":33.1,"s_grow":72.2,"s_safe":52.5,"s_val":30.3,"s_cash":42.6,"s_flow":11.5,"score":43.09},{"code":"600257","name":"大湖股份","industry":"渔业","board_code":"BK1260","roe":2.08,"npm":3.89,"yoyr":1.98,"yoyp":500,"ocfps":0.116,"eps":0.035,"bps":1.7,"zcfzl":46.37,"xsmll":29.43,"price":5.64,"chg":0,"pe":80.39,"pb":3.33,"flow10":0.48,"flowD":"2026-08-25","s_earn":14.4,"s_grow":57.4,"s_safe":72.1,"s_val":28.7,"s_cash":36.1,"s_flow":67.2,"score":43.03},{"code":"603618","name":"杭电股份","industry":"电网设备","board_code":"BK0457","roe":13.5,"npm":7.71,"yoyr":12.66,"yoyp":500,"ocfps":-0.579,"eps":0.57,"bps":4.34,"zcfzl":71.92,"xsmll":17.97,"price":31.92,"chg":9.99,"pe":28.09,"pb":7.36,"flow10":-32.5,"flowD":"2026-08-25","s_earn":60,"s_grow":57.3,"s_safe":36.1,"s_val":32,"s_cash":9.8,"s_flow":34.4,"score":42.78},{"code":"603255","name":"鼎际得","industry":"化学制品","board_code":"BK0538","roe":2.73,"npm":6.19,"yoyr":60.51,"yoyp":500,"ocfps":2.209,"eps":0.32,"bps":11.99,"zcfzl":69.81,"xsmll":19.17,"price":30.85,"chg":0.49,"pe":47.64,"pb":2.57,"flow10":-86.21,"flowD":"2026-08-25","s_earn":25.6,"s_grow":63.1,"s_safe":39.3,"s_val":38.6,"s_cash":77,"s_flow":9.8,"score":41.92},{"code":"002491","name":"通鼎互联","industry":"通信设备","board_code":"BK0448","roe":7.88,"npm":8.24,"yoyr":61.46,"yoyp":326.04,"ocfps":0.116,"eps":0.165,"bps":2.17,"zcfzl":55.85,"xsmll":27.82,"price":21.51,"chg":0.51,"pe":65.31,"pb":9.9,"flow10":-77.87,"flowD":"2026-08-25","s_earn":48.2,"s_grow":53.3,"s_safe":57.4,"s_val":14.8,"s_cash":37.7,"s_flow":21.3,"score":41.87},{"code":"600661","name":"昂立教育","industry":"教育","board_code":"BK0740","roe":12.48,"npm":4.54,"yoyr":8.4,"yoyp":500,"ocfps":0.544,"eps":0.112,"bps":0.93,"zcfzl":79.43,"xsmll":45.06,"price":8.58,"chg":-0.46,"pe":39.51,"pb":9.27,"flow10":-3.19,"flowD":"2026-08-25","s_earn":50.2,"s_grow":45,"s_safe":24.6,"s_val":24.6,"s_cash":62.3,"s_flow":50.8,"score":41.73},{"code":"002805","name":"丰元股份","industry":"电池","board_code":"BK1033","roe":15.68,"npm":4.45,"yoyr":353.04,"yoyp":159.99,"ocfps":-0.053,"eps":0.52,"bps":3.58,"zcfzl":74.53,"xsmll":8.23,"price":18.96,"chg":1.23,"pe":18.19,"pb":5.3,"flow10":-97.61,"flowD":"2026-08-25","s_earn":57.4,"s_grow":59,"s_safe":31.1,"s_val":40.2,"s_cash":19.7,"s_flow":3.3,"score":41.14},{"code":"001313","name":"粤海饲料","industry":"饲料","board_code":"BK1258","roe":1.86,"npm":1.26,"yoyr":41.66,"yoyp":500,"ocfps":-0.689,"eps":0.07,"bps":3.73,"zcfzl":52.06,"xsmll":10.99,"price":7.79,"chg":0.52,"pe":57.06,"pb":2.09,"flow10":-0.55,"flowD":"2026-08-25","s_earn":6.9,"s_grow":70.5,"s_safe":60.7,"s_val":42.7,"s_cash":6.6,"s_flow":65.6,"score":40.6},{"code":"000599","name":"青岛双星","industry":"汽车零部件","board_code":"BK0481","roe":2.53,"npm":1.03,"yoyr":-4.41,"yoyp":500,"ocfps":0.773,"eps":0.07,"bps":2.53,"zcfzl":66.24,"xsmll":23.67,"price":4.75,"chg":0.42,"pe":40.59,"pb":1.87,"flow10":-20.85,"flowD":"2026-08-25","s_earn":13.4,"s_grow":44.3,"s_safe":44.3,"s_val":47.6,"s_cash":65.6,"s_flow":39.3,"score":38.87},{"code":"002115","name":"三维通信","industry":"通信服务","board_code":"BK0736","roe":2.44,"npm":0.42,"yoyr":173.76,"yoyp":500,"ocfps":-0.024,"eps":0.063,"bps":2.58,"zcfzl":54.52,"xsmll":3.05,"price":10.7,"chg":0.09,"pe":85.47,"pb":4.15,"flow10":-21.55,"flowD":"2026-08-25","s_earn":9.5,"s_grow":76.3,"s_safe":59,"s_val":23,"s_cash":24.6,"s_flow":37.7,"score":38.3},{"code":"600395","name":"盘江股份","industry":"煤炭开采","board_code":"BK1250","roe":0.59,"npm":1.31,"yoyr":-5.95,"yoyp":500,"ocfps":0.52,"eps":0.03,"bps":4.94,"zcfzl":76.14,"xsmll":29.16,"price":5.49,"chg":0.18,"pe":92.93,"pb":1.11,"flow10":7.9,"flowD":"2026-08-25","s_earn":5.6,"s_grow":37.7,"s_safe":27.9,"s_val":45.9,"s_cash":57.4,"s_flow":82,"score":35.29},{"code":"001258","name":"立新能源","industry":"电力","board_code":"BK0428","roe":2.37,"npm":11.34,"yoyr":29.75,"yoyp":500,"ocfps":0.305,"eps":0.078,"bps":3.31,"zcfzl":74.89,"xsmll":32.51,"price":12.09,"chg":-1.63,"pe":77.26,"pb":3.65,"flow10":-83.09,"flowD":"2026-08-25","s_earn":28.9,"s_grow":56.6,"s_safe":29.5,"s_val":27.9,"s_cash":45.9,"s_flow":14.8,"score":34.98},{"code":"600692","name":"亚通股份","industry":"房地产开发","board_code":"BK0451","roe":1.94,"npm":1.65,"yoyr":444.09,"yoyp":284.04,"ocfps":-0.581,"eps":0.054,"bps":2.81,"zcfzl":67.82,"xsmll":8.88,"price":6.45,"chg":-0.62,"pe":59.76,"pb":2.3,"flow10":-1.66,"flowD":"2026-08-25","s_earn":9.2,"s_grow":64.8,"s_safe":41,"s_val":35.3,"s_cash":8.2,"s_flow":59,"score":34.82},{"code":"002524","name":"光正眼科","industry":"医疗服务","board_code":"BK0727","roe":17.15,"npm":4.56,"yoyr":-10.55,"yoyp":500,"ocfps":0.061,"eps":0.03,"bps":0.22,"zcfzl":90.19,"xsmll":39.88,"price":4.07,"chg":0.74,"pe":59,"pb":18.64,"flow10":-68.21,"flowD":"2026-08-25","s_earn":60.6,"s_grow":32.8,"s_safe":11.5,"s_val":14,"s_cash":32.8,"s_flow":27.9,"score":32.52},{"code":"000504","name":"南华生物","industry":"医疗服务","board_code":"BK0727","roe":2.23,"npm":2.03,"yoyr":473.56,"yoyp":271.99,"ocfps":-0.018,"eps":0.018,"bps":0.82,"zcfzl":59.28,"xsmll":10.01,"price":8.24,"chg":-0.72,"pe":226.89,"pb":10.01,"flow10":-68.21,"flowD":"2026-08-25","s_earn":12.8,"s_grow":63.1,"s_safe":54.1,"s_val":7.4,"s_cash":26.2,"s_flow":26.2,"score":32.18},{"code":"600203","name":"福日电子","industry":"消费电子","board_code":"BK1037","roe":5.05,"npm":1.05,"yoyr":48.57,"yoyp":277.41,"ocfps":-0.767,"eps":0.141,"bps":2.9,"zcfzl":80.54,"xsmll":5.8,"price":10.64,"chg":1.92,"pe":37.85,"pb":3.67,"flow10":-77.93,"flowD":"2026-08-25","s_earn":19,"s_grow":44.3,"s_safe":21.3,"s_val":37.7,"s_cash":4.9,"s_flow":18,"score":25.94},{"code":"002848","name":"高斯贝尔","industry":"黑色家电","board_code":"BK1241","roe":-7.05,"npm":-1.59,"yoyr":235.53,"yoyp":83.04,"ocfps":-0.03,"eps":-0.031,"bps":0.42,"zcfzl":84.74,"xsmll":5.7,"price":13.14,"chg":-0.68,"pe":-209.51,"pb":31.27,"flow10":null,"flowD":"","s_earn":0,"s_grow":55.7,"s_safe":16.4,"s_val":26.7,"s_cash":21.3,"s_flow":50,"score":25.38},{"code":"600221","name":"海航控股","industry":"航空机场","board_code":"BK0420","roe":4.98,"npm":0.76,"yoyr":7.36,"yoyp":374.43,"ocfps":0.144,"eps":0.006,"bps":0.13,"zcfzl":96.46,"xsmll":2.06,"price":1.33,"chg":1.53,"pe":106.37,"pb":10.46,"flow10":-1.34,"flowD":"2026-08-25","s_earn":16.7,"s_grow":33.6,"s_safe":0,"s_val":8.2,"s_cash":39.3,"s_flow":62.3,"score":22.28}]};
-var STOCK_PICKS=[["600519","t-gold","盈利质量与现金流标杆：净利率 48.2%、每股经营现金流 56.5 元全池第一，负债率仅 15.2%"],["603986","t-tech","半导体存储/MCU 国产化核心：ROE 23.1%、营收 +178.7%；但近10日板块主力净流出 666 亿，短线拥挤"],["601318","t-div","低估值金融蓝筹：PE 5.48、PB 0.99 破净，经营现金流 20.3 元/股，股息防御属性"],["000506","t-supply","黄金景气 + 板块资金流入：ROE 28.3%、营收 +85.1%，贵金属近10日净流入 +18.8 亿"],["002611","t-semi","综合榜第 1（78.1 分）：ROE 50.9%、PE 仅 2.34，叠加板块净流入 +19.7 亿"],["600919","t-div","城商行龙头：PE 5.11、PB 0.82 破净，净利 +8.1%，板块近10日净流入 +14.3 亿"],["603444","t-growth","现金流丰厚的游戏龙头：每股经营现金流 17.7 元，ROE 18.6%、PE 12.8 低于行业"],["002432","t-med","低估值医疗器械：PE 5.02、PB 1.33，账上现金充裕（中报含一次性因素，需甄别）"],["000042","t-el","地产困境反转弹性：ROE 35.0%、营收 +168%、PE 2.89；负债率 91.3% 财务安全分低，高风险观察"],["603129","t-ic","出海制造（摩托车）：ROE 13.4%、经营现金流 14.6 元/股，PE 21.9 成长溢价"]];
+var STOCK_PICKS=[["600519","t-gold","盈利质量与现金流标杆：净利率 48.2%、每股经营现金流 56.5 元全池第一，负债率仅 15.2%"],["603986","t-tech","半导体存储/MCU 国产化核心：ROE 23.1%、营收 +178.7%；但近10日板块主力净流出 666 亿，短线拥挤"],["601318","t-div","低估值金融蓝筹：PE 5.48、PB 0.99 破净，经营现金流 20.3 元/股，股息防御属性"],["000506","t-supply","黄金景气 + 板块资金流入：ROE 28.3%、营收 +85.1%，贵金属近10日净流入 +18.8 亿"],["002611","t-semi","六维评分第 1（78.1 分）：ROE 50.9%、PE 仅 2.34，叠加板块净流入 +19.7 亿"],["600919","t-div","城商行龙头：PE 5.11、PB 0.82 破净，净利 +8.1%，板块近10日净流入 +14.3 亿"],["603444","t-growth","现金流丰厚的游戏龙头：每股经营现金流 17.7 元，ROE 18.6%、PE 12.8 低于行业"],["002432","t-med","低估值医疗器械：PE 5.02、PB 1.33，账上现金充裕（中报含一次性因素，需甄别）"],["000042","t-el","地产困境反转弹性：ROE 35.0%、营收 +168%、PE 2.89；负债率 91.3% 财务安全分低，高风险观察"],["603129","t-ic","出海制造（摩托车）：ROE 13.4%、经营现金流 14.6 元/股，PE 21.9 成长溢价"]];
 var BANK_STATIC=[]; /* 已移除静态快照，改为现金管理类实时收益榜（见 fetchCashMgmt） */
 
 /* ================= 工具 ================= */
@@ -1251,16 +1241,15 @@ function fetchTop30(){
     });
     var arr=Object.keys(pool).map(function(k){return pool[k];});
     arr=arr.filter(function(d){ return [d.y,d.m3,d.m6,d.y1].every(function(v){ return v!==null&&!isNaN(v); }); });
-    /* 预评分（收益 80% 权重） */
-    arr.forEach(function(d){ d.pre=Math.round((0.2*d.y1+0.25*d.m6+0.25*d.m3+0.1*d.y)*100)/100; });
-    arr.sort(function(a,b){ return b.pre-a.pre; });
+    /* 热门榜单：直接按近1年涨幅降序 */
+    arr.sort(function(a,b){ return b.y1-a.y1; });
     var seen={}, dedup=[];
     arr.forEach(function(d){
       var k=top30BaseName(d.name);
       if(seen[k]) return;
       seen[k]=1; dedup.push(d);
     });
-    /* 先取前 45 名补齐回撤/板块，再按完整公式终评，避免边界错杀 */
+    /* 先取前 45 名补齐回撤/板块/规模 */
     var cand=dedup.slice(0,45);
     var i=0;
     function next(){
@@ -1278,12 +1267,9 @@ function fetchTop30(){
     var workers=[]; for(var w=0;w<6;w++) workers.push(next());
     return Promise.all(workers).then(function(){
       cand.forEach(function(d){
-        var alpha=(ALPHA_MAP[d.code]!=null)?ALPHA_MAP[d.code]:0;
-        var mdd=(d.mdd!=null&&!isNaN(d.mdd))?d.mdd:0;
         d.alpha=(ALPHA_MAP[d.code]!=null)?ALPHA_MAP[d.code]:null;
-        d.score=Math.round((d.pre+0.1*alpha-0.1*mdd)*100)/100;
       });
-      cand.sort(function(a,b){ return b.score-a.score; });
+      cand.sort(function(a,b){ return b.y1-a.y1; });
       return cand.slice(0,30);
     });
   });
@@ -1466,8 +1452,9 @@ function renderCharts(){
 /* ================= Top30 渲染 ================= */
 function renderTop30(list){
   var tb=$('top30Body'); if(!tb||!list||!list.length) return;
+  var sorted=list.slice().sort(function(a,b){ return (b.y1||-9999)-(a.y1||-9999); });
   var html='';
-  list.forEach(function(d,i){
+  sorted.forEach(function(d,i){
     var sec=(d.fbk&&d.fbk!=='--'&&d.fbk!=='')?d.fbk:((d.ttype&&d.ttype!=='--')?d.ttype:'--');
     var sg=(d.sgzt&&d.sgzt!=='--')?d.sgzt:'--';
     var mddTxt=(d.mdd!=null&&!isNaN(d.mdd))?('-'+n2(d.mdd)+'%'):'--';
@@ -1479,10 +1466,9 @@ function renderTop30(list){
       +'<td class="'+cls(d.y)+'">'+pct(d.y)+'</td>'
       +'<td class="'+cls(d.m3)+'">'+pct(d.m3)+'</td>'
       +'<td class="'+cls(d.m6)+'">'+pct(d.m6)+'</td>'
-      +'<td class="'+cls(d.y1)+'">'+pct(d.y1)+'</td>'
+      +'<td class="'+cls(d.y1)+'"><b>'+pct(d.y1)+'</b></td>'
       +'<td class="down">'+mddTxt+'</td>'
       +'<td class="'+cls(d.alpha)+'">'+alphaTxt+'</td>'
-      +'<td class="up"><b>'+n2(d.score)+'</b></td>'
       +'<td>'+esc(sec)+'</td>'
       +'<td>'+esc(sg)+'</td>'
       +'<td>'+esc(RATING_MAP[d.code]||'—')+'</td>'
@@ -1491,8 +1477,8 @@ function renderTop30(list){
   tb.innerHTML=html;
   setTxt('top30AsOf', fmtTime(new Date()));
   flashEl(tb);
-  lastTop30=list;
-  renderFundRec(list);
+  lastTop30=sorted;
+  renderFundRec(sorted);
 }
 
 /* ================= 冻结列表格：鼠标按住拖动滚动 ================= */
@@ -1720,14 +1706,14 @@ function refreshWealthTop30Live(){
 function secidOf(code){ return (code[0]==='6'||code[0]==='9')?('1.'+code):('0.'+code); }
 function fetchStockQuotes(){
   var secids=STOCK_POOL.list.map(function(x){ return secidOf(x.code); }).join(',');
-  var params='?fltt=2&secids='+encodeURIComponent(secids)+'&fields=f2,f3,f9,f12,f14,f20,f23';
+  var params='?fltt=2&secids='+encodeURIComponent(secids)+'&fields=f2,f3,f8,f9,f12,f14,f20,f23';
   var hosts=['https://push2.eastmoney.com/api/qt/ulist.np/get','https://push2delay.eastmoney.com/api/qt/ulist.np/get'];
   var hi=0;
   function attempt(){
     return jsonp(hosts[hi]+params).then(function(r){
       if(!r||!r.data||!r.data.diff) throw new Error('股票行情数据为空');
       var out={};
-      r.data.diff.forEach(function(d){ out[d.f12]={price:d.f2,chg:d.f3,pe:d.f9,pb:d.f23,mcap:(d.f20!=null&&d.f20!=='-')?parseFloat(d.f20)/1e8:null}; });
+      r.data.diff.forEach(function(d){ out[d.f12]={price:d.f2,chg:d.f3,pe:d.f9,pb:d.f23,mcap:(d.f20!=null&&d.f20!=='-')?parseFloat(d.f20)/1e8:null,turnover:(d.f8!=null&&d.f8!=='-')?parseFloat(d.f8):null}; });
       return out;
     }).catch(function(e){ hi++; if(hi<hosts.length) return attempt(); throw e; });
   }
@@ -1758,7 +1744,7 @@ function scoreStocks(quotes, flows){
   var q=quotes||{}, f=flows||{};
   list.forEach(function(x){
     var d=q[x.code];
-    if(d){ x.price=d.price; x.chg=d.chg; x.pe=(d.pe!=null&&d.pe>0)?d.pe:null; x.pb=(d.pb!=null&&d.pb>0)?d.pb:null; x.mcap=(d.mcap!=null&&d.mcap>0)?d.mcap:null; }
+    if(d){ x.price=d.price; x.chg=d.chg; x.pe=(d.pe!=null&&d.pe>0)?d.pe:null; x.pb=(d.pb!=null&&d.pb>0)?d.pb:null; x.mcap=(d.mcap!=null&&d.mcap>0)?d.mcap:null; x.turnover=d.turnover; }
     if(f[x.board_code]!=null){ x.flow10=f[x.board_code]; x.flowD=fmtDate(new Date()); }
   });
   var n=list.length;
@@ -1792,15 +1778,16 @@ function scoreStocks(quotes, flows){
 }
 function renderStockTop30(list){
   var tb=$('sTop30Body'); if(!tb) return;
+  var sorted=list.slice().sort(function(a,b){ return (b.chg!=null?b.chg:-9999)-(a.chg!=null?a.chg:-9999); });
   var html='';
-  list.slice(0,30).forEach(function(x,i){
+  sorted.slice(0,30).forEach(function(x,i){
     html+='<tr>'
       +'<td class="c-rank">'+(i+1)+'</td>'
       +'<td class="c-code">'+esc(x.code)+'</td>'
       +'<td class="c-name" title="'+esc(x.name)+'">'+esc(x.name)+'</td>'
       +'<td>'+esc(x.industry)+'</td>'
       +'<td>'+(x.price!=null? n2(x.price):'--')+'</td>'
-      +'<td class="'+(x.chg!=null? cls(x.chg):'')+'">'+(x.chg!=null? pct(x.chg):'--')+'</td>'
+      +'<td class="'+(x.chg!=null? cls(x.chg):'')+'"><b>'+(x.chg!=null? pct(x.chg):'--')+'</b></td>'
       +'<td>'+(x.pe!=null? n2(x.pe):'--')+'</td>'
       +'<td>'+(x.pb!=null? n2(x.pb):'--')+'</td>'
       +'<td>'+n2(x.roe)+'%</td>'
@@ -1810,12 +1797,10 @@ function renderStockTop30(list){
       +'<td>'+n2(x.zcfzl)+'%</td>'
       +'<td>'+n2(x.ocfps)+'</td>'
       +'<td class="'+(x.flow10!=null?(x.flow10>0?'up':'down'):'')+'">'+(x.flow10!=null? (x.flow10>0?'+':'')+n2(x.flow10)+' 亿':'--')+'</td>'
-      +'<td class="up"><b>'+n2(x.score)+'</b></td>'
-      +'<td class="dim5"><b>'+Math.round(x.s_earn)+'</b>/'+Math.round(x.s_grow)+'/'+Math.round(x.s_safe)+'/'+Math.round(x.s_val)+'/'+Math.round(x.s_cash)+'/'+Math.round(x.s_flow)+'</td>'
       +'</tr>';
   });
   tb.innerHTML=html;
-  setTxt('sTop30AsOf', fmtTime(new Date())+'（行情加载后按实时估值与板块资金重排）');
+  setTxt('sTop30AsOf','数据更新时间：'+fmtTime(new Date())+' · 按当日涨幅降序');
   flashEl(tb);
 }
 function renderStockCards(list){
@@ -1878,35 +1863,29 @@ function recPct(list, get, higher){
     return higher? (r/(m-1))*100 : ((m-1-r)/(m-1))*100;
   });
 }
-function recScore(list, scaleF, r3F, r6F, custF, thirdF){
-  var sS=recPct(list, scaleF, true);
-  var r3=recPct(list, r3F, true);
-  var r6=recPct(list, r6F, true);
-  var out=list.map(function(x,i){
-    var s=sS[i]==null?50:sS[i];
-    var a=r3[i]==null?50:r3[i];
-    var b=r6[i]==null?50:r6[i];
-    var c=custF(x); c=(c==null||!isFinite(c))?50:c;
-    var t=thirdF(x); t=(t==null||!isFinite(t))?50:t;
-    return {d:x, sc_s:s, sc_3:a, sc_6:b, sc_c:c, sc_t:t, score:s*0.10+a*0.30+b*0.30+c*0.15+t*0.15};
-  });
-  out.sort(function(a,b){ return b.score-a.score; });
-  return out;
-}
 function renderFundRec(list){
   var tb=$('fundRecBody'); if(!tb||!list||!list.length) return;
   var arr=list.slice(0,30);
-  var scored=recScore(arr,
-    function(x){ return x.scale; },
-    function(x){ return annualize(x.m3,91); },
-    function(x){ return annualize(x.m6,182); },
-    function(){ return null; },
-    function(x){ return ratingScore(RATING_MAP[x.code]); }
-  );
+  var scS=recPct(arr, function(x){ return x.scale; }, true);
+  var sc3=recPct(arr, function(x){ return annualize(x.m3,91); }, true);
+  var sc6=recPct(arr, function(x){ return annualize(x.m6,182); }, true);
+  var scM=recPct(arr, function(x){ return x.mdd; }, false);
+  var scored=arr.map(function(x,i){
+    var s=scS[i]==null?50:scS[i];
+    var a=sc3[i]==null?50:sc3[i];
+    var b=sc6[i]==null?50:sc6[i];
+    var m=scM[i]==null?50:scM[i];
+    var c=50;
+    var t=ratingScore(RATING_MAP[x.code]); t=(t==null)?50:t;
+    return {d:x, sc_s:s, sc_3:a, sc_6:b, sc_m:m, sc_c:c, sc_t:t,
+      score:s*0.085 + a*0.255 + b*0.255 + m*0.15 + c*0.1275 + t*0.1275};
+  });
+  scored.sort(function(a,b){ return b.score-a.score; });
   var html='';
   scored.forEach(function(o,i){
     var d=o.d;
     var r3a=annualize(d.m3,91), r6a=annualize(d.m6,182);
+    var mddTxt=(d.mdd!=null&&!isNaN(d.mdd))?('-'+n2(d.mdd)+'%'):'--';
     var third=ratingScore(RATING_MAP[d.code]);
     html+='<tr>'
       +'<td class="c-rank">'+(i+1)+'</td>'
@@ -1915,10 +1894,11 @@ function renderFundRec(list){
       +'<td>'+(d.scale!=null&&!isNaN(d.scale)? n2(d.scale)+' 亿':'--')+'</td>'
       +'<td class="'+cls(r3a)+'">'+(r3a!=null? pct(r3a):'--')+'</td>'
       +'<td class="'+cls(r6a)+'">'+(r6a!=null? pct(r6a):'--')+'</td>'
+      +'<td class="down">'+mddTxt+'</td>'
       +'<td title="基金管理人评分无公开实时接口，按中性兜底">50·兜底</td>'
       +'<td>'+(third!=null? third:'50·兜底')+'</td>'
       +'<td class="up"><b>'+n1(o.score)+'</b></td>'
-      +'<td class="dim5">规模<b>'+Math.round(o.sc_s)+'</b>/近3月<b>'+Math.round(o.sc_3)+'</b>/近6月<b>'+Math.round(o.sc_6)+'</b>/管护<b>'+Math.round(o.sc_c)+'</b>/三方<b>'+Math.round(o.sc_t)+'</b></td>'
+      +'<td class="dim5">规模<b>'+Math.round(o.sc_s)+'</b>/近3月<b>'+Math.round(o.sc_3)+'</b>/近6月<b>'+Math.round(o.sc_6)+'</b>/回撤<b>'+Math.round(o.sc_m)+'</b>/管护<b>'+Math.round(o.sc_c)+'</b>/三方<b>'+Math.round(o.sc_t)+'</b></td>'
       +'</tr>';
   });
   tb.innerHTML=html;
@@ -1929,33 +1909,40 @@ function renderStockRec(list){
   var tb=$('stockRecBody'); if(!tb||!list||!list.length) return;
   var arr=list.slice(0,30);
   var ret=__stockReturns||{};
-  var scored=recScore(arr,
-    function(x){ return x.mcap; },
-    function(x){ var r=ret[x.code]; return r? annualize(r.r3m,91):null; },
-    function(x){ var r=ret[x.code]; return r? annualize(r.r6m,182):null; },
-    function(){ return null; },
-    function(){ return null; }
-  );
+  function priceChg(x){
+    var r=ret[x.code]; var ma=r? r.ma60:null;
+    if(ma==null||ma<=0||x.price==null||x.price<=0) return null;
+    return (ma - x.price)/ma*100;
+  }
+  var scChg=recPct(arr, priceChg, true);
+  var scTurn=recPct(arr, function(x){ return x.turnover; }, true);
+  var scFlow=recPct(arr, function(x){ return x.flow10; }, true);
+  var scored=arr.map(function(x,i){
+    var a=scChg[i]==null?50:scChg[i];
+    var b=scTurn[i]==null?50:scTurn[i];
+    var c=scFlow[i]==null?50:scFlow[i];
+    return {d:x, sc_chg:a, sc_turn:b, sc_flow:c, score:a*0.40 + b*0.30 + c*0.30};
+  });
+  scored.sort(function(a,b){ return b.score-a.score; });
   var html='';
   scored.forEach(function(o,i){
     var d=o.d;
-    var r=ret[d.code];
-    var r3a=r? annualize(r.r3m,91):null, r6a=r? annualize(r.r6m,182):null;
+    var chg=priceChg(d);
+    var flowTxt=(d.flow10!=null)? ((d.flow10>0?'+':'')+n2(d.flow10)+' 亿'):'--';
     html+='<tr>'
       +'<td class="c-rank">'+(i+1)+'</td>'
       +'<td class="c-code">'+esc(d.code)+'</td>'
       +'<td class="c-name" title="'+esc(d.name)+'">'+esc(d.name)+'</td>'
       +'<td>'+(d.mcap!=null&&!isNaN(d.mcap)? n2(d.mcap)+' 亿':'--')+'</td>'
-      +'<td class="'+cls(r3a)+'">'+(r3a!=null? pct(r3a):'--')+'</td>'
-      +'<td class="'+cls(r6a)+'">'+(r6a!=null? pct(r6a):'--')+'</td>'
-      +'<td title="股票无对应管护人口径，按中性兜底">50·兜底</td>'
-      +'<td title="股票无对应三方评级口径，按中性兜底">50·兜底</td>'
+      +'<td class="'+cls(chg)+'">'+(chg!=null? pct(chg):'--')+'</td>'
+      +'<td>'+(d.turnover!=null? n2(d.turnover)+'%':'--')+'</td>'
+      +'<td class="'+(d.flow10!=null?(d.flow10>0?'up':'down'):'')+'">'+flowTxt+'</td>'
       +'<td class="up"><b>'+n1(o.score)+'</b></td>'
-      +'<td class="dim5">规模<b>'+Math.round(o.sc_s)+'</b>/近3月<b>'+Math.round(o.sc_3)+'</b>/近6月<b>'+Math.round(o.sc_6)+'</b>/管护<b>'+Math.round(o.sc_c)+'</b>/三方<b>'+Math.round(o.sc_t)+'</b></td>'
+      +'<td class="dim5">涨跌<b>'+Math.round(o.sc_chg)+'</b>/换手<b>'+Math.round(o.sc_turn)+'</b>/资金<b>'+Math.round(o.sc_flow)+'</b></td>'
       +'</tr>';
   });
   tb.innerHTML=html;
-  setTxt('stockRecAsOf','推荐指数满分 100 · 按推荐指数从高到低 · 区间涨幅'+(__stockReturns? '已加载':'加载中')+' · 生成于 '+fmtTime(new Date()));
+  setTxt('stockRecAsOf','推荐指数满分 100 · 按推荐指数从高到低 · 涨跌幅/换手率'+(__stockReturns?'已加载':'加载中')+' · 生成于 '+fmtTime(new Date()));
   flashEl(tb);
 }
 function fetchStockReturns(){
@@ -1971,7 +1958,9 @@ function fetchStockReturns(){
       if(closes.length<2){ out[code]=null; return next(); }
       var last=closes[closes.length-1];
       function ret(days){ var i=closes.length-1-days; if(i<0)i=0; var p0=closes[i]; if(p0<=0)return null; return (last/p0-1)*100; }
-      out[code]={ r3m:ret(63), r6m:ret(126) };
+      var ma60=null;
+      if(closes.length>=60){ var s60=closes.slice(-60).reduce(function(s,v){ return s+v; },0); ma60=s60/60; }
+      out[code]={ r3m:ret(63), r6m:ret(126), ma60:ma60 };
       return next();
     }).catch(function(){ out[code]=null; return next(); });
   }
