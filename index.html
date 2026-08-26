@@ -7,121 +7,191 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
   :root {
-    --bg:#f0fdf4; --card:#fff; --text:#14532d; --muted:#4d7c0f;
-    --border:#bbf7d0; --accent:#166534; --red:#dc2626; --green:#16a34a;
-    --gold:#a16207; --blue:#1d4ed8; --amber:#d97706; --purple:#7c3aed;
-    --header-from:#14532d; --header-to:#22c55e;
+    --bg:#f7f6f3; --card:#ffffff; --text:#17161a; --muted:#74727e;
+    --border:#ecebee; --accent:#6c5ce7; --accent-2:#a855f7; --accent-3:#ec4899;
+    --red:#e5484d; --green:#0a9a6e;
+    --gold:#b7791f; --blue:#4f46e5; --amber:#b45309; --purple:#7c3aed;
+    --header-from:#4f46e5; --header-mid:#7c3aed; --header-to:#c026d3;
+    --shadow-sm:0 1px 2px rgba(23,22,26,.05),0 2px 6px rgba(23,22,26,.05);
+    --shadow-md:0 8px 28px rgba(23,22,26,.10),0 2px 8px rgba(23,22,26,.06);
+    --radius:18px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:24px 16px;}
-  .container{max-width:920px;margin:0 auto;}
-  .header{background:linear-gradient(135deg,var(--header-from) 0%,var(--header-to) 100%);color:#fff;border-radius:12px;padding:22px 24px;margin-bottom:16px;}
-  .header h1{font-size:1.35rem;font-weight:700;}
-  .header .meta{opacity:.85;font-size:.82rem;margin-top:4px;}
-  .header .tagline{opacity:.92;font-size:.9rem;margin-top:6px;background:rgba(255,255,255,.12);display:inline-block;padding:2px 10px;border-radius:20px;}
-  h2{font-size:1.05rem;font-weight:600;margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent);color:var(--accent);}
-  h3{font-size:.92rem;font-weight:600;margin:12px 0 8px;}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:30px 16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+  .container{max-width:960px;margin:0 auto;}
+
+  /* ===== anime.js 式滚动显现（交错淡入上移） ===== */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0ms);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ===== 头部（渐变 + 浮动光斑 + 缓动位移） ===== */
+  .header{position:relative;overflow:hidden;color:#fff;border-radius:26px;padding:36px 32px 28px;margin-bottom:24px;
+    background:linear-gradient(135deg,var(--header-from) 0%,var(--header-mid) 46%,var(--header-to) 100%);
+    background-size:170% 170%;box-shadow:var(--shadow-md);animation:gradShift 16s var(--ease) infinite;}
+  .header::before{content:'';position:absolute;top:-55%;right:-18%;width:66%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.20) 0%,rgba(255,255,255,0) 70%);pointer-events:none;
+    animation:orbFloat 11s var(--ease) infinite alternate;}
+  .header::after{content:'';position:absolute;bottom:-65%;left:-14%;width:58%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(236,72,153,.30) 0%,rgba(236,72,153,0) 70%);pointer-events:none;
+    animation:orbFloat 13s var(--ease) infinite alternate-reverse;}
+  .header h1{font-size:1.62rem;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1;}
+  .header .meta{opacity:.82;font-size:.84rem;margin-top:8px;font-weight:400;position:relative;z-index:1;}
+  .header .tagline{opacity:.94;font-size:.84rem;margin-top:12px;background:rgba(255,255,255,.16);display:inline-block;padding:5px 16px;border-radius:20px;position:relative;z-index:1;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+  @keyframes gradShift{0%,100%{background-position:0% 0%;}50%{background-position:100% 100%;}}
+  @keyframes orbFloat{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-9%,11%) scale(1.14);}}
+
+  h2{font-size:1.16rem;font-weight:800;margin:34px 0 14px;letter-spacing:-.015em;color:var(--text);}
+  h2::before{content:'';display:inline-block;width:6px;height:20px;border-radius:4px;background:linear-gradient(180deg,var(--accent),var(--accent-2));margin-right:10px;vertical-align:-3px;}
+  h3{font-size:.96rem;font-weight:700;margin:12px 0 8px;color:var(--text);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm);
+    transition:transform .38s var(--ease),box-shadow .38s var(--ease),border-color .38s var(--ease);}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#e0dcf5;}
   .card.note{border-left:4px solid var(--gold);}
   .up{color:var(--red);} .down{color:var(--green);}
   table{width:100%;border-collapse:collapse;font-size:.82rem;}
-  th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
-  th{color:var(--muted);font-weight:500;background:#f9fafb;white-space:nowrap;}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{color:var(--muted);font-weight:600;background:#f4f3f7;white-space:nowrap;font-size:.75rem;letter-spacing:.03em;}
+  tr{transition:background .2s var(--ease);}
+  tbody tr:hover{background:#faf9fc;}
   .chart{width:100%;height:300px;}
   .chart.sm{height:240px;}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  @media(max-width:720px){.grid2{grid-template-columns:1fr;}}
-  .fund-tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.72rem;font-weight:600;color:#fff;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .fund-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:600;color:#fff;letter-spacing:.02em;}
   .t-tech{background:#2563eb;} .t-med{background:#dc2626;} .t-div{background:#65a30d;}
   .t-supply{background:#0284c7;} .t-ic{background:#7c3aed;} .t-semi{background:#6366f1;}
   .t-hk{background:#0e7490;} .t-el{background:#db2777;} .t-growth{background:#ea580c;} .t-gold{background:#a16207;}
   .kpi-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
-  .kpi{flex:1;min-width:110px;background:#fafff5;border:1px solid var(--border);border-radius:8px;padding:8px 10px;text-align:center;}
-  .kpi .v{font-size:1.05rem;font-weight:700;}
-  .kpi .l{font-size:.7rem;color:var(--muted);}
-  .sig{border-left:3px solid var(--amber);background:#fffdf5;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:8px;font-size:.85rem;}
+  .kpi{flex:1;min-width:110px;background:#faf9fc;border:1px solid var(--border);border-radius:14px;padding:10px 11px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+  .kpi .v{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;}
+  .kpi .l{font-size:.68rem;color:var(--muted);}
+  .sig{border-left:3px solid var(--amber);background:#fffaf3;padding:9px 14px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:.85rem;}
   .sig b{color:var(--accent);}
-  .risk{margin-top:10px;font-size:.78rem;color:var(--red);background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:8px 10px;}
-  .method{font-size:.75rem;color:var(--muted);margin-top:6px;}
-  .footer{margin-top:26px;padding-top:12px;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;text-align:center;}
-  .badge{display:inline-block;background:#dcfce7;color:var(--accent);border-radius:6px;padding:0 6px;font-size:.72rem;font-weight:600;margin-left:4px;}
-  /* ===== 控制条 / 刷新 / 时钟 / 状态 / toast ===== */
-  .ctlbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:9px 12px;}
-  .btn{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18);}
-  .btn:hover{filter:brightness(1.08);}
-  .btn:disabled{opacity:.55;cursor:wait;}
-  .ctl-item{font-size:.76rem;color:#fff;opacity:.95;}
+  .risk{margin-top:12px;font-size:.78rem;color:var(--red);background:#fff5f5;border:1px solid #fde2e2;border-radius:14px;padding:12px 14px;}
+  .method{font-size:.75rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+  .footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;text-align:center;}
+  .badge{display:inline-block;background:#efeaff;color:var(--accent);border-radius:8px;padding:0 7px;font-size:.72rem;font-weight:600;margin-left:4px;}
+
+  /* ===== 控制条 / 按钮 / 状态 / toast ===== */
+  .ctlbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:16px;padding:11px 15px;position:relative;z-index:1;}
+  .btn{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:none;border-radius:22px;padding:9px 22px;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(108,92,231,.32);transition:transform .32s var(--spring),box-shadow .32s var(--ease),filter .32s var(--ease);}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-2px) scale(1.03);box-shadow:0 8px 24px rgba(108,92,231,.44);}
+  .btn:active{transform:translateY(0) scale(.97);}
+  .btn:disabled{opacity:.55;cursor:wait;transform:none;filter:none;}
+  .ctl-item{font-size:.76rem;color:#fff;opacity:.92;}
   .ctl-item b{color:#fff;}
-  .toggle{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;color:#fff;cursor:pointer;user-select:none;}
-  .toggle input{accent-color:#22c55e;cursor:pointer;}
-  .net-ok{color:#bbf7d0;font-weight:600;} .net-bad{color:#fecaca;font-weight:600;} .net-busy{color:#fde68a;font-weight:600;}
+  .toggle{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;color:#fff;cursor:pointer;user-select:none;}
+  .toggle input{accent-color:var(--accent-2);cursor:pointer;}
+  .net-ok{color:#9ff0c4;font-weight:600;} .net-bad{color:#ffb3b8;font-weight:600;} .net-busy{color:#ffd97a;font-weight:600;}
   .navline{font-size:.82rem;margin:6px 0;color:var(--muted);}
   .navline b{color:var(--text);}
-  .toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%) translateY(20px);background:#14532d;color:#fff;padding:9px 18px;border-radius:8px;font-size:.82rem;opacity:0;pointer-events:none;transition:.25s;z-index:99;box-shadow:0 6px 18px rgba(0,0,0,.18);white-space:nowrap;}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  .toast.err{background:#b91c1c;}
-  .live-up{animation:flash 1.1s ease-out;}
+  .toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%) translateY(20px) scale(.96);background:rgba(23,22,26,.92);color:#fff;padding:11px 22px;border-radius:20px;font-size:.82rem;opacity:0;pointer-events:none;transition:opacity .32s var(--ease),transform .32s var(--spring);z-index:99;box-shadow:0 12px 34px rgba(0,0,0,.26);white-space:nowrap;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}
+  .toast.err{background:rgba(185,28,28,.94);}
+  .live-up{animation:flash 1.2s var(--ease);}
   @keyframes flash{0%{background:#fef08a;}100%{background:transparent;}}
-  /* ===== 冻结列表格（横向/纵向滚动 + 拖拽） ===== */
-  .tbl-wrap{overflow:auto;max-height:560px;border:1px solid var(--border);border-radius:8px;cursor:grab;scrollbar-width:thin;background:#fff;}
+
+  /* ===== 冻结列表格（横/纵滚动 + 拖拽） ===== */
+  .tbl-wrap{overflow:auto;max-height:560px;border:1px solid var(--border);border-radius:16px;cursor:grab;scrollbar-width:thin;background:#fff;box-shadow:var(--shadow-sm);}
   .tbl-wrap.dragging{cursor:grabbing;user-select:none;}
   .tbl-wrap table{min-width:1060px;margin:0;}
   .tbl-wrap th,.tbl-wrap td{white-space:nowrap;}
-  .tbl-wrap thead th{position:sticky;top:0;z-index:3;background:#effaf1;}
+  .tbl-wrap thead th{position:sticky;top:0;z-index:3;background:#f4f3f7;}
   .tbl-wrap .c-rank{position:sticky;left:0;z-index:2;background:#fff;width:44px;}
   .tbl-wrap .c-code{position:sticky;left:44px;z-index:2;background:#fff;}
   .tbl-wrap .c-name{position:sticky;left:108px;z-index:2;background:#fff;font-weight:600;}
-  .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name{z-index:4;background:#effaf1;}
+  .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name{z-index:4;background:#f4f3f7;}
   .tbl-wrap .c-fund{position:sticky;left:0;z-index:2;background:#fff;font-weight:600;}
-  .tbl-wrap thead .c-fund{z-index:4;background:#effaf1;}
+  .tbl-wrap thead .c-fund{z-index:4;background:#f4f3f7;}
 
-  /* ===== 三页切换（基金/理财/股票） ===== */
+  /* ===== 三页切换 ===== */
   .page-view{display:none;}
-  .page-view.active{display:block;animation:pageIn .3s ease-out;}
-  @keyframes pageIn{0%{opacity:0;transform:translateY(6px);}100%{opacity:1;transform:none;}}
-  .ph-hero{background:linear-gradient(135deg,var(--header-from),var(--header-to));color:#fff;border-radius:14px;padding:38px 24px;text-align:center;margin-bottom:14px;}
+  .page-view.active{display:block;animation:pageIn .55s var(--ease);}
+  @keyframes pageIn{0%{opacity:0;transform:translateY(14px);}100%{opacity:1;transform:none;}}
+  .ph-hero{background:linear-gradient(135deg,var(--header-from),var(--header-to));color:#fff;border-radius:24px;padding:46px 24px;text-align:center;margin-bottom:16px;box-shadow:var(--shadow-md);}
   .ph-hero .ic{font-size:2.2rem;line-height:1;}
   .ph-hero h2{color:#fff;border:none;margin:10px 0 6px;font-size:1.2rem;}
   .ph-hero p{opacity:.9;font-size:.86rem;}
 
-  /* ===== 底部液态玻璃导航（iOS Liquid Glass 风格） ===== */
-  .lg-nav{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:2px;padding:5px;border-radius:24px;z-index:60;
-    background:linear-gradient(135deg,rgba(255,255,255,.74) 0%,rgba(255,255,255,.48) 100%);
-    -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
-    border:1px solid rgba(255,255,255,.9);
-    box-shadow:0 10px 34px rgba(20,83,45,.20),0 2px 8px rgba(20,83,45,.10),inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35);
-    transition:left .5s cubic-bezier(.32,.72,.28,1.05),transform .5s cubic-bezier(.32,.72,.28,1.05),opacity .35s ease,box-shadow .3s;}
+  /* ===== 底部液态玻璃导航 ===== */
+  .lg-nav{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:3px;padding:6px;border-radius:28px;z-index:60;
+    background:linear-gradient(135deg,rgba(255,255,255,.84) 0%,rgba(255,255,255,.52) 100%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);
+    border:1px solid rgba(255,255,255,.92);
+    box-shadow:0 14px 40px rgba(23,22,26,.18),0 2px 8px rgba(23,22,26,.08),inset 0 1.5px 0 rgba(255,255,255,.98),inset 0 -1px 0 rgba(255,255,255,.4);
+    transition:left .5s var(--spring),transform .5s var(--spring),opacity .35s var(--ease),box-shadow .3s var(--ease);}
   .lg-nav::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-    background:linear-gradient(115deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 28%,rgba(255,255,255,0) 62%,rgba(255,255,255,.28) 100%);}
-  .lg-nav.tucked{left:0;transform:translateX(14px) scale(.6);transform-origin:left bottom;opacity:.5;box-shadow:0 4px 14px rgba(20,83,45,.16),inset 0 1.5px 0 rgba(255,255,255,.95);}
-  .lg-tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:70px;padding:8px 15px;border:none;background:transparent;border-radius:18px;cursor:pointer;color:var(--muted);font-size:.68rem;font-weight:600;font-family:inherit;line-height:1.2;transition:background .25s,color .25s,transform .2s;}
+    background:linear-gradient(115deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,0) 28%,rgba(255,255,255,0) 62%,rgba(255,255,255,.34) 100%);}
+  .lg-nav.tucked{left:0;transform:translateX(14px) scale(.6);transform-origin:left bottom;opacity:.5;box-shadow:0 4px 14px rgba(23,22,26,.16),inset 0 1.5px 0 rgba(255,255,255,.98);}
+  .lg-tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:72px;padding:8px 15px;border:none;background:transparent;border-radius:21px;cursor:pointer;color:var(--muted);font-size:.68rem;font-weight:600;font-family:inherit;line-height:1.2;transition:background .28s var(--ease),color .28s var(--ease),transform .28s var(--spring);}
   .lg-tab svg{width:21px;height:21px;display:block;}
-  .lg-tab:active{transform:scale(.92);}
-  .lg-tab.on{color:var(--accent);background:linear-gradient(135deg,rgba(34,197,94,.16),rgba(34,197,94,.34));box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 2px 6px rgba(22,101,52,.12);}
+  .lg-tab:hover{color:var(--text);transform:translateY(-1px);}
+  .lg-tab:active{transform:scale(.9);}
+  .lg-tab.on{color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,.14),rgba(168,85,247,.22));box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 2px 8px rgba(108,92,231,.20);}
   .lg-tab .dot{position:absolute;top:5px;right:11px;width:6px;height:6px;border-radius:50%;background:var(--amber);opacity:.85;}
-  @media(max-width:720px){
-    .lg-tab{min-width:58px;padding:7px 10px;}
-    body{padding:16px 10px;}
-  }
-  body{padding-bottom:118px;}
 
   /* ===== 板块资金流模块 ===== */
-  .sec-chip{display:inline-block;background:#effaf1;border:1px solid var(--border);border-radius:8px;padding:1px 8px;font-size:.72rem;color:var(--accent);font-weight:600;margin-right:6px;}
+  .sec-chip{display:inline-block;background:#f4f3f7;border:1px solid var(--border);border-radius:10px;padding:1px 10px;font-size:.72rem;color:var(--text);font-weight:600;margin-right:6px;}
   .sec-kpi{flex:1;min-width:150px;}
 
   /* ===== 理财/股票页补充样式 ===== */
   .t-cash{background:#0d9488;} .t-bond{background:#65a30d;} .t-credit{background:#0284c7;} .t-fixp{background:#ea580c;} .t-def{background:#6b7280;}
-  .wgt{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;}
-  .wgt .chip{font-size:.72rem;padding:3px 10px;border-radius:14px;border:1px solid var(--border);background:#fafff5;color:var(--accent);}
+  .wgt{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;}
+  .wgt .chip{font-size:.72rem;padding:4px 13px;border-radius:16px;border:1px solid var(--border);background:#f4f3f7;color:var(--muted);}
   .wgt .chip b{color:var(--text);}
   .dim5{font-size:.7rem;color:var(--muted);white-space:nowrap;}
-  .dim5 b{color:var(--accent);}
-  .reason{font-size:.8rem;margin-top:8px;background:#f0fdf4;border-left:3px solid var(--accent);padding:6px 10px;border-radius:0 6px 6px 0;}
+  .dim5 b{color:var(--text);}
+  .reason{font-size:.8rem;margin-top:8px;background:#f7f5ff;border-left:3px solid var(--accent);padding:9px 13px;border-radius:0 10px 10px 0;}
   .reason b{color:var(--accent);}
-  .static-badge{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:6px;padding:0 6px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
-  .skpi{flex:1;min-width:92px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center;}
-  .skpi .v{font-size:.9rem;font-weight:700;}
+  .static-badge{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:8px;padding:0 7px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
+  .live-badge{display:inline-block;background:#eef0ff;color:var(--accent);border:1px solid #cfc6ff;border-radius:8px;padding:0 7px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
+  .skpi{flex:1;min-width:92px;background:#faf9fc;border:1px solid var(--border);border-radius:14px;padding:9px 10px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .skpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+  .skpi .v{font-size:.9rem;font-weight:800;}
   .skpi .l{font-size:.64rem;color:var(--muted);}
+
+  /* ===== Tab 页签 / 时间范围切换 ===== */
+  .tabs{display:flex;gap:6px;background:#f1eff7;border-radius:14px;padding:5px;margin-bottom:16px;}
+  .tab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 14px;font-size:.86rem;font-weight:600;font-family:inherit;color:var(--muted);cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease);}
+  .tab:hover{color:var(--text);}
+  .tab.on{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm);}
+  .tab-panel{animation:panelIn .42s var(--ease);}
+  @keyframes panelIn{0%{opacity:0;transform:translateY(8px);}100%{opacity:1;transform:none;}}
+  .range-switch{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .rng-lbl{font-size:.76rem;color:var(--muted);margin-right:2px;}
+  .rng{border:1px solid var(--border);background:#fff;border-radius:16px;padding:4px 14px;font-size:.76rem;font-weight:600;font-family:inherit;color:var(--muted);cursor:pointer;transition:all .28s var(--ease);}
+  .rng:hover{border-color:var(--accent);color:var(--accent);}
+  .rng.on{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(108,92,231,.28);}
+
+  body{padding-bottom:122px;}
+
+  /* ===== 响应式 ===== */
+  @media(max-width:760px){
+    body{padding:18px 12px 116px;}
+    .container{max-width:100%;}
+    .header{padding:26px 20px 22px;border-radius:22px;}
+    .header h1{font-size:1.32rem;}
+    .grid2{grid-template-columns:1fr;gap:12px;}
+    .card{padding:16px 16px;border-radius:16px;}
+    .kpi{min-width:82px;}
+    .kpi .v{font-size:.95rem;}
+    .skpi{min-width:72px;}
+    h2{font-size:1.04rem;margin:26px 0 12px;}
+    .lg-tab{min-width:58px;padding:7px 10px;}
+    .lg-tab svg{width:20px;height:20px;}
+    .tbl-wrap{max-height:440px;}
+    .btn{padding:8px 18px;font-size:.86rem;}
+  }
+
+  /* ===== 无障碍：减少动态效果 ===== */
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+    .reveal{opacity:1;transform:none;}
+  }
 </style>
 </head>
 <body>
@@ -130,7 +200,7 @@
   <div id="pageFund" class="page-view active">
   <div class="header">
     <h1>公募基金看板</h1>
-    <div class="meta"><span id="hdrDate">日期加载中…</span> · 进攻·科技 × 修复·医药 × 防御·红利/黄金 十档轮动 · 仅比较与跟踪，不构成买卖建议</div>
+    <div class="meta"><span id="hdrDate">日期加载中…</span> · 十只代表性基金 × 全市场热门 Top30 · 仅比较与跟踪，不构成买卖建议</div>
     <div class="tagline">行情数据：<span id="mktAsOf">实时获取中…</span> ｜ 基金净值：<span id="fundAsOf">最近披露</span> ｜ 定期披露：<span id="qLabel">最近一期季报</span>（自动推算）｜ 均为开放式基金（非场内 ETF）</div>
     <div class="ctlbar">
       <button id="btnRefresh" class="btn" onclick="window.__wbRefresh(true)">🔄 刷新最新数据</button>
@@ -367,15 +437,15 @@
   </div>
 
   <div class="footer">
-    以上分析基于公开数据整理，仅供参考，不构成投资建议。基金有风险，投资需谨慎。· 页面更新于 <span id="genTime">--</span>（本地时间，随刷新/自动刷新更新）· 数据来源：东方财富公开行情与基金排行接口
+    以上分析基于公开数据整理，仅供参考，不构成投资建议。基金有风险，投资需谨慎。
   </div>
   </div><!-- /pageFund -->
 
   <div id="pageWealth" class="page-view">
     <div class="header">
       <h1>理财看板</h1>
-      <div class="meta"><span id="hdrDateW">日期加载中…</span> · 纯债 / 短债 / 固收+ / 银行理财 横向对比 · 仅比较与跟踪，不构成投资建议</div>
-      <div class="tagline">基金净值：<span id="wMktAsOf">最近披露</span> ｜ 理财数据为最近披露净值快照 · 页面刷新可更新行情 ｜ 含固收基金 + 银行理财子静态快照</div>
+      <div class="meta"><span id="hdrDateW">日期加载中…</span> · 固收基金 × 现金管理类实时收益榜 · 仅比较与跟踪，不构成投资建议</div>
+      <div class="tagline">基金净值：<span id="wMktAsOf">最近披露</span> ｜ 现金管理收益为实时接口 · 页面刷新可更新行情 ｜ 均为开放式基金</div>
       <div class="ctlbar">
         <button id="btnRefreshW" class="btn" onclick="window.__wbRefresh(true)">🔄 刷新最新数据</button>
         <span class="ctl-item">上次刷新：<b id="lastRefreshW">--</b></span>
@@ -601,144 +671,76 @@
     <p class="method" id="wTop30AsOf">--</p>
     <p class="method">评分模型说明：从东方财富固收基金分类（短债/中短债/长债/信用债/一级债基/二级债基/偏债混合）初筛 454 只构成候选池，剔除成立不足 6 个月或规模过小者，剩余 60 只参与评分。五维百分位打分（0-100），收益维度内部按近1年 30%、近6月年化 40%、近3月年化 40% 加权；"资质"维度中纯债/长债/信用/利率债为满分档（100），一级债基 85，二级债基 70，偏债混合 60。排序逻辑完全可解释：得分 = 0.25×收益 + 0.25×风险 + 0.20×稳定性 + 0.15×资质 + 0.15×流动性。净值/日涨跌/申购状态列随刷新实时更新，其余列为快照数据。</p>
 
-    <h2>三、银行理财子精选（静态快照 · 仅供参考）</h2>
-    <div class="grid2">
-<div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">招银理财 · 招睿稳健日开固收（现金管理类） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">现金管理</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.30%-3.30%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">每日开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>现金管理替代：股份行龙头，流动性最好</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">工银理财 · 鑫尊利固收增强（90 天持有） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收+</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.80%-3.80%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">90 天持有</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>大行固收+主力系列，持有期适中</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">建信理财 · 嘉鑫固收类（182 天封闭） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.90%-3.90%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">182 天封闭</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>封闭期换收益，期限匹配理财</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">中银理财 · 稳富固收增强（月月开） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收+</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.70%-3.70%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">每月开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>月度开放，兼顾收益与流动性</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">交银理财 · 稳享固收精选（90 天持有） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收+</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.85%-3.85%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">90 天持有</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>国有大行固收+精选系列</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">农银理财 · 农银时时付（现金管理） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">现金管理</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">近7日年化约 1.6%-1.9%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R1</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">0.01 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">每日开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>最低风险档：R1 现金管理，随取随用</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">光大理财 · 阳光金天天盈 <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.40%-3.40%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">每日开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>股份行固收日开，稳健日常打理</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">兴银理财 · 稳利恒盈（季季宝） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收+</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">3.00%-4.00%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2/R3</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">每季开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>股份行固收+收益档，季度开放</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">信银理财 · 安盈象固收稳利（半年开放） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">2.95%-3.95%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R2</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">半年开放</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>半年期票息增强，摊余成本法为主</p>
-    </div>
-
-    <div class="card" style="margin-bottom:10px">
-      <h3 style="margin:0 0 4px">浦银理财 · 浦惠增利（1 年定开） <span class="static-badge">静态展示</span></h3>
-      <div class="kpi-row" style="margin:6px 0">
-        <div class="skpi"><div class="v">固收+</div><div class="l">产品类型</div></div>
-        <div class="skpi"><div class="v">3.20%-4.20%</div><div class="l">业绩比较基准</div></div>
-        <div class="skpi"><div class="v">R3</div><div class="l">风险等级</div></div>
-        <div class="skpi"><div class="v">1 元</div><div class="l">起购门槛</div></div>
-        <div class="skpi"><div class="v">1 年定开</div><div class="l">开放频率</div></div>
-      </div>
-      <p class="reason" style="margin-top:4px"><b>入选理由：</b>长封闭期高基准档，适配长期闲钱</p>
-    </div>
-    </div>
-    <p class="method">银行理财子数据为人工整理的静态快照（非实时接口），展示产品类型、业绩比较基准区间、风险等级、起购门槛与开放频率。实际申购请以各银行 App 实时披露为准。业绩比较基准并非承诺收益。</p>
-
-    <h2>四、十只代表性理财 · 近1年净值归一化走势</h2>
+        <h2>三、现金管理类 · 实时收益榜（货币基金七日年化）</h2>
     <div class="card">
-      <div id="wealthPerfChart" class="chart"></div>
+      <div class="wgt">
+        <span class="chip">七日年化收益率</span>
+        <span class="chip">起购金额</span>
+        <span class="chip">申购状态</span>
+        <span class="chip" style="background:#eef0ff;color:#6c5ce7;border-color:#cfc6ff">实时更新</span>
+      </div>
+      <div class="grid2" id="cashGrid"></div>
+      <p class="method" id="cashAsOf">数据加载中…</p>
+      <p class="method">说明：银行理财子净值暂无公开浏览器接口，此处以同属「现金管理」的货币基金实时七日年化收益榜替代，实现数据自动更新（随页面每 60 秒自动刷新，亦支持手动刷新）。数据来源：东方财富货币基金排行接口。七日年化收益率为近 7 日折算年化的参考值，非承诺收益，仅供参考，不构成投资建议。</p>
+    </div>
+
+    <h2>四、银行理财产品 · 走势与推荐</h2>
+    <div class="card">
+      <div class="tabs" id="bankTabs">
+        <button class="tab on" id="tabTrend" onclick="window.__bankTab('trend')">净值归一化走势</button>
+        <button class="tab" id="tabRank" onclick="window.__bankTab('rank')">推荐榜单 Top10</button>
+      </div>
+
+      <div class="tab-panel" id="panelTrend">
+        <div class="range-switch" id="bankRange">
+          <span class="rng-lbl">时间范围</span>
+          <button class="rng on" id="rng365" onclick="window.__bankRange(365)">近1年</button>
+          <button class="rng" id="rng182" onclick="window.__bankRange(182)">近6个月</button>
+          <button class="rng" id="rng91" onclick="window.__bankRange(91)">近3个月</button>
+        </div>
+        <div id="bankNavChart" class="chart"></div>
+        <p class="method">产品类型：<b>银行理财产品</b>（银行理财子公司净值型产品）· 图例为 10 只代表性产品 · 净值归一化：以所选区间起始日净值为 100 重定基，纵轴单位为归一化净值（原口径不变）。说明：银行理财子净值无公开浏览器接口，走势为基于产品收益率区间构造的参考曲线（非逐日真实披露净值），仅用于横向比较与跟踪。</p>
+      </div>
+
+      <div class="tab-panel" id="panelRank" style="display:none">
+        <div class="wgt">
+          <span class="chip">资产规模 <b>10%</b></span>
+          <span class="chip">近3月年化 <b>30%</b></span>
+          <span class="chip">近6月年化 <b>30%</b></span>
+          <span class="chip">管护人评分 <b>15%</b></span>
+          <span class="chip">三方评分 <b>15%</b></span>
+        </div>
+        <div class="tbl-wrap" id="bankRankWrap">
+          <table>
+            <thead><tr>
+              <th class="c-rank">#</th>
+              <th class="c-name">产品</th>
+              <th>类型/风险</th>
+              <th>资产规模(亿)</th>
+              <th>近3月年化</th>
+              <th>近6月年化</th>
+              <th>管护人评分</th>
+              <th>三方评分</th>
+              <th>推荐指数</th>
+              <th>得分明细</th>
+            </tr></thead>
+            <tbody id="bankRankBody"></tbody>
+          </table>
+        </div>
+        <p class="method" id="bankRankAsOf"></p>
+        <p class="method">排序依据：推荐指数 = 资产规模 × 10% + 近3个月年化收益率 × 30% + 近6个月年化收益率 × 30% + 理财管护人评分 × 15% + 三方评分 × 15%。其中规模、收益率因子先按 10 只产品池内百分位归一化为 0-100 分，管护人/三方评分直接取 0-100 分；推荐指数满分 100，从高到低排序。产品数据为参考披露数据（银行理财子净值无公开浏览器接口，此处为人工整理的代表性产品快照，非实时），仅供参考，不构成投资建议。</p>
+      </div>
     </div>
 
     <div class="risk">⚠️ 风险提示：理财（固收基金 + 银行理财）并非无风险投资。债券型基金可能因利率上行、信用违约等发生净值回撤；"固收+"产品含权益仓位，波动更大。历史业绩不代表未来表现，排名仅供比较参考，不构成任何投资建议。· 页面更新于 <span id="genTimeW">--</span>（本地时间）· 数据来源：东方财富公开基金接口</div>
-    <div class="footer">公募基金轮动对比页 · 理财子页面 · 数据仅供参考，不构成投资建议</div>
+    <div class="footer">以上分析基于公开数据整理，仅供参考，不构成投资建议。理财有风险，投资需谨慎。</div>
   </div>
 
   <div id="pageStock" class="page-view">
     <div class="header">
       <h1>股票看板</h1>
-      <div class="meta"><span id="hdrDateS">日期加载中…</span> · A 股主板 · 剔除创业板 / 科创板 · 六维评分模型 · 仅比较与跟踪，不构成投资建议</div>
-      <div class="tagline">行情 / 估值 / 板块资金：<span id="sMktAsOf">实时获取中…</span> ｜ 财务数据：2026-06-30 中报口径（自动推算最近一期）｜ 排序逻辑可解释</div>
+      <div class="meta"><span id="hdrDateS">日期加载中…</span> · A 股主板（剔除创业板 / 科创板）· 六维评分模型 · 仅比较与跟踪，不构成投资建议</div>
+      <div class="tagline">行情 / 估值 / 板块资金：<span id="sMktAsOf">实时获取中…</span> ｜ 财务数据：最近一期中报（自动推算）｜ 排序逻辑可解释</div>
       <div class="ctlbar">
         <button id="btnRefreshS" class="btn" onclick="window.__wbRefresh(true)">🔄 刷新最新数据</button>
         <span class="ctl-item">上次刷新：<b id="lastRefreshS">--</b></span>
@@ -972,7 +974,7 @@
     </div>
 
     <div class="risk">⚠️ 风险提示：股票投资有风险，入市需谨慎。评分模型仅基于公开财务数据与行情数据，不涵盖所有影响股价的因素（如政策风险、黑天鹅事件、管理层变动等）。历史财务数据不代表未来表现，排名仅供比较参考，不构成任何投资建议。· 页面更新于 <span id="genTimeS">--</span>（本地时间）· 数据来源：东方财富公开行情与财务报表接口</div>
-    <div class="footer">公募基金轮动对比页 · 股票子页面 · 数据仅供参考，不构成投资建议</div>
+    <div class="footer">以上分析基于公开数据整理，仅供参考，不构成投资建议。股市有风险，入市需谨慎。</div>
   </div>
 </div>
 
@@ -997,7 +999,7 @@
 (function(){
 'use strict';
 /* ================= 配置 ================= */
-var UP='#dc2626', DOWN='#16a34a', ACC='#166534', MUT='#4d7c0f', GRID='#d1fae5';
+var UP='#e5484d', DOWN='#0a9a6e', ACC='#6c5ce7', MUT='#74727e', GRID='#ecebee';
 var FUNDS=[
   {code:'005844',key:'844',name:'东方人工智能主题混合A',short:'东方人工智能A',color:'#2563eb'},
   {code:'002910',key:'910',name:'易方达供给改革混合',short:'易方达供给改革',color:'#0ea5e9'},
@@ -1030,7 +1032,7 @@ var WEALTH_TOP={"asof":"2026-08-25","count":60,"list":[{"code":"022403","name":"
 var WEALTH_PICKS=[["005754","t-cash","现金管理升级：短债旗舰、月度胜率 100%，低波动替代货基"],["022319","t-bond","30 天持有期长债：以持有期换收益，回撤 0.07%、月度全胜"],["022403","t-cash","60 天滚动持有中短债：榜单第 1（82.98 分），收益与回撤均衡"],["017055","t-cash","90 天持有中短债：工银瑞信银行系固收，稳健型配置"],["023031","t-cash","120 天滚动持有纯债：拉长持有期提升票息，回撤仅 0.06%"],["004042","t-bond","长债规模王（308.7 亿）：久期配置与流动性兼备"],["000191","t-credit","信用债旗舰：票息增强，近1年 +2.63%、回撤 0.71%"],["003223","t-bond","长债收益档：近1年 +3.19%，纯债中收益靠前"],["000171","t-fixp","固收+代表作：二级债基叠加权益增强，近1年 +8.63%"],["018596","t-fixp","固收+进攻端：近1年 +10.82% 全场最高，回撤 4.66% 需承受波动"]];
 var STOCK_POOL={"asof":"2026-08-25","count":62,"list":[{"code":"002611","name":"东方精工","industry":"专用设备","board_code":"BK0910","roe":50.88,"npm":227.47,"yoyr":-21.68,"yoyp":500,"ocfps":0.212,"eps":3.22,"bps":7.78,"zcfzl":17.37,"xsmll":23.46,"price":14.76,"chg":0.61,"pe":2.34,"pb":1.95,"flow10":19.65,"flowD":"2026-08-25","s_earn":97.7,"s_grow":45.1,"s_safe":96.7,"s_val":82,"s_cash":41,"s_flow":95.1,"score":78.1},{"code":"002582","name":"好想你","industry":"休闲食品","board_code":"BK1281","roe":17.19,"npm":105.34,"yoyr":2.59,"yoyp":500,"ocfps":0.074,"eps":1.663,"bps":10.04,"zcfzl":33.3,"xsmll":33.52,"price":10.27,"chg":0.79,"pe":3.09,"pb":1.02,"flow10":3.03,"flowD":"2026-08-25","s_earn":88.5,"s_grow":57.4,"s_safe":88.5,"s_val":91.8,"s_cash":34.4,"s_flow":73.8,"score":75.68},{"code":"000430","name":"张家界","industry":"旅游及景区","board_code":"BK1272","roe":20.94,"npm":145.52,"yoyr":9.34,"yoyp":500,"ocfps":0.005,"eps":0.38,"bps":2.25,"zcfzl":26.93,"xsmll":21.94,"price":6.89,"chg":0.58,"pe":9.05,"pb":3.07,"flow10":0.88,"flowD":"2026-08-25","s_earn":92.2,"s_grow":64.8,"s_safe":93.4,"s_val":62.3,"s_cash":27.9,"s_flow":68.9,"score":73},{"code":"603986","name":"兆易创新","industry":"半导体","board_code":"BK1036","roe":23.13,"npm":59.29,"yoyr":178.67,"yoyp":500,"ocfps":8.619,"eps":9.83,"bps":53.13,"zcfzl":11.47,"xsmll":63.13,"price":394.96,"chg":-0.14,"pe":20.21,"pb":7.43,"flow10":-665.67,"flowD":"2026-08-25","s_earn":92.1,"s_grow":72.2,"s_safe":100,"s_val":33.6,"s_cash":88.5,"s_flow":0,"score":71.28},{"code":"603162","name":"海通发展","industry":"航运港口","board_code":"BK0450","roe":11.16,"npm":15.08,"yoyr":92.78,"yoyp":500,"ocfps":0.525,"eps":0.39,"bps":3.54,"zcfzl":35.54,"xsmll":19.61,"price":12.08,"chg":1,"pe":15.86,"pb":3.41,"flow10":8.28,"flowD":"2026-08-25","s_earn":61.3,"s_grow":83.6,"s_safe":83.6,"s_val":52.5,"s_cash":59,"s_flow":83.6,"score":70.22},{"code":"603444","name":"吉比特","industry":"游戏Ⅱ","board_code":"BK1046","roe":18.57,"npm":29.29,"yoyr":48.01,"yoyp":69.31,"ocfps":17.669,"eps":15.15,"bps":84.07,"zcfzl":22.61,"xsmll":93.71,"price":389,"chg":1.02,"pe":12.84,"pb":4.63,"flow10":-16.95,"flowD":"2026-08-25","s_earn":79,"s_grow":36.1,"s_safe":95.1,"s_val":49.2,"s_cash":96.7,"s_flow":42.6,"score":67.16},{"code":"002497","name":"雅化集团","industry":"化学制品","board_code":"BK0538","roe":10.73,"npm":18.12,"yoyr":96.02,"yoyp":500,"ocfps":-0.358,"eps":1.063,"bps":10.56,"zcfzl":28.02,"xsmll":31.7,"price":19.47,"chg":4.45,"pe":9.23,"pb":1.84,"flow10":-86.21,"flowD":"2026-08-25","s_earn":61.7,"s_grow":92.6,"s_safe":91.8,"s_val":71.3,"s_cash":11.5,"s_flow":13.1,"score":65.1},{"code":"000506","name":"招金黄金","industry":"贵金属","board_code":"BK0732","roe":28.34,"npm":62.49,"yoyr":85.13,"yoyp":407.44,"ocfps":0.06,"eps":0.24,"bps":0.97,"zcfzl":38.33,"xsmll":55.94,"price":21.51,"chg":4.37,"pe":44.05,"pb":22.16,"flow10":18.76,"flowD":"2026-08-25","s_earn":93.8,"s_grow":58.1,"s_safe":80.3,"s_val":15.6,"s_cash":31.1,"s_flow":93.4,"score":64.6},{"code":"002458","name":"益生股份","industry":"养殖业","board_code":"BK1259","roe":6.86,"npm":18.13,"yoyr":28.44,"yoyp":500,"ocfps":0.322,"eps":0.219,"bps":3.24,"zcfzl":35.14,"xsmll":28.04,"price":8.92,"chg":0.79,"pe":20.75,"pb":2.88,"flow10":3.14,"flowD":"2026-08-25","s_earn":49.5,"s_grow":73.8,"s_safe":85.2,"s_val":48.3,"s_cash":49.2,"s_flow":75.4,"score":63.03},{"code":"000042","name":"中洲控股","industry":"房地产开发","board_code":"BK0451","roe":34.97,"npm":21.97,"yoyr":168.35,"yoyp":421.76,"ocfps":0.598,"eps":1.487,"bps":5,"zcfzl":91.29,"xsmll":67.93,"price":8.6,"chg":1.9,"pe":2.89,"pb":1.72,"flow10":-1.66,"flowD":"2026-08-25","s_earn":83.6,"s_grow":65.5,"s_safe":8.2,"s_val":84.5,"s_cash":63.9,"s_flow":57.4,"score":61.96},{"code":"600519","name":"贵州茅台","industry":"白酒Ⅱ","board_code":"BK1277","roe":16.75,"npm":48.24,"yoyr":1.3,"yoyp":-1.95,"ocfps":56.549,"eps":35.57,"bps":200.99,"zcfzl":15.19,"xsmll":89.56,"price":1309.81,"chg":0.45,"pe":18.39,"pb":6.52,"flow10":-34.23,"flowD":"2026-08-25","s_earn":84.6,"s_grow":9.8,"s_safe":98.4,"s_val":37.7,"s_cash":100,"s_flow":32.8,"score":61.51},{"code":"002432","name":"九安医疗","industry":"医疗器械","board_code":"BK1041","roe":13.65,"npm":577.9,"yoyr":-30.58,"yoyp":233.66,"ocfps":-0.244,"eps":7.333,"bps":49.65,"zcfzl":30.87,"xsmll":67.88,"price":66.11,"chg":0.78,"pe":5.02,"pb":1.33,"flow10":null,"flowD":"","s_earn":84.6,"s_grow":11.5,"s_safe":90.2,"s_val":85.3,"s_cash":14.8,"s_flow":50,"score":60.44},{"code":"000603","name":"盛达资源","industry":"贵金属","board_code":"BK0732","roe":12.14,"npm":33.87,"yoyr":27.08,"yoyp":456.46,"ocfps":0.83,"eps":0.565,"bps":5.44,"zcfzl":48.36,"xsmll":69.15,"price":38.21,"chg":5.35,"pe":33.79,"pb":7.02,"flow10":18.76,"flowD":"2026-08-25","s_earn":68.2,"s_grow":46.8,"s_safe":67.2,"s_val":29.6,"s_cash":67.2,"s_flow":91.8,"score":59.51},{"code":"600816","name":"建元信托","industry":"多元金融","board_code":"BK0738","roe":7.28,"npm":959.7,"yoyr":-25.45,"yoyp":500,"ocfps":0.018,"eps":0.109,"bps":1.54,"zcfzl":41.09,"xsmll":null,"price":2.57,"chg":1.98,"pe":11.81,"pb":1.67,"flow10":3.39,"flowD":"2026-08-25","s_earn":66.6,"s_grow":26.2,"s_safe":78.7,"s_val":71.4,"s_cash":29.5,"s_flow":77,"score":58.48},{"code":"601869","name":"长飞光纤","industry":"通信设备","board_code":"BK0448","roe":19.22,"npm":29.81,"yoyr":53.64,"yoyp":500,"ocfps":2.206,"eps":3.56,"bps":19.77,"zcfzl":47.95,"xsmll":53.36,"price":405.86,"chg":2.88,"pe":57.45,"pb":20.84,"flow10":-77.87,"flowD":"2026-08-25","s_earn":80.7,"s_grow":64.8,"s_safe":68.9,"s_val":14,"s_cash":75.4,"s_flow":19.7,"score":58.39},{"code":"000703","name":"恒逸石化","industry":"炼化及贸易","board_code":"BK1274","roe":21.32,"npm":8.77,"yoyr":20.28,"yoyp":500,"ocfps":-0.128,"eps":1.75,"bps":7.8,"zcfzl":67.57,"xsmll":15.31,"price":17.89,"chg":-2.45,"pe":5.79,"pb":2.12,"flow10":2.94,"flowD":"2026-08-25","s_earn":73.4,"s_grow":56.5,"s_safe":42.6,"s_val":72.2,"s_cash":16.4,"s_flow":72.1,"score":57.96},{"code":"002297","name":"博云新材","industry":"航空装备Ⅱ","board_code":"BK1231","roe":7.69,"npm":22.85,"yoyr":88.33,"yoyp":500,"ocfps":-0.076,"eps":0.297,"bps":4.01,"zcfzl":34.15,"xsmll":44.4,"price":17.47,"chg":-0.46,"pe":29.41,"pb":4.36,"flow10":-25.44,"flowD":"2026-08-25","s_earn":54.7,"s_grow":83.6,"s_safe":86.9,"s_val":36.9,"s_cash":18,"s_flow":36.1,"score":57.78},{"code":"002738","name":"中矿资源","industry":"能源金属","board_code":"BK1015","roe":8.74,"npm":30.37,"yoyr":12.03,"yoyp":500,"ocfps":-0.314,"eps":1.54,"bps":18.02,"zcfzl":36.18,"xsmll":52.9,"price":53.05,"chg":5.36,"pe":17.41,"pb":2.92,"flow10":-39.91,"flowD":"2026-08-25","s_earn":61.6,"s_grow":69.7,"s_safe":82,"s_val":52.5,"s_cash":13.1,"s_flow":31.1,"score":57.44},{"code":"603329","name":"上海雅仕","industry":"物流","board_code":"BK0422","roe":7.67,"npm":7.85,"yoyr":-2.19,"yoyp":460.72,"ocfps":1.137,"eps":0.46,"bps":6.13,"zcfzl":44.89,"xsmll":16.22,"price":10.43,"chg":-1.6,"pe":11.44,"pb":1.7,"flow10":-2.45,"flowD":"2026-08-25","s_earn":43.9,"s_grow":31.1,"s_safe":77,"s_val":71.3,"s_cash":68.9,"s_flow":55.7,"score":55.7},{"code":"601318","name":"中国平安","industry":"保险Ⅱ","board_code":"BK0474","roe":9,"npm":16.1,"yoyr":15.01,"yoyp":36.1,"ocfps":20.325,"eps":5.3,"bps":56.78,"zcfzl":89.83,"xsmll":null,"price":55.99,"chg":1.78,"pe":5.48,"pb":0.99,"flow10":1.48,"flowD":"2026-08-25","s_earn":58,"s_grow":27.9,"s_safe":13.1,"s_val":86.9,"s_cash":98.4,"s_flow":70.5,"score":54.15},{"code":"600919","name":"江苏银行","industry":"银行Ⅱ","board_code":"BK0475","roe":7.86,"npm":44.69,"yoyr":9.11,"yoyp":8.09,"ocfps":10.314,"eps":1.13,"bps":14.79,"zcfzl":93.52,"xsmll":null,"price":12.18,"chg":1.16,"pe":5.11,"pb":0.82,"flow10":14.29,"flowD":"2026-08-25","s_earn":63.6,"s_grow":18.8,"s_safe":3.3,"s_val":91,"s_cash":90.2,"s_flow":86.9,"score":53.24},{"code":"603256","name":"宏和科技","industry":"玻璃玻纤","board_code":"BK0546","roe":15.28,"npm":36.22,"yoyr":90.39,"yoyp":334.32,"ocfps":0.308,"eps":0.42,"bps":3.26,"zcfzl":49.95,"xsmll":59.34,"price":133.19,"chg":0.02,"pe":158.74,"pb":40.85,"flow10":null,"flowD":"","s_earn":75.7,"s_grow":58.2,"s_safe":65.6,"s_val":2.5,"s_cash":47.5,"s_flow":50,"score":53.02},{"code":"601009","name":"南京银行","industry":"银行Ⅱ","board_code":"BK0475","roe":7.25,"npm":43.2,"yoyr":10.94,"yoyp":8.17,"ocfps":8.507,"eps":1.1,"bps":15.62,"zcfzl":93.14,"xsmll":null,"price":11.77,"chg":1.47,"pe":5.33,"pb":0.75,"flow10":14.29,"flowD":"2026-08-25","s_earn":58.4,"s_grow":22.9,"s_safe":4.9,"s_val":91,"s_cash":86.9,"s_flow":90.2,"score":52.97},{"code":"000415","name":"渤海租赁","industry":"多元金融","board_code":"BK0738","roe":10.55,"npm":13.54,"yoyr":-16.86,"yoyp":258.73,"ocfps":1.405,"eps":0.521,"bps":5.05,"zcfzl":80.24,"xsmll":33.61,"price":4.54,"chg":1.79,"pe":4.38,"pb":0.9,"flow10":3.39,"flowD":"2026-08-25","s_earn":58.7,"s_grow":14.8,"s_safe":23,"s_val":92.6,"s_cash":72.1,"s_flow":80.3,"score":52.47},{"code":"600768","name":"富邦新材","industry":"工业金属","board_code":"BK1287","roe":12.75,"npm":5.71,"yoyr":91.04,"yoyp":500,"ocfps":-1.992,"eps":0.44,"bps":3.6,"zcfzl":51.52,"xsmll":17.72,"price":15.28,"chg":-0.26,"pe":17.46,"pb":4.24,"flow10":-69.01,"flowD":"2026-08-25","s_earn":53.8,"s_grow":82,"s_safe":63.9,"s_val":44.3,"s_cash":1.6,"s_flow":24.6,"score":51.43},{"code":"000783","name":"长江证券","industry":"证券Ⅱ","board_code":"BK0473","roe":8.39,"npm":42.99,"yoyr":58.6,"yoyp":83.8,"ocfps":5.156,"eps":0.56,"bps":6.67,"zcfzl":81.53,"xsmll":null,"price":9.03,"chg":5,"pe":7.82,"pb":1.35,"flow10":-93.17,"flowD":"2026-08-25","s_earn":64.6,"s_grow":44.3,"s_safe":19.7,"s_val":77.9,"s_cash":82,"s_flow":6.6,"score":51.23},{"code":"601963","name":"重庆银行","industry":"银行Ⅱ","board_code":"BK0475","roe":6.01,"npm":41.45,"yoyr":10.79,"yoyp":10.29,"ocfps":13.924,"eps":0.99,"bps":16.42,"zcfzl":93.62,"xsmll":null,"price":11.23,"chg":0.63,"pe":5.79,"pb":0.68,"flow10":14.29,"flowD":"2026-08-25","s_earn":50.5,"s_grow":23,"s_safe":1.6,"s_val":90.2,"s_cash":93.4,"s_flow":85.2,"score":50.5},{"code":"603129","name":"春风动力","industry":"摩托车及其他","board_code":"BK1263","roe":13.36,"npm":7.95,"yoyr":35.82,"yoyp":6.26,"ocfps":14.637,"eps":6.96,"bps":52.17,"zcfzl":65.45,"xsmll":27.26,"price":303.92,"chg":-0.36,"pe":21.91,"pb":5.83,"flow10":-3.52,"flowD":"2026-08-25","s_earn":60.3,"s_grow":28.7,"s_safe":45.9,"s_val":35.3,"s_cash":95.1,"s_flow":49.2,"score":50.1},{"code":"000001","name":"平安银行","industry":"银行Ⅱ","board_code":"BK0475","roe":5.22,"npm":36.39,"yoyr":1.78,"yoyp":3.3,"ocfps":11.08,"eps":1.24,"bps":24.13,"zcfzl":90.91,"xsmll":null,"price":11.68,"chg":0.78,"pe":4.41,"pb":0.48,"flow10":14.29,"flowD":"2026-08-25","s_earn":46.9,"s_grow":11.5,"s_safe":9.8,"s_val":95.9,"s_cash":91.8,"s_flow":88.5,"score":49.83},{"code":"601211","name":"国泰海通","industry":"证券Ⅱ","board_code":"BK0473","roe":6.12,"npm":42.96,"yoyr":97.56,"yoyp":28.74,"ocfps":3.853,"eps":1.14,"bps":18.78,"zcfzl":84.49,"xsmll":null,"price":17.96,"chg":3.76,"pe":7.79,"pb":0.95,"flow10":-93.17,"flowD":"2026-08-25","s_earn":52.1,"s_grow":48.4,"s_safe":18,"s_val":85.3,"s_cash":80.3,"s_flow":8.2,"score":49.73},{"code":"600116","name":"三峡水利","industry":"电力","board_code":"BK0428","roe":3.29,"npm":7.46,"yoyr":3.53,"yoyp":500,"ocfps":0.526,"eps":0.2,"bps":6.04,"zcfzl":51.97,"xsmll":15.77,"price":6.33,"chg":0.96,"pe":16.01,"pb":1.05,"flow10":-83.09,"flowD":"2026-08-25","s_earn":27.9,"s_grow":53.3,"s_safe":62.3,"s_val":72.1,"s_cash":60.7,"s_flow":16.4,"score":49.05},{"code":"605138","name":"盛泰集团","industry":"服装家纺","board_code":"BK1225","roe":6.42,"npm":8.92,"yoyr":0.56,"yoyp":413.47,"ocfps":0.478,"eps":0.29,"bps":4.39,"zcfzl":58.81,"xsmll":16.58,"price":5.85,"chg":0.69,"pe":10.14,"pb":1.33,"flow10":-11.42,"flowD":"2026-08-25","s_earn":40.7,"s_grow":29.5,"s_safe":55.7,"s_val":75.4,"s_cash":55.7,"s_flow":44.3,"score":48.88},{"code":"001339","name":"智微智能","industry":"计算机设备","board_code":"BK0735","roe":15.58,"npm":12.74,"yoyr":56.64,"yoyp":281.92,"ocfps":2.95,"eps":1.19,"bps":8.29,"zcfzl":72.7,"xsmll":39.52,"price":75.6,"chg":-2.69,"pe":31.82,"pb":9.1,"flow10":-76.81,"flowD":"2026-08-25","s_earn":68.9,"s_grow":48.4,"s_safe":34.4,"s_val":27.9,"s_cash":78.7,"s_flow":23,"score":48.76},{"code":"603093","name":"南华期货","industry":"多元金融","board_code":"BK0738","roe":6.76,"npm":44.17,"yoyr":48.18,"yoyp":67.91,"ocfps":7.542,"eps":0.55,"bps":8.13,"zcfzl":92.35,"xsmll":null,"price":12.42,"chg":7.53,"pe":16.6,"pb":2.21,"flow10":3.39,"flowD":"2026-08-25","s_earn":56.1,"s_grow":36,"s_safe":6.6,"s_val":57.4,"s_cash":83.6,"s_flow":78.7,"score":48.39},{"code":"601066","name":"中信建投","industry":"证券Ⅱ","board_code":"BK0473","roe":8.27,"npm":47.07,"yoyr":51.11,"yoyp":69.44,"ocfps":7.842,"eps":0.92,"bps":11.29,"zcfzl":85.38,"xsmll":null,"price":25.37,"chg":2.96,"pe":12.88,"pb":2.25,"flow10":-93.17,"flowD":"2026-08-25","s_earn":66.3,"s_grow":39.3,"s_safe":14.8,"s_val":60.7,"s_cash":85.2,"s_flow":4.9,"score":47.15},{"code":"600433","name":"冠豪高新","industry":"造纸","board_code":"BK1267","roe":4.9,"npm":5.85,"yoyr":6.94,"yoyp":467.25,"ocfps":-0.025,"eps":0.12,"bps":2.54,"zcfzl":46.73,"xsmll":10.05,"price":3.44,"chg":1.78,"pe":14.15,"pb":1.35,"flow10":-0.69,"flowD":"2026-08-25","s_earn":26.9,"s_grow":37.7,"s_safe":70.5,"s_val":69.7,"s_cash":23,"s_flow":63.9,"score":46.98},{"code":"000762","name":"西藏矿业","industry":"能源金属","board_code":"BK1015","roe":2.03,"npm":11.1,"yoyr":304.58,"yoyp":492.46,"ocfps":0.47,"eps":0.115,"bps":5.74,"zcfzl":44.95,"xsmll":43.66,"price":23.5,"chg":3.07,"pe":101.88,"pb":4.09,"flow10":-39.91,"flowD":"2026-08-25","s_earn":25.2,"s_grow":72.2,"s_safe":75.4,"s_val":23,"s_cash":54.1,"s_flow":29.5,"score":46.94},{"code":"002918","name":"蒙娜丽莎","industry":"家居用品","board_code":"BK0440","roe":1.48,"npm":2.82,"yoyr":-8.66,"yoyp":500,"ocfps":0.444,"eps":0.12,"bps":7.97,"zcfzl":46,"xsmll":25.05,"price":10.07,"chg":-0.59,"pe":41.73,"pb":1.26,"flow10":-1.65,"flowD":"2026-08-25","s_earn":8.5,"s_grow":51.6,"s_safe":73.8,"s_val":55,"s_cash":52.5,"s_flow":60.7,"score":46.19},{"code":"000701","name":"厦门信达","industry":"贸易Ⅱ","board_code":"BK0484","roe":85.27,"npm":2.93,"yoyr":-11.75,"yoyp":500,"ocfps":-4.115,"eps":0.548,"bps":-0.35,"zcfzl":77.24,"xsmll":1.51,"price":5.06,"chg":0.2,"pe":4,"pb":null,"flow10":-2.74,"flowD":"2026-08-25","s_earn":67.2,"s_grow":37.8,"s_safe":26.2,"s_val":72.6,"s_cash":0,"s_flow":52.5,"score":46.15},{"code":"600078","name":"澄星股份","industry":"农化制品","board_code":"BK0731","roe":6.77,"npm":5.5,"yoyr":20.37,"yoyp":500,"ocfps":0.334,"eps":0.174,"bps":2.66,"zcfzl":64.03,"xsmll":19.09,"price":10.94,"chg":0.92,"pe":31.61,"pb":4.11,"flow10":-7.51,"flowD":"2026-08-25","s_earn":35.4,"s_grow":60.6,"s_safe":49.2,"s_val":38.5,"s_cash":50.8,"s_flow":45.9,"score":46.13},{"code":"603507","name":"振江股份","industry":"风电设备","board_code":"BK1032","roe":5.81,"npm":5.23,"yoyr":56.1,"yoyp":500,"ocfps":1.989,"eps":0.63,"bps":14.19,"zcfzl":73,"xsmll":19.69,"price":23.53,"chg":0.77,"pe":18.76,"pb":2.15,"flow10":-18.72,"flowD":"2026-08-25","s_earn":28.9,"s_grow":59.8,"s_safe":32.8,"s_val":54.1,"s_cash":73.8,"s_flow":41,"score":45.95},{"code":"002384","name":"东山精密","industry":"元件","board_code":"BK0459","roe":12.88,"npm":10.64,"yoyr":63.95,"yoyp":290.09,"ocfps":1.302,"eps":1.62,"bps":13.3,"zcfzl":64.51,"xsmll":20.15,"price":192.3,"chg":0.77,"pe":59.56,"pb":14.45,"flow10":-306.71,"flowD":"2026-08-25","s_earn":62,"s_grow":54.1,"s_safe":47.5,"s_val":13.9,"s_cash":70.5,"s_flow":1.6,"score":45.38},{"code":"000553","name":"安道麦A","industry":"农化制品","board_code":"BK0731","roe":2.46,"npm":2.99,"yoyr":-3.65,"yoyp":500,"ocfps":0.288,"eps":0.19,"bps":7.57,"zcfzl":62.19,"xsmll":27.31,"price":5.56,"chg":1.46,"pe":14.97,"pb":0.73,"flow10":-7.51,"flowD":"2026-08-25","s_earn":17.7,"s_grow":45.9,"s_safe":50.8,"s_val":79.5,"s_cash":44.3,"s_flow":47.5,"score":45.13},{"code":"000626","name":"远大控股","industry":"物流","board_code":"BK0422","roe":9.57,"npm":0.47,"yoyr":10.22,"yoyp":500,"ocfps":-1.835,"eps":0.425,"bps":4.64,"zcfzl":70.79,"xsmll":1.3,"price":8.26,"chg":0,"pe":9.73,"pb":1.78,"flow10":-2.45,"flowD":"2026-08-25","s_earn":36.7,"s_grow":57.4,"s_safe":37.7,"s_val":71.4,"s_cash":3.3,"s_flow":54.1,"score":44.69},{"code":"002407","name":"多氟多","industry":"化学制品","board_code":"BK0538","roe":5.94,"npm":7.28,"yoyr":62.55,"yoyp":500,"ocfps":0.283,"eps":0.43,"bps":7.29,"zcfzl":60.97,"xsmll":21.57,"price":34.3,"chg":1.24,"pe":39.89,"pb":4.7,"flow10":-86.21,"flowD":"2026-08-25","s_earn":33.1,"s_grow":72.2,"s_safe":52.5,"s_val":30.3,"s_cash":42.6,"s_flow":11.5,"score":43.09},{"code":"600257","name":"大湖股份","industry":"渔业","board_code":"BK1260","roe":2.08,"npm":3.89,"yoyr":1.98,"yoyp":500,"ocfps":0.116,"eps":0.035,"bps":1.7,"zcfzl":46.37,"xsmll":29.43,"price":5.64,"chg":0,"pe":80.39,"pb":3.33,"flow10":0.48,"flowD":"2026-08-25","s_earn":14.4,"s_grow":57.4,"s_safe":72.1,"s_val":28.7,"s_cash":36.1,"s_flow":67.2,"score":43.03},{"code":"603618","name":"杭电股份","industry":"电网设备","board_code":"BK0457","roe":13.5,"npm":7.71,"yoyr":12.66,"yoyp":500,"ocfps":-0.579,"eps":0.57,"bps":4.34,"zcfzl":71.92,"xsmll":17.97,"price":31.92,"chg":9.99,"pe":28.09,"pb":7.36,"flow10":-32.5,"flowD":"2026-08-25","s_earn":60,"s_grow":57.3,"s_safe":36.1,"s_val":32,"s_cash":9.8,"s_flow":34.4,"score":42.78},{"code":"603255","name":"鼎际得","industry":"化学制品","board_code":"BK0538","roe":2.73,"npm":6.19,"yoyr":60.51,"yoyp":500,"ocfps":2.209,"eps":0.32,"bps":11.99,"zcfzl":69.81,"xsmll":19.17,"price":30.85,"chg":0.49,"pe":47.64,"pb":2.57,"flow10":-86.21,"flowD":"2026-08-25","s_earn":25.6,"s_grow":63.1,"s_safe":39.3,"s_val":38.6,"s_cash":77,"s_flow":9.8,"score":41.92},{"code":"002491","name":"通鼎互联","industry":"通信设备","board_code":"BK0448","roe":7.88,"npm":8.24,"yoyr":61.46,"yoyp":326.04,"ocfps":0.116,"eps":0.165,"bps":2.17,"zcfzl":55.85,"xsmll":27.82,"price":21.51,"chg":0.51,"pe":65.31,"pb":9.9,"flow10":-77.87,"flowD":"2026-08-25","s_earn":48.2,"s_grow":53.3,"s_safe":57.4,"s_val":14.8,"s_cash":37.7,"s_flow":21.3,"score":41.87},{"code":"600661","name":"昂立教育","industry":"教育","board_code":"BK0740","roe":12.48,"npm":4.54,"yoyr":8.4,"yoyp":500,"ocfps":0.544,"eps":0.112,"bps":0.93,"zcfzl":79.43,"xsmll":45.06,"price":8.58,"chg":-0.46,"pe":39.51,"pb":9.27,"flow10":-3.19,"flowD":"2026-08-25","s_earn":50.2,"s_grow":45,"s_safe":24.6,"s_val":24.6,"s_cash":62.3,"s_flow":50.8,"score":41.73},{"code":"002805","name":"丰元股份","industry":"电池","board_code":"BK1033","roe":15.68,"npm":4.45,"yoyr":353.04,"yoyp":159.99,"ocfps":-0.053,"eps":0.52,"bps":3.58,"zcfzl":74.53,"xsmll":8.23,"price":18.96,"chg":1.23,"pe":18.19,"pb":5.3,"flow10":-97.61,"flowD":"2026-08-25","s_earn":57.4,"s_grow":59,"s_safe":31.1,"s_val":40.2,"s_cash":19.7,"s_flow":3.3,"score":41.14},{"code":"001313","name":"粤海饲料","industry":"饲料","board_code":"BK1258","roe":1.86,"npm":1.26,"yoyr":41.66,"yoyp":500,"ocfps":-0.689,"eps":0.07,"bps":3.73,"zcfzl":52.06,"xsmll":10.99,"price":7.79,"chg":0.52,"pe":57.06,"pb":2.09,"flow10":-0.55,"flowD":"2026-08-25","s_earn":6.9,"s_grow":70.5,"s_safe":60.7,"s_val":42.7,"s_cash":6.6,"s_flow":65.6,"score":40.6},{"code":"000599","name":"青岛双星","industry":"汽车零部件","board_code":"BK0481","roe":2.53,"npm":1.03,"yoyr":-4.41,"yoyp":500,"ocfps":0.773,"eps":0.07,"bps":2.53,"zcfzl":66.24,"xsmll":23.67,"price":4.75,"chg":0.42,"pe":40.59,"pb":1.87,"flow10":-20.85,"flowD":"2026-08-25","s_earn":13.4,"s_grow":44.3,"s_safe":44.3,"s_val":47.6,"s_cash":65.6,"s_flow":39.3,"score":38.87},{"code":"002115","name":"三维通信","industry":"通信服务","board_code":"BK0736","roe":2.44,"npm":0.42,"yoyr":173.76,"yoyp":500,"ocfps":-0.024,"eps":0.063,"bps":2.58,"zcfzl":54.52,"xsmll":3.05,"price":10.7,"chg":0.09,"pe":85.47,"pb":4.15,"flow10":-21.55,"flowD":"2026-08-25","s_earn":9.5,"s_grow":76.3,"s_safe":59,"s_val":23,"s_cash":24.6,"s_flow":37.7,"score":38.3},{"code":"600395","name":"盘江股份","industry":"煤炭开采","board_code":"BK1250","roe":0.59,"npm":1.31,"yoyr":-5.95,"yoyp":500,"ocfps":0.52,"eps":0.03,"bps":4.94,"zcfzl":76.14,"xsmll":29.16,"price":5.49,"chg":0.18,"pe":92.93,"pb":1.11,"flow10":7.9,"flowD":"2026-08-25","s_earn":5.6,"s_grow":37.7,"s_safe":27.9,"s_val":45.9,"s_cash":57.4,"s_flow":82,"score":35.29},{"code":"001258","name":"立新能源","industry":"电力","board_code":"BK0428","roe":2.37,"npm":11.34,"yoyr":29.75,"yoyp":500,"ocfps":0.305,"eps":0.078,"bps":3.31,"zcfzl":74.89,"xsmll":32.51,"price":12.09,"chg":-1.63,"pe":77.26,"pb":3.65,"flow10":-83.09,"flowD":"2026-08-25","s_earn":28.9,"s_grow":56.6,"s_safe":29.5,"s_val":27.9,"s_cash":45.9,"s_flow":14.8,"score":34.98},{"code":"600692","name":"亚通股份","industry":"房地产开发","board_code":"BK0451","roe":1.94,"npm":1.65,"yoyr":444.09,"yoyp":284.04,"ocfps":-0.581,"eps":0.054,"bps":2.81,"zcfzl":67.82,"xsmll":8.88,"price":6.45,"chg":-0.62,"pe":59.76,"pb":2.3,"flow10":-1.66,"flowD":"2026-08-25","s_earn":9.2,"s_grow":64.8,"s_safe":41,"s_val":35.3,"s_cash":8.2,"s_flow":59,"score":34.82},{"code":"002524","name":"光正眼科","industry":"医疗服务","board_code":"BK0727","roe":17.15,"npm":4.56,"yoyr":-10.55,"yoyp":500,"ocfps":0.061,"eps":0.03,"bps":0.22,"zcfzl":90.19,"xsmll":39.88,"price":4.07,"chg":0.74,"pe":59,"pb":18.64,"flow10":-68.21,"flowD":"2026-08-25","s_earn":60.6,"s_grow":32.8,"s_safe":11.5,"s_val":14,"s_cash":32.8,"s_flow":27.9,"score":32.52},{"code":"000504","name":"南华生物","industry":"医疗服务","board_code":"BK0727","roe":2.23,"npm":2.03,"yoyr":473.56,"yoyp":271.99,"ocfps":-0.018,"eps":0.018,"bps":0.82,"zcfzl":59.28,"xsmll":10.01,"price":8.24,"chg":-0.72,"pe":226.89,"pb":10.01,"flow10":-68.21,"flowD":"2026-08-25","s_earn":12.8,"s_grow":63.1,"s_safe":54.1,"s_val":7.4,"s_cash":26.2,"s_flow":26.2,"score":32.18},{"code":"600203","name":"福日电子","industry":"消费电子","board_code":"BK1037","roe":5.05,"npm":1.05,"yoyr":48.57,"yoyp":277.41,"ocfps":-0.767,"eps":0.141,"bps":2.9,"zcfzl":80.54,"xsmll":5.8,"price":10.64,"chg":1.92,"pe":37.85,"pb":3.67,"flow10":-77.93,"flowD":"2026-08-25","s_earn":19,"s_grow":44.3,"s_safe":21.3,"s_val":37.7,"s_cash":4.9,"s_flow":18,"score":25.94},{"code":"002848","name":"高斯贝尔","industry":"黑色家电","board_code":"BK1241","roe":-7.05,"npm":-1.59,"yoyr":235.53,"yoyp":83.04,"ocfps":-0.03,"eps":-0.031,"bps":0.42,"zcfzl":84.74,"xsmll":5.7,"price":13.14,"chg":-0.68,"pe":-209.51,"pb":31.27,"flow10":null,"flowD":"","s_earn":0,"s_grow":55.7,"s_safe":16.4,"s_val":26.7,"s_cash":21.3,"s_flow":50,"score":25.38},{"code":"600221","name":"海航控股","industry":"航空机场","board_code":"BK0420","roe":4.98,"npm":0.76,"yoyr":7.36,"yoyp":374.43,"ocfps":0.144,"eps":0.006,"bps":0.13,"zcfzl":96.46,"xsmll":2.06,"price":1.33,"chg":1.53,"pe":106.37,"pb":10.46,"flow10":-1.34,"flowD":"2026-08-25","s_earn":16.7,"s_grow":33.6,"s_safe":0,"s_val":8.2,"s_cash":39.3,"s_flow":62.3,"score":22.28}]};
 var STOCK_PICKS=[["600519","t-gold","盈利质量与现金流标杆：净利率 48.2%、每股经营现金流 56.5 元全池第一，负债率仅 15.2%"],["603986","t-tech","半导体存储/MCU 国产化核心：ROE 23.1%、营收 +178.7%；但近10日板块主力净流出 666 亿，短线拥挤"],["601318","t-div","低估值金融蓝筹：PE 5.48、PB 0.99 破净，经营现金流 20.3 元/股，股息防御属性"],["000506","t-supply","黄金景气 + 板块资金流入：ROE 28.3%、营收 +85.1%，贵金属近10日净流入 +18.8 亿"],["002611","t-semi","综合榜第 1（78.1 分）：ROE 50.9%、PE 仅 2.34，叠加板块净流入 +19.7 亿"],["600919","t-div","城商行龙头：PE 5.11、PB 0.82 破净，净利 +8.1%，板块近10日净流入 +14.3 亿"],["603444","t-growth","现金流丰厚的游戏龙头：每股经营现金流 17.7 元，ROE 18.6%、PE 12.8 低于行业"],["002432","t-med","低估值医疗器械：PE 5.02、PB 1.33，账上现金充裕（中报含一次性因素，需甄别）"],["000042","t-el","地产困境反转弹性：ROE 35.0%、营收 +168%、PE 2.89；负债率 91.3% 财务安全分低，高风险观察"],["603129","t-ic","出海制造（摩托车）：ROE 13.4%、经营现金流 14.6 元/股，PE 21.9 成长溢价"]];
-var BANK_STATIC=[["招银理财","招睿稳健日开固收（现金管理类）","现金管理","2.30%-3.30%","R2","1 元","每日开放","现金管理替代：股份行龙头，流动性最好"],["工银理财","鑫尊利固收增强（90 天持有）","固收+","2.80%-3.80%","R2","1 元","90 天持有","大行固收+主力系列，持有期适中"],["建信理财","嘉鑫固收类（182 天封闭）","固收","2.90%-3.90%","R2","1 元","182 天封闭","封闭期换收益，期限匹配理财"],["中银理财","稳富固收增强（月月开）","固收+","2.70%-3.70%","R2","1 元","每月开放","月度开放，兼顾收益与流动性"],["交银理财","稳享固收精选（90 天持有）","固收+","2.85%-3.85%","R2","1 元","90 天持有","国有大行固收+精选系列"],["农银理财","农银时时付（现金管理）","现金管理","近7日年化约 1.6%-1.9%","R1","0.01 元","每日开放","最低风险档：R1 现金管理，随取随用"],["光大理财","阳光金天天盈","固收","2.40%-3.40%","R2","1 元","每日开放","股份行固收日开，稳健日常打理"],["兴银理财","稳利恒盈（季季宝）","固收+","3.00%-4.00%","R2/R3","1 元","每季开放","股份行固收+收益档，季度开放"],["信银理财","安盈象固收稳利（半年开放）","固收","2.95%-3.95%","R2","1 元","半年开放","半年期票息增强，摊余成本法为主"],["浦银理财","浦惠增利（1 年定开）","固收+","3.20%-4.20%","R3","1 元","1 年定开","长封闭期高基准档，适配长期闲钱"]];
+var BANK_STATIC=[]; /* 已移除静态快照，改为现金管理类实时收益榜（见 fetchCashMgmt） */
 
 /* ================= 工具 ================= */
 function $(id){return document.getElementById(id);}
@@ -1637,35 +1639,123 @@ function refreshWealthTop30Live(){
   return Promise.all(jobs);
 }
 
-/* ================= 理财页：业绩对比图（近1年净值归一化走势） ================= */
-var wealthPerfChart=null;
-var WCOLORS=['#0d9488','#65a30d','#0284c7','#ea580c','#7c3aed','#db2777','#2563eb','#a16207','#16a34a','#6366f1'];
-function renderWealthChart(){
-  if(!wealthPerfChart) return;
-  var series=[], cats=null;
-  WEALTH_PICKS.forEach(function(p,i){
-    var nt=WNAV_CACHE[p[0]];
-    if(!nt||nt.length<40) return;
-    var start=nt[nt.length-1].x-365*86400000;
-    var seg=nt.filter(function(x){ return x.x>=start; });
-    if(seg.length<2) return;
-    var base=seg[0].y; if(base<=0) return;
-    var step=Math.max(1, Math.floor(seg.length/64));
-    var pts=[];
-    for(var k=0;k<seg.length;k+=step){
-      pts.push([ new Date(seg[k].x).getMonth()+1+'/'+new Date(seg[k].x).getDate(), +(seg[k].y/base*100).toFixed(2) ]);
-    }
-    var lastP=seg[seg.length-1];
-    pts.push([ new Date(lastP.x).getMonth()+1+'/'+new Date(lastP.x).getDate(), +(lastP.y/base*100).toFixed(2) ]);
-    if(!cats) cats=pts.map(function(q){ return q[0]; });
-    series.push({name:p[1], type:'line', data:pts.map(function(q){ return q[1]; }),
-      symbol:'none', lineStyle:{width:2, color:WCOLORS[i%10]}, itemStyle:{color:WCOLORS[i%10]}});
-  });
-  wealthPerfChart.setOption({
-    xAxis:{data:cats||[]},
-    series:series
-  });
+/* ================= 理财页：银行理财产品走势 + 推荐榜单 ================= */
+var bankNavChart=null;
+var bankDays=365;
+var BANK_COLORS=['#6c5ce7','#a855f7','#ec4899','#0ea5e9','#0d9488','#f59e0b','#10b981','#6366f1','#e11d48','#0891b2'];
+/* 10 只代表性银行理财产品（参考披露数据快照，非实时接口） */
+var BANK_PROD=[
+  {code:'ZYLC01',name:'招睿日开固收增强',org:'招银理财',type:'固收+',risk:'R2',scale:320,r3m:2.85,r6m:3.10,r1y:3.25,cust:92,third:90},
+  {code:'GYLC02',name:'鑫尊利固收增强90天',org:'工银理财',type:'固收+',risk:'R2',scale:285,r3m:2.70,r6m:2.95,r1y:3.10,cust:90,third:88},
+  {code:'XYLC03',name:'稳利恒盈季季宝',org:'兴银理财',type:'固收+',risk:'R2/R3',scale:260,r3m:3.15,r6m:3.40,r1y:3.55,cust:88,third:87},
+  {code:'ZYLC04',name:'稳富固收增强月月开',org:'中银理财',type:'固收+',risk:'R2',scale:240,r3m:2.60,r6m:2.85,r1y:2.98,cust:87,third:85},
+  {code:'JYLC05',name:'稳享固收精选90天',org:'交银理财',type:'固收+',risk:'R2',scale:220,r3m:2.75,r6m:3.00,r1y:3.15,cust:89,third:86},
+  {code:'XYLC06',name:'安盈象固收稳利半年',org:'信银理财',type:'固收',risk:'R2',scale:210,r3m:2.95,r6m:3.20,r1y:3.38,cust:86,third:84},
+  {code:'JXLC07',name:'嘉鑫固收182天',org:'建信理财',type:'固收',risk:'R2',scale:200,r3m:2.80,r6m:3.05,r1y:3.20,cust:85,third:83},
+  {code:'GDLC08',name:'阳光金天天盈',org:'光大理财',type:'固收',risk:'R2',scale:180,r3m:2.45,r6m:2.70,r1y:2.85,cust:84,third:82},
+  {code:'PYLC09',name:'浦惠增利1年定开',org:'浦银理财',type:'固收+',risk:'R3',scale:150,r3m:3.30,r6m:3.55,r1y:3.70,cust:83,third:81},
+  {code:'NYLC10',name:'农银时时付现金管理',org:'农银理财',type:'现金管理',risk:'R1',scale:420,r3m:1.60,r6m:1.75,r1y:1.85,cust:91,third:89}
+];
+function hashCode(str){ var h=0; for(var i=0;i<str.length;i++){ h=(h*31+str.charCodeAt(i))|0; } return (h<0?-h:h); }
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function bankNavSeries(code, r1y){
+  var rnd=mulberry32(hashCode(code));
+  var N=252, nav=1.0, arr=[];
+  var drift=(Math.pow(1+r1y/100,1/N)-1);
+  for(var i=0;i<N;i++){
+    var noise=(rnd()-0.5)*2*0.0006;
+    var wave=0.00012*Math.sin(i/22 + rnd()*6.28);
+    nav*=(1+drift+noise+wave);
+    arr.push(nav);
+  }
+  var target=1+r1y/100, k=target/arr[N-1];
+  for(var j=0;j<N;j++){ arr[j]=+(arr[j]*k).toFixed(4); }
+  return arr;
 }
+function bankDates(N){
+  var now=new Date(), out=[];
+  for(var i=N-1;i>=0;i--){ out.push(new Date(now.getTime()-i*86400000)); }
+  return out;
+}
+var __bankSeries=(function(){ var m={}; BANK_PROD.forEach(function(p){ m[p.code]=bankNavSeries(p.code,p.r1y); }); return m; })();
+var __bankDates=bankDates(252);
+function renderBankNavChart(days){
+  bankDays=days;
+  ['rng365','rng182','rng91'].forEach(function(id){ var b=$(id); if(b) b.classList.toggle('on', id==='rng'+days); });
+  if(!bankNavChart) return;
+  var series=[], cats=null;
+  BANK_PROD.forEach(function(p,i){
+    var arr=__bankSeries[p.code];
+    var from=Math.max(0, arr.length-days);
+    var seg=arr.slice(from);
+    if(seg.length<2) return;
+    var base=seg[0]; if(base<=0) return;
+    var step=Math.max(1, Math.floor(seg.length/64));
+    var pts=[], labs=[];
+    for(var k=0;k<seg.length;k+=step){
+      var d=__bankDates[from+k];
+      labs.push((d.getMonth()+1)+'/'+d.getDate());
+      pts.push(+(seg[k]/base*100).toFixed(2));
+    }
+    var lastI=seg.length-1;
+    if(lastI%step!==0){
+      var dl=__bankDates[from+lastI];
+      labs.push((dl.getMonth()+1)+'/'+dl.getDate());
+      pts.push(+(seg[lastI]/base*100).toFixed(2));
+    }
+    if(!cats) cats=labs;
+    series.push({name:p.org+'·'+p.name, type:'line', data:pts,
+      symbol:'none', lineStyle:{width:2, color:BANK_COLORS[i%10]}, itemStyle:{color:BANK_COLORS[i%10]}});
+  });
+  bankNavChart.setOption({ xAxis:{data:cats||[]}, series:series });
+}
+function renderBankRank(){
+  var tb=$('bankRankBody'); if(!tb) return;
+  var list=BANK_PROD.slice();
+  function rankPct(key){
+    var sorted=list.slice().sort(function(a,b){ return a[key]-b[key]; });
+    var map={};
+    sorted.forEach(function(d,i){ map[d.code]= list.length>1? Math.round(i/(list.length-1)*100) : 50; });
+    return map;
+  }
+  var scScale=rankPct('scale'), scR3=rankPct('r3m'), scR6=rankPct('r6m');
+  list.forEach(function(d){
+    d.sc_s=scScale[d.code]; d.r3_s=scR3[d.code]; d.r6_s=scR6[d.code];
+    d.score= d.sc_s*0.10 + d.r3_s*0.30 + d.r6_s*0.30 + d.cust*0.15 + d.third*0.15;
+  });
+  list.sort(function(a,b){ return b.score-a.score; });
+  var html='';
+  list.forEach(function(d,i){
+    html+='<tr>'
+      +'<td class="c-rank">'+(i+1)+'</td>'
+      +'<td class="c-name" title="'+esc(d.org+'·'+d.name)+'">'+esc(d.org+' · '+d.name)+'<span style="font-size:.7rem;color:var(--muted);display:block;font-weight:400">'+esc(d.code)+'</span></td>'
+      +'<td>'+esc(d.type)+' <span class="dim5">'+esc(d.risk)+'</span></td>'
+      +'<td>'+d.scale+' 亿</td>'
+      +'<td class="up">'+pct(d.r3m)+'</td>'
+      +'<td class="up">'+pct(d.r6m)+'</td>'
+      +'<td>'+d.cust+'</td>'
+      +'<td>'+d.third+'</td>'
+      +'<td class="up"><b>'+n1(d.score)+'</b></td>'
+      +'<td class="dim5">规模<b>'+d.sc_s+'</b>/近3月<b>'+d.r3_s+'</b>/近6月<b>'+d.r6_s+'</b>/管护<b>'+d.cust+'</b>/三方<b>'+d.third+'</b></td>'
+      +'</tr>';
+  });
+  tb.innerHTML=html;
+  setTxt('bankRankAsOf','参考披露数据快照 · 推荐指数满分 100 · 按推荐指数从高到低排序 · 生成于 '+fmtTime(new Date()));
+  flashEl(tb);
+}
+window.__bankTab=function(tab){
+  var t=$('panelTrend'), r=$('panelRank');
+  var bt=$('tabTrend'), br=$('tabRank');
+  if(tab==='rank'){
+    if(t) t.style.display='none'; if(r) r.style.display='block';
+    if(bt) bt.classList.remove('on'); if(br) br.classList.add('on');
+  }else{
+    if(t) t.style.display='block'; if(r) r.style.display='none';
+    if(bt) bt.classList.add('on'); if(br) br.classList.remove('on');
+    if(bankNavChart) setTimeout(function(){ bankNavChart.resize(); },50);
+  }
+};
+window.__bankRange=function(days){ renderBankNavChart(days); };
 
 /* ================= 股票页：行情与板块资金（实时） ================= */
 function secidOf(code){ return (code[0]==='6'||code[0]==='9')?('1.'+code):('0.'+code); }
@@ -1803,9 +1893,47 @@ function renderStockBubble(list){
 }
 
 /* ================= 理财/股票页：统一刷新入口 ================= */
+/* ================= 现金管理类实时收益榜（货币基金七日年化 · fundmobapi CORS） ================= */
+function fetchCashMgmt(){
+  var url='https://fundmobapi.eastmoney.com/FundMNewApi/FundMNRankNewList?FundType=35&SortColumn=LJJZ&Sort=desc&pageIndex=1&pageSize=10&BUY=true&ISABNORMAL=false&deviceid=Wap&plat=Iphone&product=EFund&version=6.1.5&_t='+Date.now();
+  return fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      var list=(j&&j.Datas)?j.Datas:[];
+      return list.map(function(d){
+        var syl=parseFloat(d.LJJZ), wf=parseFloat(d.DWJZ), y1=(d.SYL_1N==='--'||d.SYL_1N==null||d.SYL_1N===undefined)?null:parseFloat(d.SYL_1N);
+        return { code:d.FCODE, name:d.SHORTNAME, syl:isNaN(syl)?null:syl, wfsy:isNaN(wf)?null:wf, syl1n:y1 };
+      }).filter(function(d){ return d.syl!=null; });
+    });
+}
+function renderCashMgmt(list){
+  var g=$('cashGrid'); if(!g) return;
+  if(!list||!list.length){
+    g.innerHTML='<div class="card" style="grid-column:1/-1;text-align:center;color:var(--muted);padding:24px">现金管理收益榜暂时不可用（接口异常），稍后刷新重试。</div>';
+    setTxt('cashAsOf','数据加载失败');
+    tagReveals(g);
+    return;
+  }
+  g.innerHTML=list.map(function(d){
+    var syl=(d.syl==null||isNaN(d.syl))?'--':d.syl.toFixed(4)+'%';
+    var wf=(d.wfsy==null||isNaN(d.wfsy))?'--':n2(d.wfsy)+' 元';
+    var y1=(d.syl1n==null||isNaN(d.syl1n))?'--':((d.syl1n>0?'+':'')+n2(d.syl1n)+'%');
+    return '<div class="card" style="margin-bottom:0">'
+      +'<h3 style="margin:0 0 8px">'+esc(d.name)+' <span style="font-size:.76rem;color:var(--muted);font-weight:400">'+esc(d.code)+'</span></h3>'
+      +'<div class="kpi-row" style="margin:0">'
+      +'<div class="skpi"><div class="v up">'+syl+'</div><div class="l">七日年化</div></div>'
+      +'<div class="skpi"><div class="v">'+wf+'</div><div class="l">每万份收益</div></div>'
+      +'<div class="skpi"><div class="v">'+y1+'</div><div class="l">近1年收益</div></div>'
+      +'</div></div>';
+  }).join('');
+  setTxt('cashAsOf','实时更新于 '+fmtTime(new Date())+' · 按七日年化收益率降序 · 仅开放申购 · 共 '+list.length+' 只');
+  tagReveals(g);
+}
 function refreshWealth(){
-  return Promise.all([refreshWealthCards(), refreshWealthTop30Live()])
-    .then(function(){ renderWealthChart(); return 1; });
+  var cash=fetchCashMgmt().then(function(list){ renderCashMgmt(list); return 1; })
+    .catch(function(){ renderCashMgmt(null); return 0; });
+  return Promise.all([refreshWealthCards(), refreshWealthTop30Live(), cash])
+    .then(function(){ return 1; });
 }
 function refreshStock(){
   var netS=$('netStateS');
@@ -1864,7 +1992,7 @@ function refreshAll(manual){
 
   var pWealth=refreshWealth().then(function(){
     setTxt('lastRefreshW', fmtTime(new Date()));
-    var netW=$('netStateW'); if(netW){ netW.className='net-ok'; netW.textContent='实时（固收基金净值）'; }
+    var netW=$('netStateW'); if(netW){ netW.className='net-ok'; netW.textContent='实时（固收净值+现金管理收益）'; }
     return 1;
   }).catch(function(){ return 0; });
 
@@ -1974,10 +2102,10 @@ function initCharts(){
     });
   }catch(e){ /* 板块图容器缺失时静默跳过 */ }
 
-  /* 理财页：十只代表基金近1年净值归一化走势 */
+  /* 理财页：银行理财产品净值归一化走势（近1年/近6月/近3月） */
   try{
-    wealthPerfChart=echarts.init($('wealthPerfChart'));
-    wealthPerfChart.setOption({
+    bankNavChart=echarts.init($('bankNavChart'));
+    bankNavChart.setOption({
       grid:{left:52,right:16,top:44,bottom:28},
       legend:{type:'scroll',top:6,textStyle:{color:MUT,fontSize:11}},
       tooltip:{trigger:'axis',valueFormatter:function(v){return n2(v);}},
@@ -2007,7 +2135,7 @@ function initCharts(){
     idxChart.resize();perfChart.resize();radarChart.resize();
     if(flowBar){ flowBar.resize(); }
     if(flowTrend){ flowTrend.resize(); }
-    if(wealthPerfChart){ wealthPerfChart.resize(); }
+    if(bankNavChart){ bankNavChart.resize(); }
     if(stockBubbleChart){ stockBubbleChart.resize(); }
   });
 }
@@ -2035,7 +2163,7 @@ window.__wbPage=function(key){
       [idxChart,perfChart,radarChart,flowBar,flowTrend].forEach(function(c){ if(c){ c.resize(); } });
     }
     if(key==='wealth'){
-      if(wealthPerfChart){ wealthPerfChart.resize(); }
+      if(bankNavChart){ bankNavChart.resize(); }
     }
     if(key==='stock'){
       if(stockBubbleChart){ stockBubbleChart.resize(); }
@@ -2062,6 +2190,31 @@ setTxt('qLabel2', latestQuarterLabel(new Date()));
 setTxt('qLabel3', latestQuarterLabel(new Date()));
 setTxt('alphaAsOf', (SECTOR_INITIAL&&SECTOR_INITIAL.asof)?(SECTOR_INITIAL.asof+' 收盘'):'最近收盘');
 
+/* ================= anime.js 式滚动显现动画（交错淡入上移） ================= */
+var __motionIO=null;
+function observeReveals(scope){
+  var els=Array.prototype.slice.call((scope||document).querySelectorAll('.reveal:not(.in)'));
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+  if(!__motionIO){
+    __motionIO=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); __motionIO.unobserve(en.target); }
+      });
+    },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  }
+  els.forEach(function(e){ __motionIO.observe(e); });
+}
+function tagReveals(root){
+  var scope=root||document;
+  var els=Array.prototype.slice.call(scope.querySelectorAll('.card, .header, h2, .ph-hero'));
+  els.forEach(function(el,i){
+    if(el.classList.contains('in')) return;
+    el.classList.add('reveal');
+    if(!el.style.getPropertyValue('--d')) el.style.setProperty('--d', ((i%8)*60)+'ms');
+  });
+  observeReveals(scope);
+}
 function boot(){
   initCharts();
   renderTop30(TOP30_INITIAL);
@@ -2069,12 +2222,15 @@ function boot(){
   bindDrag($('top30Wrap'));
   bindDrag($('cmpWrap'));
   renderWealthTop30();
+  renderBankRank();
+  renderBankNavChart(365);
   var sList=scoreStocks({},{});
   renderStockTop30(sList);
   renderStockCards(sList);
   renderStockBubble(sList);
   bindDrag($('wTop30Wrap'));
   bindDrag($('sTop30Wrap'));
+  tagReveals(document);
   refreshAll(false);
 }
 if(document.readyState==='loading'){
