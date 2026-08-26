@@ -12,6 +12,12 @@
     --red:#e5484d; --green:#0a9a6e;
     --gold:#b7791f; --blue:#4f46e5; --amber:#b45309; --purple:#7c3aed;
     --header-from:#4f46e5; --header-mid:#7c3aed; --header-to:#c026d3;
+    --surface:#faf9fc; --surface-2:#f4f3f7; --reason-bg:#f7f5ff;
+    --sig-bg:#fffaf3; --risk-bg:#fff5f5; --risk-border:#fde2e2;
+    --hover-border:#e0dcf5; --badge-bg:#efeaff; --live-badge-bg:#eef0ff; --live-badge-border:#cfc6ff;
+    --glass-bg:rgba(255,255,255,.55); --glass-bg-2:rgba(255,255,255,.34);
+    --glass-border:rgba(255,255,255,.72); --glass-thumb-a:rgba(255,255,255,.95); --glass-thumb-b:rgba(255,255,255,.64);
+    --glass-sheen:rgba(255,255,255,.5);
     --shadow-sm:0 1px 2px rgba(23,22,26,.05),0 2px 6px rgba(23,22,26,.05);
     --shadow-md:0 8px 28px rgba(23,22,26,.10),0 2px 8px rgba(23,22,26,.06);
     --radius:18px;
@@ -49,14 +55,14 @@
 
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm);
     transition:transform .38s var(--ease),box-shadow .38s var(--ease),border-color .38s var(--ease);}
-  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#e0dcf5;}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--hover-border);}
   .card.note{border-left:4px solid var(--gold);}
   .up{color:var(--red);} .down{color:var(--green);}
   table{width:100%;border-collapse:collapse;font-size:.82rem;}
   th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
-  th{color:var(--muted);font-weight:600;background:#f4f3f7;white-space:nowrap;font-size:.75rem;letter-spacing:.03em;}
+  th{color:var(--muted);font-weight:600;background:var(--surface-2);white-space:nowrap;font-size:.75rem;letter-spacing:.03em;}
   tr{transition:background .2s var(--ease);}
-  tbody tr:hover{background:#faf9fc;}
+  tbody tr:hover{background:var(--surface);}
   .chart{width:100%;height:300px;}
   .chart.sm{height:240px;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
@@ -65,16 +71,16 @@
   .t-supply{background:#0284c7;} .t-ic{background:#7c3aed;} .t-semi{background:#6366f1;}
   .t-hk{background:#0e7490;} .t-el{background:#db2777;} .t-growth{background:#ea580c;} .t-gold{background:#a16207;}
   .kpi-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
-  .kpi{flex:1;min-width:110px;background:#faf9fc;border:1px solid var(--border);border-radius:14px;padding:10px 11px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .kpi{flex:1;min-width:110px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 11px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
   .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
   .kpi .v{font-size:1.06rem;font-weight:800;letter-spacing:-.01em;}
   .kpi .l{font-size:.68rem;color:var(--muted);}
-  .sig{border-left:3px solid var(--amber);background:#fffaf3;padding:9px 14px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:.85rem;}
+  .sig{border-left:3px solid var(--amber);background:var(--sig-bg);padding:9px 14px;border-radius:0 10px 10px 0;margin-bottom:8px;font-size:.85rem;}
   .sig b{color:var(--accent);}
-  .risk{margin-top:12px;font-size:.78rem;color:var(--red);background:#fff5f5;border:1px solid #fde2e2;border-radius:14px;padding:12px 14px;}
+  .risk{margin-top:12px;font-size:.78rem;color:var(--red);background:var(--risk-bg);border:1px solid var(--risk-border);border-radius:14px;padding:12px 14px;}
   .method{font-size:.75rem;color:var(--muted);margin-top:8px;line-height:1.6;}
   .footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;text-align:center;}
-  .badge{display:inline-block;background:#efeaff;color:var(--accent);border-radius:8px;padding:0 7px;font-size:.72rem;font-weight:600;margin-left:4px;}
+  .badge{display:inline-block;background:var(--badge-bg);color:var(--accent);border-radius:8px;padding:0 7px;font-size:.72rem;font-weight:600;margin-left:4px;}
 
   /* ===== 控制条 / 按钮 / 状态 / toast ===== */
   .ctlbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:16px;padding:11px 15px;position:relative;z-index:1;}
@@ -100,13 +106,13 @@
   .tbl-wrap.dragging{cursor:grabbing;user-select:none;}
   .tbl-wrap table{min-width:1060px;margin:0;}
   .tbl-wrap th,.tbl-wrap td{white-space:nowrap;}
-  .tbl-wrap thead th{position:sticky;top:0;z-index:3;background:#f4f3f7;}
+  .tbl-wrap thead th{position:sticky;top:0;z-index:3;background:var(--surface-2);}
   .tbl-wrap .c-rank{position:sticky;left:0;z-index:2;background:#fff;width:44px;}
   .tbl-wrap .c-code{position:sticky;left:44px;z-index:2;background:#fff;}
   .tbl-wrap .c-name{position:sticky;left:108px;z-index:2;background:#fff;font-weight:600;}
-  .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name{z-index:4;background:#f4f3f7;}
+  .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name{z-index:4;background:var(--surface-2);}
   .tbl-wrap .c-fund{position:sticky;left:0;z-index:2;background:#fff;font-weight:600;}
-  .tbl-wrap thead .c-fund{z-index:4;background:#f4f3f7;}
+  .tbl-wrap thead .c-fund{z-index:4;background:var(--surface-2);}
 
   /* ===== 三页切换 ===== */
   .page-view{display:none;}
@@ -135,37 +141,44 @@
   .lg-tab .dot{position:absolute;top:5px;right:11px;width:6px;height:6px;border-radius:50%;background:var(--amber);opacity:.85;}
 
   /* ===== 板块资金流模块 ===== */
-  .sec-chip{display:inline-block;background:#f4f3f7;border:1px solid var(--border);border-radius:10px;padding:1px 10px;font-size:.72rem;color:var(--text);font-weight:600;margin-right:6px;}
+  .sec-chip{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:1px 10px;font-size:.72rem;color:var(--text);font-weight:600;margin-right:6px;}
   .sec-kpi{flex:1;min-width:150px;}
 
   /* ===== 理财/股票页补充样式 ===== */
   .t-cash{background:#0d9488;} .t-bond{background:#65a30d;} .t-credit{background:#0284c7;} .t-fixp{background:#ea580c;} .t-def{background:#6b7280;}
   .wgt{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;}
-  .wgt .chip{font-size:.72rem;padding:4px 13px;border-radius:16px;border:1px solid var(--border);background:#f4f3f7;color:var(--muted);}
+  .wgt .chip{font-size:.72rem;padding:4px 13px;border-radius:16px;border:1px solid var(--border);background:var(--surface-2);color:var(--muted);}
   .wgt .chip b{color:var(--text);}
   .dim5{font-size:.7rem;color:var(--muted);white-space:nowrap;}
   .dim5 b{color:var(--text);}
-  .reason{font-size:.8rem;margin-top:8px;background:#f7f5ff;border-left:3px solid var(--accent);padding:9px 13px;border-radius:0 10px 10px 0;}
+  .reason{font-size:.8rem;margin-top:8px;background:var(--reason-bg);border-left:3px solid var(--accent);padding:9px 13px;border-radius:0 10px 10px 0;}
   .reason b{color:var(--accent);}
   .static-badge{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:8px;padding:0 7px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
-  .live-badge{display:inline-block;background:#eef0ff;color:var(--accent);border:1px solid #cfc6ff;border-radius:8px;padding:0 7px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
-  .skpi{flex:1;min-width:92px;background:#faf9fc;border:1px solid var(--border);border-radius:14px;padding:9px 10px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .live-badge{display:inline-block;background:var(--live-badge-bg);color:var(--accent);border:1px solid var(--live-badge-border);border-radius:8px;padding:0 7px;font-size:.7rem;font-weight:600;margin-left:6px;vertical-align:middle;}
+  .skpi{flex:1;min-width:92px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:9px 10px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
   .skpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
   .skpi .v{font-size:.9rem;font-weight:800;}
   .skpi .l{font-size:.64rem;color:var(--muted);}
 
-  /* ===== Tab 页签 / 时间范围切换 ===== */
-  .tabs{display:flex;gap:6px;background:#f1eff7;border-radius:14px;padding:5px;margin-bottom:16px;}
-  .tab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 14px;font-size:.86rem;font-weight:600;font-family:inherit;color:var(--muted);cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease);}
+  /* ===== Tab 页签（iOS 液态玻璃 Liquid Glass 分段控件） ===== */
+  .tabs{position:relative;display:flex;gap:0;padding:6px;border-radius:18px;margin-bottom:16px;
+    background:linear-gradient(135deg,var(--glass-bg) 0%,var(--glass-bg-2) 100%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);
+    border:1px solid var(--glass-border);
+    box-shadow:0 8px 26px rgba(23,22,26,.10),0 1px 3px rgba(23,22,26,.06),inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.28);}
+  .tabs::before{content:'';position:absolute;top:6px;left:6px;width:calc(50% - 6px);height:calc(100% - 12px);border-radius:13px;z-index:0;
+    background:linear-gradient(135deg,var(--glass-thumb-a) 0%,var(--glass-thumb-b) 100%);
+    box-shadow:0 3px 12px rgba(23,22,26,.14),0 1px 2px rgba(23,22,26,.08),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(23,22,26,.04);
+    transition:transform .45s var(--spring);}
+  .tabs::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
+    background:linear-gradient(115deg,var(--glass-sheen) 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,0) 70%,rgba(255,255,255,.18) 100%);}
+  .tabs.rec::before{transform:translateX(100%);}
+  .tab{position:relative;z-index:1;flex:1;border:none;background:transparent;border-radius:13px;padding:10px 14px;font-size:.86rem;font-weight:600;font-family:inherit;color:var(--muted);cursor:pointer;transition:color .3s var(--ease);}
   .tab:hover{color:var(--text);}
-  .tab.on{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm);}
+  .tab:active{transform:scale(.97);}
+  .tab.on{color:var(--accent);}
   .tab-panel{animation:panelIn .42s var(--ease);}
   @keyframes panelIn{0%{opacity:0;transform:translateY(8px);}100%{opacity:1;transform:none;}}
-  .range-switch{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-  .rng-lbl{font-size:.76rem;color:var(--muted);margin-right:2px;}
-  .rng{border:1px solid var(--border);background:#fff;border-radius:16px;padding:4px 14px;font-size:.76rem;font-weight:600;font-family:inherit;color:var(--muted);cursor:pointer;transition:all .28s var(--ease);}
-  .rng:hover{border-color:var(--accent);color:var(--accent);}
-  .rng.on{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(108,92,231,.28);}
 
   body{padding-bottom:122px;}
 
@@ -191,6 +204,44 @@
   @media(prefers-reduced-motion:reduce){
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
     .reveal{opacity:1;transform:none;}
+  }
+
+  /* ===== 深色模式（跟随系统 prefers-color-scheme） ===== */
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#0e0e11; --card:#1b1b1f; --text:#f2f2f5; --muted:#9b9aa3;
+      --border:#2c2c33; --accent:#8b7cf7; --accent-2:#b988fc; --accent-3:#f472b6;
+      --red:#f07076; --green:#34c08c; --gold:#d9a441; --amber:#e08a3c;
+      --header-from:#3b33c9; --header-mid:#6a2fd0; --header-to:#9d27a8;
+      --surface:#26262b; --surface-2:#2c2c33; --reason-bg:#221f38;
+      --sig-bg:#2a2415; --risk-bg:#2a181a; --risk-border:#4a2a2e;
+      --hover-border:#3a3560; --badge-bg:#2a2547; --live-badge-bg:#2a2547; --live-badge-border:#4a3f8a;
+      --glass-bg:rgba(46,46,54,.5); --glass-bg-2:rgba(46,46,54,.28);
+      --glass-border:rgba(255,255,255,.12); --glass-thumb-a:rgba(74,74,86,.92); --glass-thumb-b:rgba(60,60,72,.72);
+      --glass-sheen:rgba(255,255,255,.14);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.4);
+      --shadow-md:0 10px 34px rgba(0,0,0,.55),0 2px 10px rgba(0,0,0,.45);
+    }
+    body{color-scheme:dark;}
+    .card{box-shadow:var(--shadow-sm);}
+    .card:hover{border-color:var(--hover-border);}
+    .tbl-wrap{background:var(--card);}
+    .tbl-wrap .c-rank,.tbl-wrap .c-code,.tbl-wrap .c-name,.tbl-wrap .c-fund{background:var(--card);}
+    .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name,.tbl-wrap thead .c-fund{background:var(--surface-2);}
+    .tabs{box-shadow:0 8px 26px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.3);}
+    .tabs::before{box-shadow:0 3px 14px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.3);}
+    .lg-nav{background:linear-gradient(135deg,rgba(40,40,48,.72) 0%,rgba(40,40,48,.4) 100%);border-color:rgba(255,255,255,.14);
+      box-shadow:0 14px 40px rgba(0,0,0,.6),0 2px 8px rgba(0,0,0,.4),inset 0 1.5px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(255,255,255,.05);}
+    .lg-nav::after{background:linear-gradient(115deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 28%,rgba(255,255,255,0) 62%,rgba(255,255,255,.06) 100%);}
+    .lg-tab{color:var(--muted);}
+    .lg-tab.on{color:var(--accent);background:linear-gradient(135deg,rgba(139,124,247,.20),rgba(185,136,252,.26));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2px 8px rgba(0,0,0,.35);}
+    .toast{background:rgba(40,40,48,.92);}
+    .kpi,.skpi{background:var(--surface);}
+    .sec-chip,.wgt .chip{background:var(--surface-2);}
+    .reason{background:var(--reason-bg);}
+    .sig{background:var(--sig-bg);}
+    .risk{background:var(--risk-bg);border-color:var(--risk-border);}
+    .header{color:#fff;}
   }
 </style>
 </head>
@@ -408,19 +459,57 @@
     <p class="method">注：净值/近6月/近1年/回撤/夏普/规模/申购状态随「刷新」实时更新；类型、经理任职、评级为最近一期披露口径。表格支持鼠标按住拖动横向查看全部列。</p>
   </div>
 
-  <h2>五、热门基金 Top30（收益×风险调整综合榜，随刷新实时重算）</h2>
+  <h2>五、热门基金 Top30</h2>
   <div class="card">
-    <p class="method" style="margin:0 0 8px"><b>入选与打分规则：</b>全市场开放式基金（股票型 / 混合型 / 指数型，可申购），综合得分 = 近1年收益率×20% + 近6月×25% + 近3月×25% + 近1月×10% + <b>詹森阿尔法×10% − 近1年最大回撤×10%</b>（阿尔法 = 年化超额收益，按近1年日净值对沪深300回归计算，无风险利率取 1.5%/年，预置于 <span id="alphaAsOf">最近收盘</span>，随榜单更新重算），同名基金 A/C 份额合并保留得分最高一只，取前 30 名。四项收益率随「刷新」实时重算；最大回撤、重仓板块、申购状态实时获取；第三方评级为最近一期（<span id="rateAsOf">2026-06-30</span>）披露预置——评级接口校验来源页，浏览器端无法直连，随季报期更新。</p>
-    <div class="tbl-wrap" id="top30Wrap">
-      <table>
-        <thead><tr>
-          <th class="c-rank">排名</th><th class="c-code">代码</th><th class="c-name">基金名称</th>
-          <th>近1月</th><th>近3月</th><th>近6月</th><th>近1年</th><th>最大回撤(近1年)</th><th>阿尔法(年化)</th><th>综合得分</th><th>重仓板块</th><th>申购状态</th><th>第三方评级</th>
-        </tr></thead>
-        <tbody id="top30Body"></tbody>
-      </table>
+    <div class="tabs" id="fundTabs">
+      <button class="tab on" id="fundTabMain" onclick="window.__fundTab('main')">综合榜</button>
+      <button class="tab" id="fundTabRec" onclick="window.__fundTab('rec')">推荐榜单</button>
     </div>
-    <p class="method">榜单更新时间：<span id="top30AsOf">--</span> · 表格支持鼠标按住拖动上下/左右滚动，前三列（排名/代码/名称）冻结 · 本榜为收益与风险调整后的综合比较，仅为跟踪工具，不构成买卖建议。</p>
+
+    <div class="tab-panel" id="fundPanelMain">
+      <div class="wgt">
+        <span class="chip">近1年 <b>20%</b></span>
+        <span class="chip">近6月 <b>25%</b></span>
+        <span class="chip">近3月 <b>25%</b></span>
+        <span class="chip">近1月 <b>10%</b></span>
+        <span class="chip">阿尔法 <b>10%</b></span>
+        <span class="chip">最大回撤 <b>−10%</b></span>
+      </div>
+      <div class="tbl-wrap" id="top30Wrap">
+        <table>
+          <thead><tr>
+            <th class="c-rank">排名</th><th class="c-code">代码</th><th class="c-name">基金名称</th>
+            <th>近1月</th><th>近3月</th><th>近6月</th><th>近1年</th><th>最大回撤(近1年)</th><th>阿尔法(年化)</th><th>综合得分</th><th>重仓板块</th><th>申购状态</th><th>第三方评级</th>
+          </tr></thead>
+          <tbody id="top30Body"></tbody>
+        </table>
+      </div>
+      <p class="method">榜单更新时间：<span id="top30AsOf">--</span> · 表格支持鼠标按住拖动上下/左右滚动，前三列（排名/代码/名称）冻结 · 本榜为收益与风险调整后的综合比较，仅为跟踪工具，不构成买卖建议。</p>
+      <p class="method"><b>综合榜 · 口径说明：</b>全市场开放式基金（股票型 / 混合型 / 指数型，可申购），综合得分 = 近1年收益率×20% + 近6月×25% + 近3月×25% + 近1月×10% + 詹森阿尔法×10% − 近1年最大回撤×10%（阿尔法 = 年化超额收益，按近1年日净值对沪深300回归计算，无风险利率取 1.5%/年，预置于 <span id="alphaAsOf">最近收盘</span>，随榜单更新重算），同名基金 A/C 份额合并保留得分最高一只，取前 30 名。四项收益率随「刷新」实时重算；最大回撤、重仓板块、申购状态实时获取；第三方评级为最近一期（<span id="rateAsOf">2026-06-30</span>）披露预置——评级接口校验来源页，浏览器端无法直连，随季报期更新。</p>
+    </div>
+
+    <div class="tab-panel" id="fundPanelRec" style="display:none">
+      <div class="wgt">
+        <span class="chip">资产规模 <b>10%</b></span>
+        <span class="chip">近3月年化 <b>30%</b></span>
+        <span class="chip">近6月年化 <b>30%</b></span>
+        <span class="chip">管护人评分 <b>15%</b></span>
+        <span class="chip">三方评分 <b>15%</b></span>
+      </div>
+      <div class="tbl-wrap" id="fundRecWrap">
+        <table>
+          <thead><tr>
+            <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">基金名称</th>
+            <th>资产规模(亿)</th><th>近3月年化</th><th>近6月年化</th>
+            <th>管护人评分</th><th>三方评分</th><th>推荐指数</th>
+            <th>得分明细(规模/近3月/近6月/管护/三方)</th>
+          </tr></thead>
+          <tbody id="fundRecBody"></tbody>
+        </table>
+      </div>
+      <p class="method" id="fundRecAsOf">--</p>
+      <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 资产规模×10% + 近3月年化×30% + 近6月年化×30% + 管护人评分×15% + 三方评分×15%，满分 100，从高到低排序。各因子先按 30 只池内百分位归一化为 0-100 分（越大分越高）：资产规模=期末资产净值（亿元，实时）；近3月/近6月年化=近3月/近6月收益率年化（%）；三方评分=第三方评级星级映射（5星=100 / 4星=80 / 3星=60 / 2星=40 / 1星=20，取招商与晨星最高星级）；管护人评分=基金管理人评分，无公开实时接口，按<b>中性 50 分兜底</b>。任一字段缺失时同样按中性 50 分兜底。仅供参考，不构成投资建议。</p>
+    </div>
   </div>
 
   <h2>六、热门 Top5 板块资金流入流出（主力口径 · 随刷新实时重算）</h2>
@@ -681,58 +770,10 @@
       </div>
       <div class="grid2" id="cashGrid"></div>
       <p class="method" id="cashAsOf">数据加载中…</p>
-      <p class="method">说明：银行理财子净值暂无公开浏览器接口，此处以同属「现金管理」的货币基金实时七日年化收益榜替代，实现数据自动更新（随页面每 60 秒自动刷新，亦支持手动刷新）。数据来源：东方财富货币基金排行接口。七日年化收益率为近 7 日折算年化的参考值，非承诺收益，仅供参考，不构成投资建议。</p>
+      <p class="method">说明：现金管理类（货币基金）实时七日年化收益榜，随页面每 60 秒自动刷新，亦支持手动刷新。数据来源：东方财富货币基金排行接口。七日年化收益率为近 7 日折算年化的参考值，非承诺收益，仅供参考，不构成投资建议。</p>
     </div>
 
-    <h2>四、银行理财产品 · 走势与推荐</h2>
-    <div class="card">
-      <div class="tabs" id="bankTabs">
-        <button class="tab on" id="tabTrend" onclick="window.__bankTab('trend')">净值归一化走势</button>
-        <button class="tab" id="tabRank" onclick="window.__bankTab('rank')">推荐榜单 Top10</button>
-      </div>
-
-      <div class="tab-panel" id="panelTrend">
-        <div class="range-switch" id="bankRange">
-          <span class="rng-lbl">时间范围</span>
-          <button class="rng on" id="rng365" onclick="window.__bankRange(365)">近1年</button>
-          <button class="rng" id="rng182" onclick="window.__bankRange(182)">近6个月</button>
-          <button class="rng" id="rng91" onclick="window.__bankRange(91)">近3个月</button>
-        </div>
-        <div id="bankNavChart" class="chart"></div>
-        <p class="method">产品类型：<b>银行理财产品</b>（银行理财子公司净值型产品）· 图例为 10 只代表性产品 · 净值归一化：以所选区间起始日净值为 100 重定基，纵轴单位为归一化净值（原口径不变）。说明：银行理财子净值无公开浏览器接口，走势为基于产品收益率区间构造的参考曲线（非逐日真实披露净值），仅用于横向比较与跟踪。</p>
-      </div>
-
-      <div class="tab-panel" id="panelRank" style="display:none">
-        <div class="wgt">
-          <span class="chip">资产规模 <b>10%</b></span>
-          <span class="chip">近3月年化 <b>30%</b></span>
-          <span class="chip">近6月年化 <b>30%</b></span>
-          <span class="chip">管护人评分 <b>15%</b></span>
-          <span class="chip">三方评分 <b>15%</b></span>
-        </div>
-        <div class="tbl-wrap" id="bankRankWrap">
-          <table>
-            <thead><tr>
-              <th class="c-rank">#</th>
-              <th class="c-name">产品</th>
-              <th>类型/风险</th>
-              <th>资产规模(亿)</th>
-              <th>近3月年化</th>
-              <th>近6月年化</th>
-              <th>管护人评分</th>
-              <th>三方评分</th>
-              <th>推荐指数</th>
-              <th>得分明细</th>
-            </tr></thead>
-            <tbody id="bankRankBody"></tbody>
-          </table>
-        </div>
-        <p class="method" id="bankRankAsOf"></p>
-        <p class="method">排序依据：推荐指数 = 资产规模 × 10% + 近3个月年化收益率 × 30% + 近6个月年化收益率 × 30% + 理财管护人评分 × 15% + 三方评分 × 15%。其中规模、收益率因子先按 10 只产品池内百分位归一化为 0-100 分，管护人/三方评分直接取 0-100 分；推荐指数满分 100，从高到低排序。产品数据为参考披露数据（银行理财子净值无公开浏览器接口，此处为人工整理的代表性产品快照，非实时），仅供参考，不构成投资建议。</p>
-      </div>
-    </div>
-
-    <div class="risk">⚠️ 风险提示：理财（固收基金 + 银行理财）并非无风险投资。债券型基金可能因利率上行、信用违约等发生净值回撤；"固收+"产品含权益仓位，波动更大。历史业绩不代表未来表现，排名仅供比较参考，不构成任何投资建议。· 页面更新于 <span id="genTimeW">--</span>（本地时间）· 数据来源：东方财富公开基金接口</div>
+    <div class="risk">⚠️ 风险提示：理财（固收基金 + 现金管理）并非无风险投资。债券型基金可能因利率上行、信用违约等发生净值回撤；"固收+"产品含权益仓位，波动更大。历史业绩不代表未来表现，排名仅供比较参考，不构成任何投资建议。· 页面更新于 <span id="genTimeW">--</span>（本地时间）· 数据来源：东方财富公开基金接口</div>
     <div class="footer">以上分析基于公开数据整理，仅供参考，不构成投资建议。理财有风险，投资需谨慎。</div>
   </div>
 
@@ -942,30 +983,62 @@
     </div>
     </div>
 
-    <h2>二、热门股票 Top30（六维评分模型 · A 股主板 · 剔除创业板/科创板）</h2>
-    <div class="wgt">
-      <span class="chip"><b>盈利能力 25.5%</b>（ROE 60% + 净利率 40%）</span>
-      <span class="chip"><b>成长能力 20%</b>（营收增速 50% + 净利增速 50%）</span>
-      <span class="chip"><b>财务安全 18.2%</b>（资产负债率反向）</span>
-      <span class="chip"><b>估值水平 16.4%</b>（PE 50% + PB 50%，亏损 PE 最低分）</span>
-      <span class="chip"><b>现金流质量 10.9%</b>（每股经营现金流百分位）</span>
-      <span class="chip"><b>板块资金净流入 9.1%</b>（近10日主力净流入百分位）</span>
+    <h2>二、热门股票 Top30</h2>
+    <div class="card">
+      <div class="tabs" id="stockTabs">
+        <button class="tab on" id="stockTabMain" onclick="window.__stockTab('main')">综合榜</button>
+        <button class="tab" id="stockTabRec" onclick="window.__stockTab('rec')">推荐榜单</button>
+      </div>
+
+      <div class="tab-panel" id="stockPanelMain">
+        <div class="wgt">
+          <span class="chip"><b>盈利能力 25.5%</b>（ROE 60% + 净利率 40%）</span>
+          <span class="chip"><b>成长能力 20%</b>（营收增速 50% + 净利增速 50%）</span>
+          <span class="chip"><b>财务安全 18.2%</b>（资产负债率反向）</span>
+          <span class="chip"><b>估值水平 16.4%</b>（PE 50% + PB 50%，亏损 PE 最低分）</span>
+          <span class="chip"><b>现金流质量 10.9%</b>（每股经营现金流百分位）</span>
+          <span class="chip"><b>板块资金净流入 9.1%</b>（近10日主力净流入百分位）</span>
+        </div>
+        <div class="tbl-wrap" id="sTop30Wrap">
+          <table>
+            <thead><tr>
+              <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">名称</th>
+              <th>行业</th><th>现价</th><th>涨跌</th>
+              <th>PE(动)</th><th>PB</th><th>ROE</th><th>净利率</th>
+              <th>营收增速</th><th>净利增速</th><th>资产负债率</th>
+              <th>每股经营现金流</th><th>近10日板块资金</th>
+              <th>得分</th><th>六维(盈利/成长/安全/估值/现金流/资金)</th>
+            </tr></thead>
+            <tbody id="sTop30Body"></tbody>
+          </table>
+        </div>
+        <p class="method" id="sTop30AsOf">--</p>
+        <p class="method">综合榜 · 评分模型说明：从东方财富 RPT_LICO_FN_CPD 业绩报表（2026-06-30 口径，6628 行 A 股中报财务数据）中筛选 A 股主板标的（剔除创业板 300xxx、科创板 688xxx），排除金融业（银行/非银金融/证券，负债率特征不同）后剩余 1577 只，再按 ROE ≥ 8% 且 营收增速 > 0 且 资产负债率 < 100% 三个条件精选为 62 只候选池。六维百分位打分（0-100），用户指定权重等比归一化为 25.5% / 20% / 18.2% / 16.4% / 10.9% / 9.1%。行情（现价/涨跌/PE/PB）与板块资金净流入为实时接口（东方财富 push2 JSONP），刷新后按实时估值与资金重排。财务数据为静态中报快照。</p>
+      </div>
+
+      <div class="tab-panel" id="stockPanelRec" style="display:none">
+        <div class="wgt">
+          <span class="chip">资产规模 <b>10%</b></span>
+          <span class="chip">近3月年化 <b>30%</b></span>
+          <span class="chip">近6月年化 <b>30%</b></span>
+          <span class="chip">管护人评分 <b>15%</b></span>
+          <span class="chip">三方评分 <b>15%</b></span>
+        </div>
+        <div class="tbl-wrap" id="stockRecWrap">
+          <table>
+            <thead><tr>
+              <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">名称</th>
+              <th>总市值(亿)</th><th>近3月年化</th><th>近6月年化</th>
+              <th>管护人评分</th><th>三方评分</th><th>推荐指数</th>
+              <th>得分明细(规模/近3月/近6月/管护/三方)</th>
+            </tr></thead>
+            <tbody id="stockRecBody"></tbody>
+          </table>
+        </div>
+        <p class="method" id="stockRecAsOf">--</p>
+        <p class="method"><b>推荐榜单 · 口径说明：</b>推荐指数 = 资产规模×10% + 近3月年化×30% + 近6月年化×30% + 管护人评分×15% + 三方评分×15%，满分 100，从高到低排序。各因子先按 62 只候选池内百分位归一化为 0-100 分（越大分越高）：资产规模=总市值（亿元，实时行情）；近3月/近6月年化=近3月/近6月股价涨幅年化（%，实时日K线计算）；管护人评分、三方评分对股票无对应公开口径，按<b>中性 50 分兜底（不适用）</b>。任一字段缺失时同样按中性 50 分兜底。仅供参考，不构成投资建议。</p>
+      </div>
     </div>
-    <div class="tbl-wrap" id="sTop30Wrap">
-      <table>
-        <thead><tr>
-          <th class="c-rank">#</th><th class="c-code">代码</th><th class="c-name">名称</th>
-          <th>行业</th><th>现价</th><th>涨跌</th>
-          <th>PE(动)</th><th>PB</th><th>ROE</th><th>净利率</th>
-          <th>营收增速</th><th>净利增速</th><th>资产负债率</th>
-          <th>每股经营现金流</th><th>近10日板块资金</th>
-          <th>得分</th><th>六维(盈利/成长/安全/估值/现金流/资金)</th>
-        </tr></thead>
-        <tbody id="sTop30Body"></tbody>
-      </table>
-    </div>
-    <p class="method" id="sTop30AsOf">--</p>
-    <p class="method">评分模型说明：从东方财富 RPT_LICO_FN_CPD 业绩报表（2026-06-30 口径，6628 行 A 股中报财务数据）中筛选 A 股主板标的（剔除创业板 300xxx、科创板 688xxx），排除金融业（银行/非银金融/证券，负债率特征不同）后剩余 1577 只，再按 ROE ≥ 8% 且 营收增速 > 0 且 资产负债率 < 100% 三个条件精选为 62 只候选池。六维百分位打分（0-100），用户指定权重等比归一化为 25.5% / 20% / 18.2% / 16.4% / 10.9% / 9.1%。行情（现价/涨跌/PE/PB）与板块资金净流入为实时接口（东方财富 push2 JSONP），刷新后按实时估值与资金重排。财务数据为静态中报快照。</p>
 
     <h2>三、盈利 × 估值 × 板块资金 气泡图</h2>
     <div class="card">
@@ -1197,6 +1270,7 @@ function fetchTop30(){
         if(snap){
           d.ttype=snap.TTYPENAME||''; d.fbk=snap.FBKINDEXNAME||''; d.sgzt=snap.SGZT||'';
           if(snap.MAXRETRA1!=null&&!isNaN(parseFloat(snap.MAXRETRA1))) d.mdd=parseFloat(snap.MAXRETRA1);
+          if(snap.ENDNAV!=null&&!isNaN(parseFloat(snap.ENDNAV))) d.scale=parseFloat(snap.ENDNAV)/1e8;
         }
         return next();
       });
@@ -1418,6 +1492,7 @@ function renderTop30(list){
   setTxt('top30AsOf', fmtTime(new Date()));
   flashEl(tb);
   lastTop30=list;
+  renderFundRec(list);
 }
 
 /* ================= 冻结列表格：鼠标按住拖动滚动 ================= */
@@ -1639,136 +1714,20 @@ function refreshWealthTop30Live(){
   return Promise.all(jobs);
 }
 
-/* ================= 理财页：银行理财产品走势 + 推荐榜单 ================= */
-var bankNavChart=null;
-var bankDays=365;
-var BANK_COLORS=['#6c5ce7','#a855f7','#ec4899','#0ea5e9','#0d9488','#f59e0b','#10b981','#6366f1','#e11d48','#0891b2'];
-/* 10 只代表性银行理财产品（参考披露数据快照，非实时接口） */
-var BANK_PROD=[
-  {code:'ZYLC01',name:'招睿日开固收增强',org:'招银理财',type:'固收+',risk:'R2',scale:320,r3m:2.85,r6m:3.10,r1y:3.25,cust:92,third:90},
-  {code:'GYLC02',name:'鑫尊利固收增强90天',org:'工银理财',type:'固收+',risk:'R2',scale:285,r3m:2.70,r6m:2.95,r1y:3.10,cust:90,third:88},
-  {code:'XYLC03',name:'稳利恒盈季季宝',org:'兴银理财',type:'固收+',risk:'R2/R3',scale:260,r3m:3.15,r6m:3.40,r1y:3.55,cust:88,third:87},
-  {code:'ZYLC04',name:'稳富固收增强月月开',org:'中银理财',type:'固收+',risk:'R2',scale:240,r3m:2.60,r6m:2.85,r1y:2.98,cust:87,third:85},
-  {code:'JYLC05',name:'稳享固收精选90天',org:'交银理财',type:'固收+',risk:'R2',scale:220,r3m:2.75,r6m:3.00,r1y:3.15,cust:89,third:86},
-  {code:'XYLC06',name:'安盈象固收稳利半年',org:'信银理财',type:'固收',risk:'R2',scale:210,r3m:2.95,r6m:3.20,r1y:3.38,cust:86,third:84},
-  {code:'JXLC07',name:'嘉鑫固收182天',org:'建信理财',type:'固收',risk:'R2',scale:200,r3m:2.80,r6m:3.05,r1y:3.20,cust:85,third:83},
-  {code:'GDLC08',name:'阳光金天天盈',org:'光大理财',type:'固收',risk:'R2',scale:180,r3m:2.45,r6m:2.70,r1y:2.85,cust:84,third:82},
-  {code:'PYLC09',name:'浦惠增利1年定开',org:'浦银理财',type:'固收+',risk:'R3',scale:150,r3m:3.30,r6m:3.55,r1y:3.70,cust:83,third:81},
-  {code:'NYLC10',name:'农银时时付现金管理',org:'农银理财',type:'现金管理',risk:'R1',scale:420,r3m:1.60,r6m:1.75,r1y:1.85,cust:91,third:89}
-];
-function hashCode(str){ var h=0; for(var i=0;i<str.length;i++){ h=(h*31+str.charCodeAt(i))|0; } return (h<0?-h:h); }
-function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
-function bankNavSeries(code, r1y){
-  var rnd=mulberry32(hashCode(code));
-  var N=252, nav=1.0, arr=[];
-  var drift=(Math.pow(1+r1y/100,1/N)-1);
-  for(var i=0;i<N;i++){
-    var noise=(rnd()-0.5)*2*0.0006;
-    var wave=0.00012*Math.sin(i/22 + rnd()*6.28);
-    nav*=(1+drift+noise+wave);
-    arr.push(nav);
-  }
-  var target=1+r1y/100, k=target/arr[N-1];
-  for(var j=0;j<N;j++){ arr[j]=+(arr[j]*k).toFixed(4); }
-  return arr;
-}
-function bankDates(N){
-  var now=new Date(), out=[];
-  for(var i=N-1;i>=0;i--){ out.push(new Date(now.getTime()-i*86400000)); }
-  return out;
-}
-var __bankSeries=(function(){ var m={}; BANK_PROD.forEach(function(p){ m[p.code]=bankNavSeries(p.code,p.r1y); }); return m; })();
-var __bankDates=bankDates(252);
-function renderBankNavChart(days){
-  bankDays=days;
-  ['rng365','rng182','rng91'].forEach(function(id){ var b=$(id); if(b) b.classList.toggle('on', id==='rng'+days); });
-  if(!bankNavChart) return;
-  var series=[], cats=null;
-  BANK_PROD.forEach(function(p,i){
-    var arr=__bankSeries[p.code];
-    var from=Math.max(0, arr.length-days);
-    var seg=arr.slice(from);
-    if(seg.length<2) return;
-    var base=seg[0]; if(base<=0) return;
-    var step=Math.max(1, Math.floor(seg.length/64));
-    var pts=[], labs=[];
-    for(var k=0;k<seg.length;k+=step){
-      var d=__bankDates[from+k];
-      labs.push((d.getMonth()+1)+'/'+d.getDate());
-      pts.push(+(seg[k]/base*100).toFixed(2));
-    }
-    var lastI=seg.length-1;
-    if(lastI%step!==0){
-      var dl=__bankDates[from+lastI];
-      labs.push((dl.getMonth()+1)+'/'+dl.getDate());
-      pts.push(+(seg[lastI]/base*100).toFixed(2));
-    }
-    if(!cats) cats=labs;
-    series.push({name:p.org+'·'+p.name, type:'line', data:pts,
-      symbol:'none', lineStyle:{width:2, color:BANK_COLORS[i%10]}, itemStyle:{color:BANK_COLORS[i%10]}});
-  });
-  bankNavChart.setOption({ xAxis:{data:cats||[]}, series:series });
-}
-function renderBankRank(){
-  var tb=$('bankRankBody'); if(!tb) return;
-  var list=BANK_PROD.slice();
-  function rankPct(key){
-    var sorted=list.slice().sort(function(a,b){ return a[key]-b[key]; });
-    var map={};
-    sorted.forEach(function(d,i){ map[d.code]= list.length>1? Math.round(i/(list.length-1)*100) : 50; });
-    return map;
-  }
-  var scScale=rankPct('scale'), scR3=rankPct('r3m'), scR6=rankPct('r6m');
-  list.forEach(function(d){
-    d.sc_s=scScale[d.code]; d.r3_s=scR3[d.code]; d.r6_s=scR6[d.code];
-    d.score= d.sc_s*0.10 + d.r3_s*0.30 + d.r6_s*0.30 + d.cust*0.15 + d.third*0.15;
-  });
-  list.sort(function(a,b){ return b.score-a.score; });
-  var html='';
-  list.forEach(function(d,i){
-    html+='<tr>'
-      +'<td class="c-rank">'+(i+1)+'</td>'
-      +'<td class="c-name" title="'+esc(d.org+'·'+d.name)+'">'+esc(d.org+' · '+d.name)+'<span style="font-size:.7rem;color:var(--muted);display:block;font-weight:400">'+esc(d.code)+'</span></td>'
-      +'<td>'+esc(d.type)+' <span class="dim5">'+esc(d.risk)+'</span></td>'
-      +'<td>'+d.scale+' 亿</td>'
-      +'<td class="up">'+pct(d.r3m)+'</td>'
-      +'<td class="up">'+pct(d.r6m)+'</td>'
-      +'<td>'+d.cust+'</td>'
-      +'<td>'+d.third+'</td>'
-      +'<td class="up"><b>'+n1(d.score)+'</b></td>'
-      +'<td class="dim5">规模<b>'+d.sc_s+'</b>/近3月<b>'+d.r3_s+'</b>/近6月<b>'+d.r6_s+'</b>/管护<b>'+d.cust+'</b>/三方<b>'+d.third+'</b></td>'
-      +'</tr>';
-  });
-  tb.innerHTML=html;
-  setTxt('bankRankAsOf','参考披露数据快照 · 推荐指数满分 100 · 按推荐指数从高到低排序 · 生成于 '+fmtTime(new Date()));
-  flashEl(tb);
-}
-window.__bankTab=function(tab){
-  var t=$('panelTrend'), r=$('panelRank');
-  var bt=$('tabTrend'), br=$('tabRank');
-  if(tab==='rank'){
-    if(t) t.style.display='none'; if(r) r.style.display='block';
-    if(bt) bt.classList.remove('on'); if(br) br.classList.add('on');
-  }else{
-    if(t) t.style.display='block'; if(r) r.style.display='none';
-    if(bt) bt.classList.add('on'); if(br) br.classList.remove('on');
-    if(bankNavChart) setTimeout(function(){ bankNavChart.resize(); },50);
-  }
-};
-window.__bankRange=function(days){ renderBankNavChart(days); };
+
 
 /* ================= 股票页：行情与板块资金（实时） ================= */
 function secidOf(code){ return (code[0]==='6'||code[0]==='9')?('1.'+code):('0.'+code); }
 function fetchStockQuotes(){
   var secids=STOCK_POOL.list.map(function(x){ return secidOf(x.code); }).join(',');
-  var params='?fltt=2&secids='+encodeURIComponent(secids)+'&fields=f2,f3,f9,f12,f14,f23';
+  var params='?fltt=2&secids='+encodeURIComponent(secids)+'&fields=f2,f3,f9,f12,f14,f20,f23';
   var hosts=['https://push2.eastmoney.com/api/qt/ulist.np/get','https://push2delay.eastmoney.com/api/qt/ulist.np/get'];
   var hi=0;
   function attempt(){
     return jsonp(hosts[hi]+params).then(function(r){
       if(!r||!r.data||!r.data.diff) throw new Error('股票行情数据为空');
       var out={};
-      r.data.diff.forEach(function(d){ out[d.f12]={price:d.f2,chg:d.f3,pe:d.f9,pb:d.f23}; });
+      r.data.diff.forEach(function(d){ out[d.f12]={price:d.f2,chg:d.f3,pe:d.f9,pb:d.f23,mcap:(d.f20!=null&&d.f20!=='-')?parseFloat(d.f20)/1e8:null}; });
       return out;
     }).catch(function(e){ hi++; if(hi<hosts.length) return attempt(); throw e; });
   }
@@ -1799,7 +1758,7 @@ function scoreStocks(quotes, flows){
   var q=quotes||{}, f=flows||{};
   list.forEach(function(x){
     var d=q[x.code];
-    if(d){ x.price=d.price; x.chg=d.chg; x.pe=(d.pe!=null&&d.pe>0)?d.pe:null; x.pb=(d.pb!=null&&d.pb>0)?d.pb:null; }
+    if(d){ x.price=d.price; x.chg=d.chg; x.pe=(d.pe!=null&&d.pe>0)?d.pe:null; x.pb=(d.pb!=null&&d.pb>0)?d.pb:null; x.mcap=(d.mcap!=null&&d.mcap>0)?d.mcap:null; }
     if(f[x.board_code]!=null){ x.flow10=f[x.board_code]; x.flowD=fmtDate(new Date()); }
   });
   var n=list.length;
@@ -1892,6 +1851,158 @@ function renderStockBubble(list){
   stockBubbleChart.setOption({series:[{data:data}]});
 }
 
+/* ================= 推荐榜单（推荐指数 = 规模×10% + 近3月年化×30% + 近6月年化×30% + 管护人×15% + 三方×15%） ================= */
+var __stockReturns=null, __stockList=[];
+function ratingScore(r){
+  if(!r||r==='—'||r==='-') return null;
+  var stars=(String(r).match(/(\d)\s*星/g)||[]).map(function(m){ return parseInt(m,10); });
+  if(!stars.length) return null;
+  var mx=Math.max.apply(null, stars);
+  var map={5:100,4:80,3:60,2:40,1:20};
+  return map[mx]!=null?map[mx]:50;
+}
+function annualize(ret, days){
+  if(ret==null||!isFinite(ret)) return null;
+  return (Math.pow(1+ret/100, 365/days)-1)*100;
+}
+function recPct(list, get, higher){
+  var vals=list.map(function(x,i){ return {v:get(x), i:i}; });
+  var valid=vals.filter(function(a){ return a.v!=null && isFinite(a.v); });
+  var m=valid.length;
+  if(m<2) return vals.map(function(){ return null; });
+  valid.sort(function(a,b){ return a.v-b.v; });
+  var rank={}; valid.forEach(function(a,r){ rank[a.i]=r; });
+  return vals.map(function(a){
+    if(a.v==null||!isFinite(a.v)) return null;
+    var r=rank[a.i];
+    return higher? (r/(m-1))*100 : ((m-1-r)/(m-1))*100;
+  });
+}
+function recScore(list, scaleF, r3F, r6F, custF, thirdF){
+  var sS=recPct(list, scaleF, true);
+  var r3=recPct(list, r3F, true);
+  var r6=recPct(list, r6F, true);
+  var out=list.map(function(x,i){
+    var s=sS[i]==null?50:sS[i];
+    var a=r3[i]==null?50:r3[i];
+    var b=r6[i]==null?50:r6[i];
+    var c=custF(x); c=(c==null||!isFinite(c))?50:c;
+    var t=thirdF(x); t=(t==null||!isFinite(t))?50:t;
+    return {d:x, sc_s:s, sc_3:a, sc_6:b, sc_c:c, sc_t:t, score:s*0.10+a*0.30+b*0.30+c*0.15+t*0.15};
+  });
+  out.sort(function(a,b){ return b.score-a.score; });
+  return out;
+}
+function renderFundRec(list){
+  var tb=$('fundRecBody'); if(!tb||!list||!list.length) return;
+  var arr=list.slice(0,30);
+  var scored=recScore(arr,
+    function(x){ return x.scale; },
+    function(x){ return annualize(x.m3,91); },
+    function(x){ return annualize(x.m6,182); },
+    function(){ return null; },
+    function(x){ return ratingScore(RATING_MAP[x.code]); }
+  );
+  var html='';
+  scored.forEach(function(o,i){
+    var d=o.d;
+    var r3a=annualize(d.m3,91), r6a=annualize(d.m6,182);
+    var third=ratingScore(RATING_MAP[d.code]);
+    html+='<tr>'
+      +'<td class="c-rank">'+(i+1)+'</td>'
+      +'<td class="c-code">'+esc(d.code)+'</td>'
+      +'<td class="c-name" title="'+esc(d.name)+'">'+esc(d.name)+'</td>'
+      +'<td>'+(d.scale!=null&&!isNaN(d.scale)? n2(d.scale)+' 亿':'--')+'</td>'
+      +'<td class="'+cls(r3a)+'">'+(r3a!=null? pct(r3a):'--')+'</td>'
+      +'<td class="'+cls(r6a)+'">'+(r6a!=null? pct(r6a):'--')+'</td>'
+      +'<td title="基金管理人评分无公开实时接口，按中性兜底">50·兜底</td>'
+      +'<td>'+(third!=null? third:'50·兜底')+'</td>'
+      +'<td class="up"><b>'+n1(o.score)+'</b></td>'
+      +'<td class="dim5">规模<b>'+Math.round(o.sc_s)+'</b>/近3月<b>'+Math.round(o.sc_3)+'</b>/近6月<b>'+Math.round(o.sc_6)+'</b>/管护<b>'+Math.round(o.sc_c)+'</b>/三方<b>'+Math.round(o.sc_t)+'</b></td>'
+      +'</tr>';
+  });
+  tb.innerHTML=html;
+  setTxt('fundRecAsOf','推荐指数满分 100 · 按推荐指数从高到低 · 生成于 '+fmtTime(new Date()));
+  flashEl(tb);
+}
+function renderStockRec(list){
+  var tb=$('stockRecBody'); if(!tb||!list||!list.length) return;
+  var arr=list.slice(0,30);
+  var ret=__stockReturns||{};
+  var scored=recScore(arr,
+    function(x){ return x.mcap; },
+    function(x){ var r=ret[x.code]; return r? annualize(r.r3m,91):null; },
+    function(x){ var r=ret[x.code]; return r? annualize(r.r6m,182):null; },
+    function(){ return null; },
+    function(){ return null; }
+  );
+  var html='';
+  scored.forEach(function(o,i){
+    var d=o.d;
+    var r=ret[d.code];
+    var r3a=r? annualize(r.r3m,91):null, r6a=r? annualize(r.r6m,182):null;
+    html+='<tr>'
+      +'<td class="c-rank">'+(i+1)+'</td>'
+      +'<td class="c-code">'+esc(d.code)+'</td>'
+      +'<td class="c-name" title="'+esc(d.name)+'">'+esc(d.name)+'</td>'
+      +'<td>'+(d.mcap!=null&&!isNaN(d.mcap)? n2(d.mcap)+' 亿':'--')+'</td>'
+      +'<td class="'+cls(r3a)+'">'+(r3a!=null? pct(r3a):'--')+'</td>'
+      +'<td class="'+cls(r6a)+'">'+(r6a!=null? pct(r6a):'--')+'</td>'
+      +'<td title="股票无对应管护人口径，按中性兜底">50·兜底</td>'
+      +'<td title="股票无对应三方评级口径，按中性兜底">50·兜底</td>'
+      +'<td class="up"><b>'+n1(o.score)+'</b></td>'
+      +'<td class="dim5">规模<b>'+Math.round(o.sc_s)+'</b>/近3月<b>'+Math.round(o.sc_3)+'</b>/近6月<b>'+Math.round(o.sc_6)+'</b>/管护<b>'+Math.round(o.sc_c)+'</b>/三方<b>'+Math.round(o.sc_t)+'</b></td>'
+      +'</tr>';
+  });
+  tb.innerHTML=html;
+  setTxt('stockRecAsOf','推荐指数满分 100 · 按推荐指数从高到低 · 区间涨幅'+(__stockReturns? '已加载':'加载中')+' · 生成于 '+fmtTime(new Date()));
+  flashEl(tb);
+}
+function fetchStockReturns(){
+  var codes=STOCK_POOL.list.map(function(x){ return x.code; });
+  var out={}, idx=0;
+  function next(){
+    if(idx>=codes.length) return Promise.resolve();
+    var code=codes[idx++];
+    var url='https://push2his.eastmoney.com/api/qt/stock/kline/get?secid='+secidOf(code)+'&klt=101&fqt=1&lmt=140&end=20500101&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58';
+    return jsonp(url).then(function(r){
+      var kl=(r&&r.data&&r.data.klines)||[];
+      var closes=kl.map(function(line){ return parseFloat(String(line).split(',')[2]); }).filter(function(v){ return !isNaN(v); });
+      if(closes.length<2){ out[code]=null; return next(); }
+      var last=closes[closes.length-1];
+      function ret(days){ var i=closes.length-1-days; if(i<0)i=0; var p0=closes[i]; if(p0<=0)return null; return (last/p0-1)*100; }
+      out[code]={ r3m:ret(63), r6m:ret(126) };
+      return next();
+    }).catch(function(){ out[code]=null; return next(); });
+  }
+  var ws=[]; for(var w=0;w<6;w++) ws.push(next());
+  return Promise.all(ws).then(function(){ return out; });
+}
+window.__fundTab=function(tab){
+  var m=$('fundPanelMain'), r=$('fundPanelRec');
+  var bm=$('fundTabMain'), br=$('fundTabRec');
+  var tabsEl=$('fundTabs'); if(tabsEl) tabsEl.classList.toggle('rec', tab==='rec');
+  if(tab==='rec'){ if(m)m.style.display='none'; if(r)r.style.display='block'; if(bm)bm.classList.remove('on'); if(br)br.classList.add('on'); }
+  else { if(m)m.style.display='block'; if(r)r.style.display='none'; if(bm)bm.classList.add('on'); if(br)br.classList.remove('on'); }
+};
+window.__stockTab=function(tab){
+  var m=$('stockPanelMain'), r=$('stockPanelRec');
+  var bm=$('stockTabMain'), br=$('stockTabRec');
+  var tabsEl=$('stockTabs'); if(tabsEl) tabsEl.classList.toggle('rec', tab==='rec');
+  if(tab==='rec'){
+    if(m)m.style.display='none'; if(r)r.style.display='block'; if(bm)bm.classList.remove('on'); if(br)br.classList.add('on');
+    if(__stockReturns==null){
+      setTxt('stockRecAsOf','正在获取近3月/近6月区间涨幅数据…');
+      fetchStockReturns().then(function(ret){ __stockReturns=ret; renderStockRec(__stockList); })
+        .catch(function(){ __stockReturns={}; renderStockRec(__stockList); });
+    }else{
+      renderStockRec(__stockList);
+    }
+  }else{
+    if(m)m.style.display='block'; if(r)r.style.display='none'; if(bm)bm.classList.add('on'); if(br)br.classList.remove('on');
+  }
+};
+
 /* ================= 理财/股票页：统一刷新入口 ================= */
 /* ================= 现金管理类实时收益榜（货币基金七日年化 · fundmobapi CORS） ================= */
 function fetchCashMgmt(){
@@ -1943,6 +2054,8 @@ function refreshStock(){
       renderStockTop30(list);
       renderStockCards(list);
       renderStockBubble(list);
+      __stockList=list;
+      renderStockRec(list);
       if(netS){ netS.className='net-ok'; netS.textContent='实时（估值+板块资金已重算）'; }
       return 1;
     })
@@ -2102,19 +2215,6 @@ function initCharts(){
     });
   }catch(e){ /* 板块图容器缺失时静默跳过 */ }
 
-  /* 理财页：银行理财产品净值归一化走势（近1年/近6月/近3月） */
-  try{
-    bankNavChart=echarts.init($('bankNavChart'));
-    bankNavChart.setOption({
-      grid:{left:52,right:16,top:44,bottom:28},
-      legend:{type:'scroll',top:6,textStyle:{color:MUT,fontSize:11}},
-      tooltip:{trigger:'axis',valueFormatter:function(v){return n2(v);}},
-      xAxis:{type:'category',data:[],axisLabel:{color:MUT,fontSize:10}},
-      yAxis:{type:'value',name:'归一化净值',axisLabel:{color:MUT,formatter:'{value}'},splitLine:{lineStyle:{color:GRID}}},
-      series:[]
-    });
-  }catch(e){ /* 容器缺失时静默 */ }
-
   /* 股票页：盈利×估值×资金气泡图 */
   try{
     stockBubbleChart=echarts.init($('stockBubbleChart'));
@@ -2135,7 +2235,6 @@ function initCharts(){
     idxChart.resize();perfChart.resize();radarChart.resize();
     if(flowBar){ flowBar.resize(); }
     if(flowTrend){ flowTrend.resize(); }
-    if(bankNavChart){ bankNavChart.resize(); }
     if(stockBubbleChart){ stockBubbleChart.resize(); }
   });
 }
@@ -2161,9 +2260,6 @@ window.__wbPage=function(key){
   setTimeout(function(){
     if(key==='fund'){
       [idxChart,perfChart,radarChart,flowBar,flowTrend].forEach(function(c){ if(c){ c.resize(); } });
-    }
-    if(key==='wealth'){
-      if(bankNavChart){ bankNavChart.resize(); }
     }
     if(key==='stock'){
       if(stockBubbleChart){ stockBubbleChart.resize(); }
@@ -2222,14 +2318,16 @@ function boot(){
   bindDrag($('top30Wrap'));
   bindDrag($('cmpWrap'));
   renderWealthTop30();
-  renderBankRank();
-  renderBankNavChart(365);
   var sList=scoreStocks({},{});
   renderStockTop30(sList);
   renderStockCards(sList);
   renderStockBubble(sList);
+  __stockList=sList;
+  renderStockRec(sList);
   bindDrag($('wTop30Wrap'));
   bindDrag($('sTop30Wrap'));
+  bindDrag($('fundRecWrap'));
+  bindDrag($('stockRecWrap'));
   tagReveals(document);
   refreshAll(false);
 }
