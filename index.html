@@ -26,7 +26,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:30px 16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:30px 16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip;}
   .container{max-width:960px;margin:0 auto;}
 
   /* ===== anime.js 式滚动显现（交错淡入上移） ===== */
@@ -102,17 +102,25 @@
   @keyframes flash{0%{background:#fef08a;}100%{background:transparent;}}
 
   /* ===== 冻结列表格（横/纵滚动 + 拖拽） ===== */
-  .tbl-wrap{overflow:auto;max-height:560px;border:1px solid var(--border);border-radius:16px;cursor:grab;scrollbar-width:thin;background:#fff;box-shadow:var(--shadow-sm);}
+  .tbl-wrap{overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-x pan-y;max-height:560px;border:1px solid var(--border);border-radius:16px;cursor:grab;scrollbar-width:thin;background:#fff;box-shadow:var(--shadow-sm);}
   .tbl-wrap.dragging{cursor:grabbing;user-select:none;}
   .tbl-wrap table{min-width:1060px;margin:0;}
   .tbl-wrap th,.tbl-wrap td{white-space:nowrap;}
-  .tbl-wrap thead th{position:sticky;top:0;z-index:3;background:var(--surface-2);}
-  .tbl-wrap .c-rank{position:sticky;left:0;z-index:2;background:#fff;width:44px;}
-  .tbl-wrap .c-code{position:sticky;left:44px;z-index:2;background:#fff;}
-  .tbl-wrap .c-name{position:sticky;left:108px;z-index:2;background:#fff;font-weight:600;}
+  .tbl-wrap thead th{position:-webkit-sticky;position:sticky;top:0;z-index:3;background:var(--surface-2);}
+  .tbl-wrap .c-rank{position:-webkit-sticky;position:sticky;left:0;z-index:2;background:#fff;width:44px;}
+  .tbl-wrap .c-code{position:-webkit-sticky;position:sticky;left:44px;z-index:2;background:#fff;}
+  .tbl-wrap .c-name{position:-webkit-sticky;position:sticky;left:108px;z-index:2;background:#fff;font-weight:600;}
   .tbl-wrap thead .c-rank,.tbl-wrap thead .c-code,.tbl-wrap thead .c-name{z-index:4;background:var(--surface-2);}
-  .tbl-wrap .c-fund{position:sticky;left:0;z-index:2;background:#fff;font-weight:600;}
+  .tbl-wrap .c-fund{position:-webkit-sticky;position:sticky;left:0;z-index:2;background:#fff;font-weight:600;}
   .tbl-wrap thead .c-fund{z-index:4;background:var(--surface-2);}
+  /* 移动端左右滑动提示（仅小屏显示） */
+  .scroll-hint{display:none;}
+  @media (max-width:768px){
+    .scroll-hint{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.72rem;color:var(--muted);padding:7px 10px;margin-bottom:8px;background:var(--surface);border:1px dashed var(--border);border-radius:12px;letter-spacing:.02em;}
+    .scroll-hint .arw{display:inline-block;color:var(--accent);font-weight:700;animation:nudge 1.5s var(--ease) infinite;}
+    .scroll-hint .arw.r{animation-delay:.75s;}
+    @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+  }
 
   /* ===== 三页切换 ===== */
   .page-view{display:none;}
@@ -1481,22 +1489,35 @@ function renderTop30(list){
   renderFundRec(sorted);
 }
 
-/* ================= 冻结列表格：鼠标按住拖动滚动 ================= */
+/* ================= 冻结列表格：鼠标按住拖动滚动（移动端走原生触摸滚动） ================= */
 function bindDrag(el){
   if(!el) return;
   var down=false, sx=0, sy=0, sl=0, st=0;
-  el.addEventListener('mousedown',function(e){
+  el.addEventListener('pointerdown',function(e){
     if(e.target&&e.target.closest&&e.target.closest('a,button,input,select,textarea')) return;
+    if(e.pointerType==='touch'||e.pointerType==='pen') return; /* 触摸/笔交由浏览器原生滚动，避免拦截 */
     down=true; sx=e.clientX; sy=e.clientY; sl=el.scrollLeft; st=el.scrollTop;
     el.classList.add('dragging');
     e.preventDefault();
   });
-  window.addEventListener('mousemove',function(e){
+  window.addEventListener('pointermove',function(e){
     if(!down) return;
     el.scrollLeft=sl-(e.clientX-sx);
     el.scrollTop=st-(e.clientY-sy);
   });
-  window.addEventListener('mouseup',function(){ if(down){ down=false; el.classList.remove('dragging'); } });
+  window.addEventListener('pointerup',function(){ if(down){ down=false; el.classList.remove('dragging'); } });
+  window.addEventListener('pointercancel',function(){ if(down){ down=false; el.classList.remove('dragging'); } });
+}
+/* 移动端：在表格上方插入「左右滑动」提示 */
+function addScrollHints(){
+  var wraps=document.querySelectorAll('.tbl-wrap');
+  wraps.forEach(function(w){
+    if(w.previousElementSibling&&w.previousElementSibling.classList&&w.previousElementSibling.classList.contains('scroll-hint')) return;
+    var h=document.createElement('div');
+    h.className='scroll-hint';
+    h.innerHTML='<span class="arw">←</span> 左右滑动查看完整榜单 <span class="arw r">→</span>';
+    w.parentNode.insertBefore(h,w);
+  });
 }
 
 /* ================= 板块资金流（热门 Top5：近5日涨幅榜，主力口径） ================= */
@@ -2317,6 +2338,7 @@ function boot(){
   bindDrag($('sTop30Wrap'));
   bindDrag($('fundRecWrap'));
   bindDrag($('stockRecWrap'));
+  addScrollHints();
   tagReveals(document);
   refreshAll(false);
 }
